@@ -189,8 +189,8 @@ if(Input::exists()){
 					'fname' => Input::get('fname'),
 					'lname' => Input::get('lname'),
 					'email' => Input::get('email'),
-					'status' => Input::get('status'),
-					'snumber' => Input::get('snumber'),
+					'custom1' => Input::get('status'),
+					'custom2' => Input::get('snumber'),
 					'gender' => Input::get('gender'),
 					'password' =>
 					password_hash(Input::get('password'), PASSWORD_BCRYPT, array('cost' => 12)),
