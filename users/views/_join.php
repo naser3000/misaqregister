@@ -34,17 +34,17 @@ if (!$form_valid && Input::exists()){
 
 	<div class="form-group">
 		<label for="username">نام کاربری* (Between <?=$settings->min_un?> - <?=$settings->max_un?> characters)</label>
-		<input  class="form-control" type="text" name="username" id="username" placeholder="Username" value="<?php if (!$form_valid && !empty($_POST)){ echo $username;} ?>" required autofocus>
+		<input  class="form-control" type="text" name="username" id="username" placeholder="نام کاربری" value="<?php if (!$form_valid && !empty($_POST)){ echo $username;} ?>" required autofocus>
 		<p class="help-block"></p>
 
 		<label for="fname">نام*</label>
-		<input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" value="<?php if (!$form_valid && !empty($_POST)){ echo $fname;} ?>" required>
+		<input type="text" class="form-control" id="fname" name="fname" placeholder="نام" value="<?php if (!$form_valid && !empty($_POST)){ echo $fname;} ?>" required>
 
 		<label for="lname">نام خانوادگی*</label>
-		<input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" value="<?php if (!$form_valid && !empty($_POST)){ echo $lname;} ?>" required>
+		<input type="text" class="form-control" id="lname" name="lname" placeholder="نام خانوادگی" value="<?php if (!$form_valid && !empty($_POST)){ echo $lname;} ?>" required>
 
 		<label for="email">پست الکترونیک*</label>
-		<input  class="form-control" type="text" name="email" id="email" placeholder="Email Address" value="<?php if (!$form_valid && !empty($_POST)){ echo $email;} ?>" required >
+		<input  class="form-control" type="text" name="email" id="email" placeholder="پست الکترونیک" value="<?php if (!$form_valid && !empty($_POST)){ echo $email;} ?>" required >
 
 		<label for="status">وضعیت*</label><br>
 		<select name="status" id = "status" class="form-control" oninput="changeStatusItems()">
