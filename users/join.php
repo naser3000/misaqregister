@@ -68,6 +68,9 @@ if(Input::exists()){
 	$fname = Input::get('fname');
 	$lname = Input::get('lname');
 	$email = Input::get('email');
+	$status = Input::get('status');
+	$snumber = Input::get('snumber');
+	$gender = Input::get('gender');
 	$agreement_checkbox = Input::get('agreement_checkbox');
 
 	if ($agreement_checkbox=='on'){
@@ -105,6 +108,14 @@ if(Input::exists()){
 		'required' => true,
 		'valid_email' => true,
 		'unique' => 'users',
+	  ),
+	  'status' => array(
+		'display' => 'Status',
+		'required' => true,
+	  ),
+	  'snumber' => array(
+		'display' => 'Snumber',
+		'required' => true,
 	  ),
 
 	  'password' => array(
@@ -178,6 +189,9 @@ if(Input::exists()){
 					'fname' => Input::get('fname'),
 					'lname' => Input::get('lname'),
 					'email' => Input::get('email'),
+					'custom1' => Input::get('status'),
+					'custom2' => Input::get('snumber'),
+					'gender' => Input::get('gender'),
 					'password' =>
 					password_hash(Input::get('password'), PASSWORD_BCRYPT, array('cost' => 12)),
 					'permissions' => 1,
