@@ -111,6 +111,7 @@ if (empty($dest = sanitizedDest('dest'))) {
  
 ?>
 
+
  
 <div id="page-wrapper">
 <div class="container">
@@ -131,7 +132,7 @@ require_once $abs_us_root.$us_url_root.'users/includes/facebook_oauth.php';
  
     <div class="form-group" >
         <label for="username" >نام کاربری یا ایمیل</label>
-        <input  class="form-control" type="text" name="username" id="username" placeholder="نام کاربری/ایمیل" required autofocus>
+        <input class="form-control" type="text" name="username" id="username" placeholder="نام کاربری/ایمیل" required autofocus>
     </div>
  
     <div class="form-group">
@@ -179,3 +180,11 @@ require_once $abs_us_root.$us_url_root.'users/includes/facebook_oauth.php';
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <?php } ?>
 <?php require_once $abs_us_root.$us_url_root.'users/includes/html_footer.php'; // currently just the closing /body and /html ?>
+
+
+<style type="text/css">
+    
+    .container input{
+        margin-left: 3px;
+    }
+</style>

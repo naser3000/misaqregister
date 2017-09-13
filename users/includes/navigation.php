@@ -50,9 +50,23 @@ $results = $query->first();
 $email_act=$results->email_act;
 
 ?>
+<style type="text/css">
+	.navbar-header{
+		float: right;
+	}
+	.container{
+		direction: rtl;
+	}
+	.container i{
+		margin-left: 3px;
+	}
+	.dropdown-menu li{
+		float: right;
+	}
+</style>
 <!-- Navigation -->
 <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-	<div class="container">
+	<div class="container" >
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header ">
 			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-top-menu-collapse">
@@ -63,8 +77,8 @@ $email_act=$results->email_act;
 			</button>
 			<a class="" href="<?=$us_url_root?>"><img class="img-responsive" src="<?=$us_url_root?>users/images/logo.png" alt="" /></a>
 		</div>
-		<div class="collapse navbar-collapse navbar-top-menu-collapse navbar-right">
-			<ul class="nav navbar-nav ">
+		<div class="collapse navbar-collapse navbar-top-menu-collapse navbar-left">
+			<ul class="nav navbar-nav " >
 				<?php if($user->isLoggedIn()){ //anyone is logged in?>
 					<li><a href="<?=$us_url_root?>users/account.php"><i class="fa fa-fw fa-user"></i> <?php echo ucfirst($user->data()->username);?></a></li> <!-- Common for Hamburger and Regular menus link -->
 
@@ -77,7 +91,7 @@ $email_act=$results->email_act;
 					<?php } // is user an admin ?>
 					<li class="dropdown hidden-xs"><a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-fw fa-cog"></i><b class="caret"></b></a> <!-- regular user menu -->
 						<ul class="dropdown-menu"> <!-- open tag for User dropdown menu -->
-							<li><a href="<?=$us_url_root?>"><i class="fa fa-fw fa-home"></i> خانه</a></li> <!-- regular user menu link -->
+							<li ><a href="<?=$us_url_root?>"><i class="fa fa-fw fa-home"></i> خانه</a></li> <!-- regular user menu link -->
 							<li><a href="<?=$us_url_root?>users/account.php"><i class="fa fa-fw fa-user"></i> حساب کاربری</a></li>
 						<?php if($settings->messaging == 1){ ?>
 							<li><a href="<?=$us_url_root?>users/messages.php"><i class="fa fa-fw fa-envelope"></i><?=$msgC?> پیامها</a></li>
