@@ -56,7 +56,7 @@ if (Input::exists()) {
  
         }else{
             $reCaptchaValid=FALSE;
-            $error_message .= 'Please check the reCaptcha.';
+            $error_message .= 'لطفاً کد امنیتی را بررسی کنید.';
         }
     }else{
         $reCaptchaValid=TRUE;
@@ -94,7 +94,7 @@ if (Input::exists()) {
                     }
                 }
             } else {
-                $error_message .= 'Log in failed. Please check your username and password and try again.';
+                $error_message .= 'ورود ناموفق. لطفاً نام کاربری و رمز عبور خود را بررسی کرده و دوباره امتحان کنید.';
             }
         } else{
             $error_message .= '<ul>';
@@ -110,6 +110,7 @@ if (empty($dest = sanitizedDest('dest'))) {
 }
  
 ?>
+
  
 <div id="page-wrapper">
 <div class="container">
@@ -128,28 +129,28 @@ require_once $abs_us_root.$us_url_root.'users/includes/facebook_oauth.php';
     <h2 class="form-signin-heading"></i> <?=lang("SIGNIN_TITLE","");?></h2>
     <input type="hidden" name="dest" value="<?= $dest ?>" />
  
-    <div class="form-group">
-        <label for="username" >Username OR Email</label>
-        <input  class="form-control" type="text" name="username" id="username" placeholder="Username/Email" required autofocus>
+    <div class="form-group" >
+        <label for="username" >نام کاربری یا ایمیل</label>
+        <input  class="form-control" type="text" name="username" id="username" placeholder="نام کاربری/ایمیل" required autofocus>
     </div>
  
     <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control"  name="password" id="password"  placeholder="Password" required autocomplete="off">
+        <label for="password">رمز عبور</label>
+        <input type="password" class="form-control"  name="password" id="password"  placeholder="رمز عبور" required autocomplete="off">
     </div>
  
     <?php
     if($settings->recaptcha == 1){
     ?>
     <div class="form-group">
-    <label>Please check the box below to continue</label>
+    <label>لطفاً جای خالی را پر کنید. </label>
     <div class="g-recaptcha" data-sitekey="<?=$publickey; ?>"></div>
     </div>
     <?php } ?>
  
     <div class="form-group">
     <label for="remember">
-    <input type="checkbox" name="remember" id="remember" > Remember Me</label>
+    <input type="checkbox" name="remember" id="remember" > مرا به خاطر بسپار</label>
     </div>
  
     <input type="hidden" name="csrf" value="<?=Token::generate(); ?>">
@@ -160,7 +161,7 @@ require_once $abs_us_root.$us_url_root.'users/includes/facebook_oauth.php';
 </div>
 <div class="row">
     <div class="col-xs-6"><br>
-        <a class="pull-left" href='forgot_password.php'><i class="fa fa-wrench"></i> Forgot Password</a><br><br>
+        <a class="pull-left" href='forgot_password.php'><i class="fa fa-wrench"></i> فراموشی رمز عبور</a><br><br>
     </div>
     <div class="col-xs-6"><br>
         <a class="pull-right" href='join.php'><i class="fa fa-plus-square"></i> <?=lang("SIGNUP_TEXT","");?></a><br><br>

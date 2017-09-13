@@ -22,25 +22,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Signup
 $lang = array_merge($lang,array(
-	"SIGNUP_TEXT"			=> "Register",
-	"SIGNUP_BUTTONTEXT"		=> "Register Me",
-	"SIGNUP_AUDITTEXT"		=> "Registered",
+	"SIGNUP_TEXT"			=> "ثبت نام",
+	"SIGNUP_BUTTONTEXT"		=> "مرا ثبت نام کن",
+	"SIGNUP_AUDITTEXT"		=> "ثبت نام انجام شد",
 	));
 
 // Signin
 $lang = array_merge($lang,array(
-	"SIGNIN_FAIL"			=> "** FAILED LOGIN **",
-	"SIGNIN_TITLE"			=> "Please Log In",
-	"SIGNIN_TEXT"			=> "Log In",
-	"SIGNOUT_TEXT"			=> "Log Out",
-	"SIGNIN_BUTTONTEXT"		=> "Login",
-	"SIGNIN_AUDITTEXT"		=> "Logged In",
-	"SIGNOUT_AUDITTEXT"		=> "Logged Out",
+	"SIGNIN_FAIL"			=> "** ورود ناموفق بود **",
+	"SIGNIN_TITLE"			=> "لطفاً وارد شوید",
+	"SIGNIN_TEXT"			=> "ورود",
+	"SIGNOUT_TEXT"			=> "خروج",
+	"SIGNIN_BUTTONTEXT"		=> "ورود",
+	"SIGNIN_AUDITTEXT"		=> "ورود انجام شد",
+	"SIGNOUT_AUDITTEXT"		=> "خروج انجام شد",
 	));
 
 //Navigation
 $lang = array_merge($lang,array(
-	"NAVTOP_HELPTEXT"		=> "Help",
+	"NAVTOP_HELPTEXT"		=> "راهنما",
 	));
 
 $query = $db->query("SELECT * FROM email");
@@ -71,39 +71,39 @@ $email_act=$results->email_act;
 					<?php if($settings->messaging == 1){ ?>
 					<li><a href="<?=$us_url_root?>users/messages.php"><i class="fa fa-fw fa-envelope"></i><?=$msgC?> <?=$grammar?></a></li>
 					<?php } ?>
-					<li class="hidden-sm hidden-md hidden-lg"><a href="<?=$us_url_root?>"><i class="fa fa-fw fa-home"></i> Home</a></li> <!-- Hamburger menu link -->
+					<li class="hidden-sm hidden-md hidden-lg"><a href="<?=$us_url_root?>"><i class="fa fa-fw fa-home"></i> خانه</a></li> <!-- Hamburger menu link -->
 					<?php if (checkMenu(2,$user->data()->id)){  //Links for permission level 2 (default admin) ?>
-						<li class="hidden-sm hidden-md hidden-lg"><a href="<?=$us_url_root?>users/admin.php"><i class="fa fa-fw fa-cogs"></i> Admin Dashboard</a></li> <!-- Hamburger menu link -->
+						<li class="hidden-sm hidden-md hidden-lg"><a href="<?=$us_url_root?>users/admin.php"><i class="fa fa-fw fa-cogs"></i> داشبورد مدیر سایت</a></li> <!-- Hamburger menu link -->
 					<?php } // is user an admin ?>
 					<li class="dropdown hidden-xs"><a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-fw fa-cog"></i><b class="caret"></b></a> <!-- regular user menu -->
 						<ul class="dropdown-menu"> <!-- open tag for User dropdown menu -->
-							<li><a href="<?=$us_url_root?>"><i class="fa fa-fw fa-home"></i> Home</a></li> <!-- regular user menu link -->
-							<li><a href="<?=$us_url_root?>users/account.php"><i class="fa fa-fw fa-user"></i> Account</a></li>
+							<li><a href="<?=$us_url_root?>"><i class="fa fa-fw fa-home"></i> خانه</a></li> <!-- regular user menu link -->
+							<li><a href="<?=$us_url_root?>users/account.php"><i class="fa fa-fw fa-user"></i> حساب کاربری</a></li>
 						<?php if($settings->messaging == 1){ ?>
-							<li><a href="<?=$us_url_root?>users/messages.php"><i class="fa fa-fw fa-envelope"></i><?=$msgC?> Messages</a></li>
+							<li><a href="<?=$us_url_root?>users/messages.php"><i class="fa fa-fw fa-envelope"></i><?=$msgC?> پیامها</a></li>
 						<?php } ?>
 
 									 <!-- regular user menu link -->
 
 							<?php if (checkMenu(2,$user->data()->id)){  //Links for permission level 2 (default admin) ?>
 								<li class="divider"></li>
-								<li><a href="<?=$us_url_root?>users/admin.php"><i class="fa fa-fw fa-cogs"></i> Admin Dashboard</a></li> <!-- regular Admin menu link -->
+								<li><a href="<?=$us_url_root?>users/admin.php"><i class="fa fa-fw fa-cogs"></i> داشبورد ممدیر سایت</a></li> <!-- regular Admin menu link -->
 							<?php } // is user an admin ?>
 							<li class="divider"></li>
-							<li><a href="<?=$us_url_root?>users/logout.php"><i class="fa fa-fw fa-sign-out"></i> Logout</a></li> <!-- regular Logout menu link -->
+							<li><a href="<?=$us_url_root?>users/logout.php"><i class="fa fa-fw fa-sign-out"></i> خروج</a></li> <!-- regular Logout menu link -->
 						</ul> <!-- close tag for User dropdown menu -->
 					</li>
 
-					<li class="hidden-sm hidden-md hidden-lg"><a href="<?=$us_url_root?>users/logout.php"><i class="fa fa-fw fa-sign-out"></i> Logout</a></li> <!-- regular Hamburger logout menu link -->
+					<li class="hidden-sm hidden-md hidden-lg"><a href="<?=$us_url_root?>users/logout.php"><i class="fa fa-fw fa-sign-out"></i> خروج</a></li> <!-- regular Hamburger logout menu link -->
 
 				<?php }else{ // no one is logged in so display default items ?>
-					<li><a href="<?=$us_url_root?>users/login.php" class=""><i class="fa fa-sign-in"></i> Login</a></li>
-					<li><a href="<?=$us_url_root?>users/join.php" class=""><i class="fa fa-plus-square"></i> Register</a></li>
-					<li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-life-ring"></i> Help <b class="caret"></b></a>
+					<li><a href="<?=$us_url_root?>users/login.php" class=""><i class="fa fa-sign-in"></i> ورود</a></li>
+					<li><a href="<?=$us_url_root?>users/join.php" class=""><i class="fa fa-plus-square"></i> ثبت نام</a></li>
+					<li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-life-ring"></i> راهنما <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-					<li><a href="<?=$us_url_root?>users/forgot_password.php"><i class="fa fa-wrench"></i> Forgot Password</a></li>
+					<li><a href="<?=$us_url_root?>users/forgot_password.php"><i class="fa fa-wrench"></i> فراموشی رمز عبور</a></li>
 					<?php if ($email_act){ //Only display following menu item if activation is enabled ?>
-					<li><a href="<?=$us_url_root?>users/verify_resend.php"><i class="fa fa-exclamation-triangle"></i> Resend Activation Email</a></li>
+					<li><a href="<?=$us_url_root?>users/verify_resend.php"><i class="fa fa-exclamation-triangle"></i> دوباره فرستادن فعالسازی ایمیل</a></li>
 					<?php }?>
 					</ul>
 					</li>
