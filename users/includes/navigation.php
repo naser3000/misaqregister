@@ -51,10 +51,18 @@ $email_act=$results->email_act;
 
 ?>
 <style type="text/css">
+@font-face {
+    font-family: "IRANSans";
+    font-weight: 300;
+	src: url("../users/css/fonts/IRANSans.eot") format("eot"),
+url("../users/css/fonts/IRANSans.ttf") format("ttf"),
+url("../users/css/fonts/IRANSans.woff") format("woff");
+}
 	.navbar-header{
 		float: right;
 	}
 	.container{
+		font-family: "IRANSans";
 		direction: rtl;
 	}
 	.container i{

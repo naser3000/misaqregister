@@ -19,7 +19,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Special thanks to John Bovey for the password strenth feature.
 */
+
+
 ?>
+
+<style type="text/css">
+@font-face {
+    font-family: "IRANSans";
+    font-weight: 300;
+    src: url("../users/css/fonts/IRANSans.eot") format("eot"),
+url("../users/css/fonts/IRANSans.ttf") format("ttf"),
+url("../users/css/fonts/IRANSans.woff") format("woff");
+}
+    
+    h2{
+        font-family: "IRANSans";
+    }
+    
+    .container input{
+        margin-left: 5px;
+    }
+    .container label{
+        margin-top: 20px;
+    }
+
+</style>
+
+
 <div class="row">
 <div class="col-xs-12">
 <?php
@@ -28,12 +54,13 @@ if (!$form_valid && Input::exists()){
 }
 ?>
 
+
 <form class="form-signup" action="<?=$form_action;?>" method="<?=$form_method;?>" id="payment-form">
 
 	<h2 class="form-signin-heading"> <?=lang("SIGNUP_TEXT","");?></h2>
 
 	<div class="form-group">
-		<label for="username">نام کاربری* (Between <?=$settings->min_un?> - <?=$settings->max_un?> characters)</label>
+		<label for="username">نام کاربری* (بین <?=$settings->max_un?>-<?=$settings->min_un?> حرف)</label>
 		<input  class="form-control" type="text" name="username" id="username" placeholder="نام کاربری" value="<?php if (!$form_valid && !empty($_POST)){ echo $username;} ?>" required autofocus>
 		<p class="help-block"></p>
 
@@ -79,15 +106,15 @@ if (!$form_valid && Input::exists()){
 	
 <?php
 
-		$character_range = 'Be between '.$settings->min_pw . ' and ' . $settings->max_pw;
-		$character_statement = '<span id="character_range" class="gray_out_text">' . $character_range . ' characters</span>';
+		$character_range = 'بین '.$settings->min_pw . ' تا ' . $settings->max_pw;
+		$character_statement = '<span id="character_range" class="gray_out_text">' . $character_range . ' حرف باشد.</span>';
 
 if ($settings->req_cap == 1){
 		$num_caps = '1'; //Password must have at least 1 capital
 		if($num_caps != 1){
 			$num_caps_s = 's';
 		}
-		$num_caps_statement = '<span id="caps" class="gray_out_text">Have at least ' . $num_caps . ' capital letter </span>';
+		$num_caps_statement = '<span id="caps" class="gray_out_text">حداقل دارای ' . $num_caps . ' حرف بزرگ باشد. </span>';
 }
 
 if ($settings->req_num == 1){
@@ -96,9 +123,9 @@ if ($settings->req_num == 1){
 			$num_numbers_s = 's';
 		}
 
-		$num_numbers_statement = '<span id="number" class="gray_out_text">Have at least ' . $num_numbers . ' number</span>';
+		$num_numbers_statement = '<span id="number" class="gray_out_text">حداقل دارای ' . $num_numbers . ' عدد باشد.</span>';
 }
-		$password_match_statement = '<span id="password_match" class="gray_out_text">Be typed correctly twice</span>';
+		$password_match_statement = '<span id="password_match" class="gray_out_text">تکرار رمز عبور صحیح باشد.</span>';
 
 
 		//2.) Apply default class to gray out green check icon
@@ -171,14 +198,14 @@ if ($settings->req_num == 1){
 ?>
 
 		<div style="display: inline-block">
-			<label for="password">Choose a Password* (Between <?=$settings->min_pw?> and <?=$settings->max_pw?> characters)</label>
-			<input  class="form-control" type="password" name="password" id="password" placeholder="Password" required autocomplete="off" aria-describedby="passwordhelp">
+			<label for="password">رمز عبور* (بین <?=$settings->max_pw?>-<?=$settings->min_pw?>  حرف)</label>
+			<input  class="form-control" type="password" name="password" id="password" placeholder="رمز عبور" required autocomplete="off" aria-describedby="passwordhelp">
 
-			<label for="confirm">Confirm Password*</label>
-			<input  type="password" id="confirm" name="confirm" class="form-control" placeholder="Confirm Password" required autocomplete="off" >
+			<label for="confirm">تکرار رمز عبور*</label>
+			<input  type="password" id="confirm" name="confirm" class="form-control" placeholder="تکرار رمز عبور" required autocomplete="off" >
 		</div>
-		<div style="display: inline-block; padding-left: 20px">
-			<strong>Passwords Should...</strong><br>
+		<div style="display: inline-block; padding-right: 20px">
+			<strong>رمز عبور باید...</strong><br>
 			<span id="character_range_icon" class="glyphicon glyphicon-ok gray_out_icon" style="color: green"></span>&nbsp;&nbsp;<?php echo $character_statement;?>
 			<br>
 <?php
@@ -195,11 +222,13 @@ if ($settings->req_num == 1){ ?>
 		</div>
 		<br><br>
 
-		<label for="confirm">Registration User Terms and Conditions</label>
+		<label for="confirm">شرایط و قوانین ثبت نام کاربر</label>
 		<textarea id="agreement" name="agreement" rows="5" class="form-control" disabled ><?php require $abs_us_root.$us_url_root.'usersc/includes/user_agreement.php'; ?></textarea>
 
-		<label for="confirm">Check box to agree to terms</label>
-		<input type="checkbox" id="agreement_checkbox" name="agreement_checkbox" class="form-control">
+		
+		<input type="checkbox" id="agreement_checkbox" name="agreement_checkbox" class="form-controlaaaaa">
+		<label for="confirm">با قوانین موافقم.</label>
+		
 	</div>
 
 	<?php if($settings->recaptcha == 1|| $settings->recaptcha == 2){ ?>
@@ -208,7 +237,7 @@ if ($settings->req_num == 1){ ?>
 	</div>
 	<?php } ?>
 	<input type="hidden" value="<?=Token::generate();?>" name="csrf">
-	<button class="submit btn btn-primary " type="submit" id="next_button"><i class="fa fa-plus-square"></i> Register</button>
+	<button class="submit btn btn-primary " type="submit" id="next_button"><i class="fa fa-plus-square"></i> ثبت نام</button>
 </form>
 </div>
 </div>
