@@ -71,6 +71,9 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 	.dropdown-menu li{
 		float: right;
 	}
+	h1, h2{
+		font-family: 'IRANSans';
+	}
 </style>
 <!-- Navigation -->
 <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">

@@ -22,9 +22,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div class="row">
 <div class="col-xs-12">
 <div class="jumbotron text-center">
-<h1>Welcome To <?=$settings->site_name?></h1>
-<p>Thanks for registering!</p>
-<a href="login.php" class="btn btn-primary">Login</a>
+<h1>به <?=$settings->site_name?> خوش آمدید</h1>
+<p>از ثبت نام شما سپاس گزاریم!</p>
+<a href="login.php" class="btn btn-primary">ورود</a>
 </div>
 </div>
 </div>

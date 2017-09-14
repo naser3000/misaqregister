@@ -21,8 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div class="row">
 <div class="col-xs-12">
 <div class="jumbotron text-center">
-<h1>Ooops! There was an error verifying your email address. Please click below to try again.</h1>
-<a href="verify_resend.php" class="btn btn-primary">Resend Verification Email</a>
+<h1>اشتباه! تأیید ایمیل شما با خطا مواجه شد. بر روی دکمه زیر کلیک کرده و دوباره امتحان کنید.</h1>
+<a href="verify_resend.php" class="btn btn-primary">ارسال تأییدیه ایمیل</a>
 </div>
 </div>
 </div>

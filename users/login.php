@@ -183,16 +183,9 @@ require_once $abs_us_root.$us_url_root.'users/includes/facebook_oauth.php';
 
 
 <style type="text/css">
-@font-face {
-    font-family: "IRANSans";
-    font-weight: 300;
-    src: url("../users/css/fonts/IRANSans.eot") format("eot"),
-url("../users/css/fonts/IRANSans.ttf") format("ttf"),
-url("../users/css/fonts/IRANSans.woff") format("woff");
-}
     
     h2{
-        font-family: "IRANSans";
+        font-family: 'IRANSans';
     }
     
     .container input{

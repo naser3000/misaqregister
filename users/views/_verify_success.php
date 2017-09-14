@@ -21,8 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div class="row">
 <div class="col-xs-12">
 <div class="jumbotron text-center">
-<h2>Your Email has been verified!</h2>
-<a href="login.php" class="btn btn-primary">Log In</a>
+<h2>ایمیل شما تأیید شد!</h2>
+<a href="login.php" class="btn btn-primary">ورود</a>
 </div>
 </div>
 </div>

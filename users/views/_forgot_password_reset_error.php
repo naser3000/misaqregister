@@ -21,8 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div class="row">
 <div class="col-xs-12">
 <div class="jumbotron text-center">
-<h2>Oops...something went wrong, maybe an old reset link you clicked on. Click below to try again</h2>
-<p><a href="forgot_password.php" class="btn btn-primary">Reset Password</a></p>
+<h2 >اشتباهی رخ داده است.... شاید شما بر روی یک لینک قدیمی کلیک کرده اید. بر روی دکمه زیر کلیک کرده و دوباره امتحان کنید.</h2>
+<p><a href="forgot_password.php" class="btn btn-primary">بازیابی رمز عبور</a></p>
 </div>	
 </div><!-- /.col -->
 </div><!-- /.row -->
