@@ -21,7 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div class="row">
 <div class="col-xs-12">
 <div class="jumbotron text-center">
-<h2>از شما سپاس گزاریم! تأییدیه لیمیل شما ارسال شد.</h2>
+<h2>از شما سپاس گزاریم!</h2>
+<h2>تأییدیه ایمیل شما ارسال شد.</h2>
 </div>
 </div>
 </div>

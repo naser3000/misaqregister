@@ -46,7 +46,7 @@ $userdetails=$user->data();
 //Temporary Success Message
 $holdover = Input::get('success');
 if($holdover == 'true'){
-    bold("Account Updated");
+    bold("حساب کاربری به روز رسانی شد");
 }
 //Forms posted
 if(!empty($_POST)) {
@@ -63,7 +63,7 @@ if(!empty($_POST)) {
             );
             $validation->check($_POST,array(
                 'username' => array(
-                    'display' => 'Username',
+                    'display' => 'نام کاربری',
                     'required' => true,
                     'unique_update' => 'users,'.$userId,
                     'min' => 1,
@@ -75,7 +75,7 @@ if(!empty($_POST)) {
                     Redirect::to('user_settings.php?err=Username+has+already+been+changed+once.');
                 }
                 $db->update('users',$userId,$fields);
-                $successes[]="Username updated.";
+                $successes[]="نام کاربری به روز رسانی شد.";
             }else{
                 //validation did not pass
                 foreach ($validation->errors() as $error) {
@@ -91,7 +91,7 @@ if(!empty($_POST)) {
             $fields=array('fname'=>$fname);
             $validation->check($_POST,array(
                 'fname' => array(
-                    'display' => 'First Name',
+                    'display' => 'نام',
                     'required' => true,
                     'min' => 1,
                     'max' => 25
@@ -99,7 +99,7 @@ if(!empty($_POST)) {
             ));
             if($validation->passed()){
                 $db->update('users',$userId,$fields);
-                $successes[]='First name updated.';
+                $successes[]='نام به روز رسانی شد.';
             }else{
                 //validation did not pass
                 foreach ($validation->errors() as $error) {
@@ -115,7 +115,7 @@ if(!empty($_POST)) {
             $fields=array('lname'=>$lname);
             $validation->check($_POST,array(
                 'lname' => array(
-                    'display' => 'Last Name',
+                    'display' => 'نام خانوادگی',
                     'required' => true,
                     'min' => 1,
                     'max' => 25
@@ -123,7 +123,7 @@ if(!empty($_POST)) {
             ));
             if($validation->passed()){
                 $db->update('users',$userId,$fields);
-                $successes[]='Last name updated.';
+                $successes[]='نام خانوادگی به روز رسانی شد.';
             }else{
                 //validation did not pass
                 foreach ($validation->errors() as $error) {
@@ -139,7 +139,7 @@ if(!empty($_POST)) {
             $fields=array('email'=>$email);
             $validation->check($_POST,array(
                 'email' => array(
-                    'display' => 'Email',
+                    'display' => 'ایمیل',
                     'required' => true,
                     'valid_email' => true,
                     'unique_update' => 'users,'.$userId,
@@ -152,7 +152,7 @@ if(!empty($_POST)) {
                 if($emailR->email_act==1){
                     $db->update('users',$userId,['email_verified'=>0]);
                 }
-                $successes[]='Email updated.';
+                $successes[]='ایمیل به روز رسانی شد.';
             }else{
                 //validation did not pass
                 foreach ($validation->errors() as $error) {
@@ -165,17 +165,17 @@ if(!empty($_POST)) {
         if(!empty($_POST['password'])) {
             $validation->check($_POST,array(
                 'old' => array(
-                    'display' => 'Old Password',
+                    'display' => 'رمز عبور قبلی',
                     'required' => true,
                 ),
                 'password' => array(
-                    'display' => 'New Password',
+                    'display' => 'رمز عبور جدید',
                     'required' => true,
                     'min' => $settings->min_pw,
                 'max' => $settings->max_pw,
                 ),
                 'confirm' => array(
-                    'display' => 'Confirm New Password',
+                    'display' => 'تکرار رمز عبور جدید',
                     'required' => true,
                     'matches' => 'password',
                 ),
@@ -187,7 +187,7 @@ if(!empty($_POST)) {
                 foreach ($validation->errors() as $error) {
                     $errors[] = $error;
                 }
-                $errors[]='There is a problem with your password.';
+                $errors[]='یک مشکل با رمز عبور شما وجود دارد.';
             }
             if (empty($errors)) {
                 //process
@@ -212,15 +212,15 @@ if(!empty($_POST)) {
                     <p><img src="<?=$grav; ?>" class="img-thumbnail" alt="Generic placeholder thumbnail"></p>
                 </div>
                 <div class="col-xs-12 col-md-10">
-                    <h1>Update your user settings</h1>
-                    <strong>Want to change your profile picture? </strong><br> Visit <a href="https://en.gravatar.com/">https://en.gravatar.com/</a> and setup an account with the email address <?=$email?>.  It works across millions of sites. It's fast and easy!<br>
-                    <span class="bg-danger"><?=display_errors($errors);?></span>
-                    <span><?=display_successes($successes);?></span>
+                    <h1>حساب کاربری خود را به روز رسانی کنید</h1>
+                    <strong>آیا میخواهید تصویر پروفایل خود را تغییر دهید؟ </strong><br> Visit <a href="https://en.gravatar.com/">https://en.gravatar.com/</a> and setup an account with the email address <?=$email?>.  It works across millions of sites. It's fast and easy!<br>
+                    <span class="bg-danger" style="color: red"><?=display_errors($errors);?></span>
+                    <span style=" color: green;"><?=display_successes($successes);?></span>
 
                     <form name='updateAccount' action='user_settings.php' method='post'>
 
                         <div class="form-group">
-                            <label>Username</label>
+                            <label>نام کاربری</label>
                             <?php if (($settings->change_un == 0) || (($settings->change_un == 2) && ($user->data()->un_changed == 1)) ) {
                                 echo "<input  class='form-control' type='text' name='username' value='$displayname' readonly/>";
                             }else{
@@ -230,39 +230,39 @@ if(!empty($_POST)) {
                         </div>
 
                         <div class="form-group">
-                            <label>First Name</label>
+                            <label>نام</label>
                             <input  class='form-control' type='text' name='fname' value='<?=$fname?>' />
                         </div>
 
                         <div class="form-group">
-                            <label>Last Name</label>
+                            <label>نام خانوادگی</label>
                             <input  class='form-control' type='text' name='lname' value='<?=$lname?>' />
                         </div>
 
                         <div class="form-group">
-                            <label>Email</label>
+                            <label>ایمیل</label>
                             <input class='form-control' type='text' name='email' value='<?=$email?>' />
                         </div>
 
                         <div class="form-group">
-                            <label>Old Password (required to change password)</label>
+                            <label>رمز عبور قبلی (برای تغییر رمز ضروری است)</label>
                             <input class='form-control' type='password' name='old' />
                         </div>
 
                         <div class="form-group">
-                            <label>New Password (<?=$settings->min_pw?> char min, <?=$settings->max_pw?> max.)</label>
+                            <label>رمز عبور جدید (حداقل <?=$settings->min_pw?> و حداکثر<?=$settings->max_pw?> کاراکتر)</label>
                             <input class='form-control' type='password' name='password' />
                         </div>
 
                         <div class="form-group">
-                            <label>Confirm Password</label>
+                            <label>تکرار رمز عبور</label>
                             <input class='form-control' type='password' name='confirm' />
                         </div>
 
                         <input type="hidden" name="csrf" value="<?=Token::generate();?>" />
 
-                        <p><input class='btn btn-primary' type='submit' value='Update' class='submit' /></p>
-                        <p><a class="btn btn-info" href="account.php">Cancel</a></p>
+                        <p><input class='btn btn-primary' type='submit' value='به روز رسانی' class='submit' /></p>
+                        <p><a class="btn btn-info" href="account.php">انصراف</a></p>
 
                     </form>
                     <?php

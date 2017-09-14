@@ -63,10 +63,10 @@ if(Input::exists('post')){
             $body =  email_body('_email_template_verify.php',$options);
             $email_sent=email($email,$subject,$body);
             if(!$email_sent){
-                $errors[] = 'Email NOT sent due to error. Please contact site administrator.';
+                $errors[] = 'در ارسال ایمیل خطایی رخ داده است. لطفاً با مدیر سایت تماس بگیرید..';
             }
         }else{
-            $errors[] = 'That email does not exist in our database';
+            $errors[] = 'کاربری با این ایمیل وجود ندارد.';
         }
     }else{
         $errors = $validation->errors();

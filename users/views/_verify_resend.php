@@ -21,16 +21,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div class="row">
 <div class="col-xs-12">
 <div class="jumbotron">
-	<h2>ایمیل خود را تأیید کنید</h2>
+	<h2>ایمیل خود را تأیید کنید:</h2>
 	<ol>
-		<li>آدرس ایمیل خود را وارد کرده و دکمه ارسال را بزنید</li>
-		<li>ایمیل خود را بررسی کرده و بر روی لینکی که برای شما ارسال شده کلیک کنید</li>
-		<li>انجام شد</li>
+		<li>آدرس ایمیل خود را وارد کرده و دکمه ارسال را بزنید.</li>
+		<li>ایمیل خود را بررسی کرده و بر روی لینکی که برای شما ارسال شده کلیک کنید.</li>
+		<li>انجام شد.</li>
 	</ol>
 	<form class="" action="verify_resend.php" method="post">
 	<span class="bg-danger"><?=display_errors($errors);?></span>
 	<div class="form-group">
-	<label for="email">ایمیل خود را وارد کنید</label>
+	<label for="email">ایمیل خود را وارد کنید:</label>
 	<input class="form-control" type="text" id="email" name="email" placeholder="ایمیل">
 	</div>
 	<input type="hidden" name="csrf" value="<?=Token::generate();?>">
