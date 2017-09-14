@@ -49,7 +49,7 @@ if (Input::get('forgotten_password')) {
               'email' => rawurlencode($email),
               'vericode' => $fuser->data()->vericode,
             );
-            $subject = 'Password Reset';
+            $subject = 'بازیابی رمز عبور';
             $encoded_email=rawurlencode($email);
             $body =  email_body('_email_template_forgot_password.php',$options);
             $email_sent=email($email,$subject,$body);

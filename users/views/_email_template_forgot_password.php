@@ -8,7 +8,7 @@ $results = $query->first();
   <head>
     <meta charset="utf-8">
   </head>
-  <body>
+  <body style="direction: rtl; font-family: 'IRANSans';">
     <p>سلام <?=$fname;?>,</p>
     <p>شما جهت بازیابی رمز عبور این ایمیل را دریافت کرده اید. اگر اشتباهی رخ داده, این ایمیل را نادیده بگیرید.</p>
     <p>در صورت صحت, جهت بازیابی رمز عبور بر روی لینک زیر کلیک کنید.</p>
