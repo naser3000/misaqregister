@@ -64,7 +64,7 @@ $email_act=$results->email_act;
 			</button>
 			<a class="" href="<?=$us_url_root?>"><img class="img-responsive" src="<?=$us_url_root?>users/images/logo.png" alt="" /></a>
 		</div>
-		<div class="collapse navbar-collapse navbar-top-menu-collapse navbar-left">
+		<div class="collapse navbar-collapse navbar-top-menu-collapse navbar-left" >
 			<ul class="nav navbar-nav " >
 				<?php if($user->isLoggedIn()){ //anyone is logged in?>
 					<li><a href="<?=$us_url_root?>users/account.php"><i class="fa fa-fw fa-user"></i> <?php echo ucfirst($user->data()->username);?></a></li> <!-- Common for Hamburger and Regular menus link -->
@@ -130,16 +130,47 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 		float: right;
 	}
 	.container{
-		font-family: "IRANSans";
+		font-family: 'IRANSans';
 		direction: rtl;
 	}
 	.container i{
 		margin-left: 3px;
 	}
-	.dropdown-menu li{
-		float: right;
+	.navbar-left li{
+		float: right !important;
 	}
-	h1, h2{
+	h1, h2, h3{
 		font-family: 'IRANSans';
 	}
+	th, td{
+		text-align: right;
+	}
+
+	.col-md-2, .col-md-6, .col-xs-2 {
+    	float: right !important;
+	}
+
+	.input-group {
+		direction: ltr !important;
+	}
+
+	.input-group-addon {
+		background-color: rgb(92, 184, 92);
+	}
 </style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+<script src="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#datepicker, #datepicker, #datepicker #datepicker, #datepicker').datetimepicker({
+            format: 'YYYY/MM/DD',
+            locale: 'fa',
+        });
+        $('#timepicker, #timepicker, #timepicker, #timepicker, #timepicker').datetimepicker({
+            format : 'HH:mm',
+        });
+    });
+</script>
