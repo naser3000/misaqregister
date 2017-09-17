@@ -146,11 +146,19 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 		text-align: right;
 	}
 
-	[class*='col-'] { /* contains col-lg in class name */
+	.capacity-row [class*='col-'], 
+	.datetime-group [class*='col-'], 
+	.spec-row [class*='col-'] { /* contains col-lg in class name */
 
-  		float: righ;
-  		clear: righ;
+  		float: right;
 	}
+
+
+div.scrollmenu {
+    overflow: auto;
+}
+
+
 
 
 	.input-group {

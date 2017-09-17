@@ -194,7 +194,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                     <div class="row-fluid">
                         <h2>مشخصات</h2>
                     </div>
-                    <div class="row">
+                    <div class="row spec-row">
                         <div class="col-xs-6" >
                             <input  class="form-control" type="text" name="username" id="username" placeholder="نام برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $username;} ?>" required autofocus>
                         </div>
@@ -211,13 +211,14 @@ $userData = fetchAllUsers(); //Fetch information for all users
 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->                
-                <div class="well well-sm">
-                <div class="form-group" >
+                <div class="well well-sm scrollmenu">
+                <div class="form-group datetime-group" style="width: 1100px;">
+                <div class="alluinfo">&nbsp;</div>
                     <div class="row-fluid">
                         <h2>زمان</h2>
                     </div>
 
-                    <div class="row" style="text-align: center; ">
+                    <div class="row " style="text-align: center; ">
                         <div class="col-xs-2">
                             <p></p>
                         </div>
@@ -340,9 +341,9 @@ $userData = fetchAllUsers(); //Fetch information for all users
                                 </span>
                                 <input type='text' class="form-control" />
                             </div>
-                        </div>
+                        </div>                      
 
-                    </div> <!-- End of row  -->
+                    </div> <!-- End of row  -->                  
 
                 </div><!-- End of form-group  -->
                 </div>
@@ -356,7 +357,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                         <h2>ظرفیت</h2>
                     </div>
 
-                    <div class="row">
+                    <div class="row capacity-row">
                 
                         <div class="col-xs-12 col-md-8 col-lg-6 capacity">
                             <div class="input-group">
@@ -496,7 +497,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                 <div class="well well-sm">
                 <div class="row">
                     <div class="col-xs-12">
-                    <div class="alluinfo">&nbsp;</div>
+                        <div class="alluinfo">&nbsp;</div>
                         <form name="adminUsers" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
                             <div class="allutable table-responsive" style="align-content: right;">
                                 <table class='table table-hover table-list-search'>
