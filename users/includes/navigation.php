@@ -142,20 +142,32 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 	h1, h2, h3{
 		font-family: 'IRANSans';
 	}
-	th, td{
+	th, td, li{
 		text-align: right;
 	}
 
-	.col-md-2, .col-md-6, .col-xs-2 {
-    	float: right !important;
+	[class*='col-'] { /* contains col-lg in class name */
+
+  		float: righ;
+  		clear: righ;
 	}
+
 
 	.input-group {
 		direction: ltr !important;
 	}
+	.input-group .form-control{
+		direction: rtl;
+	}
 
 	.input-group-addon {
 		background-color: rgb(92, 184, 92);
+	}
+	.col-lg-4 .input-group-addon{
+		background-color: rgb(180, 230, 180);
+	}
+	.capacity {
+		margin-bottom: 10px;
 	}
 </style>
 
@@ -173,4 +185,14 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
             format : 'HH:mm',
         });
     });
+
+    function changeStatusItems(){
+			var input = document.getElementById('yinter');
+			var select = document.getElementById('status');
+			if (select.value == 'دانشجو') {
+				input.disabled = '';
+			}else{
+				input.disabled = 'disabled';
+			}
+		}
 </script>

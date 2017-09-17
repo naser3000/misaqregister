@@ -146,285 +146,415 @@ $userData = fetchAllUsers(); //Fetch information for all users
 
 <div id="page-wrapper">
 
-  <div class="container">
-  
+    <div class="container">
 
-    <!-- Page Heading -->
-    <div class="row">
-
-      <div class="col-xs-12 col-md-6">
-        <h1>مدیریت کاربران</h1>
-      </div>
-
-      <div class="col-xs-12 col-md-6">
-        <form class="">
-            <label for="system-search">جستجو:</label>
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
-                    </span>
-                    <input class="form-control" id="system-search" name="q" placeholder="جستجوی کاربران..." type="text">
-                    
-                </div>
-            </form>
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <h1>مدیریت برنامه ها</h1>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <form class="">
+                    <label for="system-search">جستجو:</label>
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+                        </span>
+                        <input class="form-control" id="system-search" name="q" placeholder="جستجوی کاربران..." type="text">
+                    </div>
+                </form>
+            </div>
         </div>
 
-    </div>
 
-
-         <div class="row">
-         <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
           <?php echo resultBlock($errors,$successes);
         ?>
 
-               <hr />
-               <div class="row">
-               <div class="col-xs-12">
-               <?php
-               if (!$form_valid && Input::exists()){
-                echo display_errors($validation->errors());
-               }
-               ?>
+                <hr />
+                <div class="row">
+                <div class="col-xs-12">
+                    <?php
+                        if (!$form_valid && Input::exists()){
+                            echo display_errors($validation->errors());
+                        }
+                    ?>
 
-               <form class="form-signup" action="admin_users.php" method="POST" id="payment-form">
+                    <form class="form-signup" action="admin_users.php" method="POST" id="payment-form">
 
+                        
+
+<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
                 <div class="well well-sm">
-                <h3 class="form-signin-heading"> اضافه کردن دستی
-                <select name="perm">
-                  <?php
-
-                  foreach ($permOps as $permOp){
-                    echo "<option value='$permOp->id'>$permOp->name</option>";
-                  }
-                  ?>
-                  </select>
-                  </h3>
-
                 <div class="form-group" >
 
-                <div class="row-fluid">
-                  <h2>مشخصات</h2>
+                    <div class="row-fluid">
+                        <h2>مشخصات</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6" >
+                            <input  class="form-control" type="text" name="username" id="username" placeholder="نام برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $username;} ?>" required autofocus>
+                        </div>
+                        <div class="col-xs-6">
+                            <input type="text" class="form-control" id="fname" name="fname" placeholder="هزینه" value="<?php if (!$form_valid && !empty($_POST)){ echo $fname;} ?>" required>
+                        </div>
+                        <div class="col-xs-12">
+                            <textarea class="form-control" id="lname" name="lname" placeholder="توضیحات" rows="5"></textarea>
+                        </div>
+                    </div>
                 </div>
+                </div>
+
+<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->                
+                <div class="well well-sm">
+                <div class="form-group" >
+                    <div class="row-fluid">
+                        <h2>زمان</h2>
+                    </div>
+
+                    <div class="row" style="text-align: center; ">
+                        <div class="col-xs-2">
+                            <p></p>
+                        </div>
+                        <div class="col-xs-2">
+                            <p>شروع ثبت نام</p>
+                        </div>  
+                        <div class="col-xs-2 ">
+                            <p>پایان ثبت نام</p>
+                        </div>  
+                        <div class="col-xs-2 ">
+                            <p>مهلت لغو ثبت نام</p>
+                        </div>  
+                        <div class="col-xs-2 ">
+                            <p>شروع برنامه</p>
+                        </div>  
+                        <div class="col-xs-2 ">
+                            <p>پایان برنامه</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-2" style="text-align: center;">
+                            <p>تاریخ</p>
+                        </div>
+
+                        <div class="col-xs-2">
+                            <div class='input-group date' id='datepicker' >
+                                <span class="input-group-addon" >
+                                    <span class="glyphicon glyphicon-calendar" ></span>
+                                </span>
+                                <input type='text' class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-xs-2 ">                    
+                            <div class='input-group date' id='datepicker' >
+                                <span class="input-group-addon" >
+                                    <span class="glyphicon glyphicon-calendar" ></span>
+                                </span>
+                                <input type='text' class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-xs-2 ">                    
+                            <div class='input-group date' id='datepicker' >
+                                <span class="input-group-addon" >
+                                    <span class="glyphicon glyphicon-calendar" ></span>
+                                </span>
+                                <input type='text' class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-xs-2 ">                    
+                            <div class='input-group date' id='datepicker' >
+                                <span class="input-group-addon" >
+                                    <span class="glyphicon glyphicon-calendar" ></span>
+                                </span>
+                                <input type='text' class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-xs-2 ">                    
+                            <div class='input-group date' id='datepicker' >
+                                <span class="input-group-addon" >
+                                    <span class="glyphicon glyphicon-calendar" ></span>
+                                </span>
+                                <input type='text' class="form-control" />
+                            </div>
+                        </div>
+
+                    </div> <!-- End of row  -->
+
+
+
+                    <div class="row" style="text-align: center;">
+                        <div class="col-xs-2">
+                            <p>ساعت</p>
+                        </div>
+
+                        <div class="col-xs-2">                    
+                            <div class='input-group date' id='timepicker' >
+                                <span class="input-group-addon" >
+                                    <span class="glyphicon glyphicon-time" ></span>
+                                </span>     
+                                <input type='text' class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-xs-2">                    
+                            <div class='input-group date' id='timepicker' >
+                                <span class="input-group-addon" >
+                                    <span class="glyphicon glyphicon-time" ></span>
+                                </span>
+                                <input type='text' class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-xs-2">                    
+                            <div class='input-group date' id='timepicker' >
+                                <span class="input-group-addon" >
+                                    <span class="glyphicon glyphicon-time" ></span>
+                                </span>
+                                <input type='text' class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-xs-2">                    
+                            <div class='input-group date' id='timepicker' >
+                                <span class="input-group-addon" >
+                                    <span class="glyphicon glyphicon-time" ></span>
+                                </span>
+                                <input type='text' class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-xs-2">                    
+                            <div class='input-group date' id='timepicker' >
+                                <span class="input-group-addon" >
+                                    <span class="glyphicon glyphicon-time" ></span>
+                                </span>
+                                <input type='text' class="form-control" />
+                            </div>
+                        </div>
+
+                    </div> <!-- End of row  -->
+
+                </div><!-- End of form-group  -->
+                </div>
+
+<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+<!--||||||||||||||||||||||||||||    F O R M   O F   A D D I N G   C A P A C I T Y    |||||||||||||||||||||||||||||||||-->
+<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                <div class="well well-sm">
+                <form class="" action="#" method="POST" id="">                
+                    <div class="row-fluid">
+                        <h2>ظرفیت</h2>
+                    </div>
+
+                    <div class="row">
+                
+                        <div class="col-xs-12 col-md-8 col-lg-6 capacity">
+                            <div class="input-group">
+                                <select class="form-control multiselect multiselect-icon" id="status" oninput="changeStatusItems()">
+                                    <option>فارغ التحصیل</option>
+                                    <option>دانشجو</option>
+                                    <option>کارمند</option>
+                                    <option>استاد</option>
+                                    <option>آزاد</option>
+                                
+                                </select>
+                                <span class="input-group-addon" >
+                                    <span class="capacity" >وضعیت</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 capacity">
+                            <div class="input-group">
+                                <select class="form-control" id="yinter" disabled="disabled">
+                                    <option>85</option>
+                                    <option>86</option>
+                                    <option>87</option>
+                                    <option>88</option>
+                                    <option>89</option>
+                                    <option>90</option>
+                                    <option>91</option>
+                                    <option>92</option>
+                                    <option>93</option>
+                                    <option>94</option>
+                                    <option>95</option>
+                                    <option>96</option>
+                                    <option>97</option>
+                                    <option>98</option>
+                                    <option>99</option>
+                                </select>
+                                <span class="input-group-addon" >
+                                    <span class="capacity" >سال ورود</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 capacity">
+                            <div class="input-group">
+                                <select class="form-control">
+                                    <option value="0">بدون اهمیت</option>
+                                    <option value="1">آقا</option>
+                                    <option value="2">خانم</option>
+                                </select>
+                                <span class="input-group-addon" >
+                                    <span class="capacity" >جنسیت</span>
+                                </span>
+                            </div>
+                        </div>
+                 
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 capacity">
+                            <div class="input-group">
+                                <span class="input-group-addon" >
+                                    <span class="capacity" >تومان</span>
+                                </span>
+                                <input type="number" name="" class="form-control">
+                                <span class="input-group-addon" >
+                                    <span class="capacity" >هزینه</span>
+                                </span>
+                            </div>
+                        </div>
+    
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 capacity">
+                            <div class="input-group">
+                                <span class="input-group-addon" >
+                                    <span class="capacity" >نفر</span>
+                                </span>
+                                <input type="number" name="" class="form-control">
+                                <span class="input-group-addon" >
+                                    <span class="capacity" >ظرفیت</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 capacity">
+                            <div class="input-group">
+                                <span class="input-group-addon" >
+                                    <span class="capacity" >نفر</span>
+                                </span>
+                                <input type="number" name="" class="form-control">
+                                <span class="input-group-addon" >
+                                    <span class="capacity" >تعداد همراه</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 capacity">
+                            <div class="input-group">
+                                <span class="input-group-addon" >
+                                    <span class="capacity" >تومان</span>
+                                </span>
+                                <input type="number" name="" class="form-control">
+                                <span class="input-group-addon" >
+                                    <span class="capacity" >هزینه همراه</span>
+                                </span>
+                            </div>
+                        </div>
+                    <!--
+                    <div class="col-xs-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" aria-label="Text input with dropdown button"> 
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                وضعیت
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a class="dropdown-item" >فارغ التحصیل</a></li>
+                                    <li><a class="dropdown-item" >دانشجو</a></li>
+                                    <li><a class="dropdown-item" >کارمند</a></li>
+                                    <li><a class="dropdown-item" >همراه</a></li>
+                                    <li><a class="dropdown-item" >استاد</a></li>
+                                    <li><a class="dropdown-item" >آزاد</a></li>
+                                    <li class="divider"></li>
+                                    <li><a class="dropdown-item" >بدون اهمیت</a></li>
+                                </ul>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    -->
+                    
+                    </div> <!-- End of row  -->
+
+                    <input type="hidden" value="<?=Token::generate();?>" name="csrf">
+                    <input class='btn btn-success' type='submit' name='addUser' value='اضافه کردن ظرفیت' />
+                </form>
+                </div>
+
+<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+<!--||||||||||||||||||    F O R M   O F   E D I T   A N D   R E M O V E   C A P A C I T Y    |||||||||||||||||||||||||-->
+<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+                <div class="well well-sm">
                 <div class="row">
-                  <div class="col-xs-6" >
-                  <input  class="form-control" type="text" name="username" id="username" placeholder="نام کاربری" value="<?php if (!$form_valid && !empty($_POST)){ echo $username;} ?>" required autofocus>
-</div>
-                  <div class="col-xs-6">
-                  <input type="text" class="form-control" id="fname" name="fname" placeholder="نام" value="<?php if (!$form_valid && !empty($_POST)){ echo $fname;} ?>" required>
-</div>
-                  <div class="col-xs-12">
-                  <input type="textarea" class="form-control" id="lname" name="lname" placeholder="نام خانوادگی" value="<?php if (!$form_valid && !empty($_POST)){ echo $lname;} ?>" required>
-</div>
-                </div>
-                <div class="row-fluid">
-                  <h2>زمان</h2>
-                </div>
+                    <div class="col-xs-12">
+                    <div class="alluinfo">&nbsp;</div>
+                        <form name="adminUsers" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
+                            <div class="allutable table-responsive" style="align-content: right;">
+                                <table class='table table-hover table-list-search'>
+                                    <thead>
+                                        <tr>
+                                            <th>انتخاب</th><th>وضعیت</th><th>سال ورودی</th><th>جنسیت</th><th>هزینه</th><th>هزینه همراه</th><th>تعداد همراه</th><th>ظرفیت</th>
+                                            </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                        //Cycle through users
+                                        foreach ($userData as $v1) {
+                                    ?>
+                                        <tr>
+                                         <td><div class="form-group"><input type="checkbox" name="delete[<?=$v1->id?>]" value="<?=$v1->id?>" /></div></td>
+                                        <td><a href='admin_user.php?id=<?=$v1->id?>'><?=$v1->username?></a></td>
+                                        <td><?=$v1->email?></td>
+                                        <td><?=$v1->fname?></td>
+                                        <td><?=$v1->lname?></td>
+                                        <td><?=$v1->join_date?></td>
+                                        <td><?=$v1->last_login?></td>
+                                        <td><?=$v1->logins?></td>
+                                        </tr>
+                                    <?php } ?>
 
+                                    </tbody>
+                                </table>
+                            </div>
 
+                            <input class='btn btn-success' type='submit' name='Submit' value='ویرایش' style="width: 200px;" />
+                            <input class='btn btn-danger' type='submit' name='Submit' value='حذف'  style="width: 100px" />
+                            <br><br>
 
-
-                <div class="row" style="text-align: center; ">
-                <div class="col-xs-2">
-                    <p></p>
-</div>
-                  <div class="col-xs-2">
-                    <p>شروع ثبت نام</p>
-</div>
-                  <div class="col-xs-2 ">
-                  <p>پایان ثبت نام</p>
-</div>
-                  <div class="col-xs-2 ">
-                  <p>مهلت لغو ثبت نام</p>
-</div>
-                  <div class="col-xs-2 ">
-                  <p>شروع برنامه</p>
-</div>
-                  <div class="col-xs-2 ">
-                  <p>پایان برنامه</p>
-</div>
-                  </div>
-                <div class="row">
-                <div class="col-xs-2" style="text-align: center;">
-                  <p>تاریخ</p>
-</div>
-                   <div class="col-xs-2">
-                    <div class="form-group" >
-                        <div class='input-group date' id='datepicker' >
-                            <span class="input-group-addon" >
-                                <span class="glyphicon glyphicon-calendar" ></span>
-                            </span>
-                            <input type='text' class="form-control" />
-                        </div>
-                    </div>
-</div>
-                  <div class="col-xs-2 ">
-                    <div class="form-group" >
-                        <div class='input-group date' id='datepicker' >
-                            <span class="input-group-addon" >
-                                <span class="glyphicon glyphicon-calendar" ></span>
-                            </span>
-                            <input type='text' class="form-control" />
-
-                        </div>
-                    </div>
-
-</div>
-                  <div class="col-xs-2 ">
-                    <div class="form-group" >
-                        <div class='input-group date' id='datepicker' >
-                            <span class="input-group-addon" >
-                                <span class="glyphicon glyphicon-calendar" ></span>
-                            </span>
-                            <input type='text' class="form-control" />
-                            
-                        </div>
-                    </div>
-</div>
-                  <div class="col-xs-2 ">
-                    <div class="form-group" >
-                        <div class='input-group date' id='datepicker' >
-                            <span class="input-group-addon" >
-                                <span class="glyphicon glyphicon-calendar" ></span>
-                            </span>
-                            <input type='text' class="form-control" />
-                            
-                        </div>
-                    </div>
-</div>
-                  <div class="col-xs-2 ">
-                    <div class="form-group" >
-                        <div class='input-group date' id='datepicker' >
-                            <span class="input-group-addon" >
-                                <span class="glyphicon glyphicon-calendar" ></span>
-                            </span>
-                            <input type='text' class="form-control" />
-                            
-                        </div>
-                    </div>
-</div>
-                  </div>
-                  <div class="row" style="text-align: center;">
-                  <div class="col-xs-2">
-                  <p>ساعت</p>
-</div>
-                  <div class="col-xs-2">
-                    <div class="form-group" >
-                        <div class='input-group date' id='timepicker' >
-                            <span class="input-group-addon" >
-                                <span class="glyphicon glyphicon-time" ></span>
-                            </span>
-                            <input type='text' class="form-control" />
-                            
-                        </div>
-                    </div>
-</div>
-                  <div class="col-xs-2">
-                    <div class="form-group" >
-                        <div class='input-group date' id='timepicker' >
-                            <span class="input-group-addon" >
-                                <span class="glyphicon glyphicon-time" ></span>
-                            </span>
-                            <input type='text' class="form-control" />
-                            
-                        </div>
-                    </div>
-</div>
-                  <div class="col-xs-2">
-                    <div class="form-group" >
-                        <div class='input-group date' id='timepicker' >
-                            <span class="input-group-addon" >
-                                <span class="glyphicon glyphicon-time" ></span>
-                            </span>
-                            <input type='text' class="form-control" />
-                            
-                        </div>
-                    </div>
-</div>
-                  <div class="col-xs-2">
-                    <div class="form-group" >
-                        <div class='input-group date' id='timepicker' >
-                            <span class="input-group-addon" >
-                                <span class="glyphicon glyphicon-time" ></span>
-                            </span>
-                            <input type='text' class="form-control" />
-                            
-                        </div>
-                    </div>
-</div>
-                  <div class="col-xs-2">
-                    <div class="form-group" >
-                        <div class='input-group date' id='timepicker' >
-                            <span class="input-group-addon" >
-                                <span class="glyphicon glyphicon-time" ></span>
-                            </span>
-                            <input type='text' class="form-control" />
-                            
-                        </div>
-                    </div>
-</div>
-                </div>
-                <div class="row-fluid">
-                  <h2>ظرفیت</h2>
-                </div>
-                <div class="row">
-                    <div class="form-group">
-                        <div class="col-md-6 col-xs-12">
-                            
-                        </div>
+                        </form>
 
                     </div>
-                </div>
+                </div> <!-- End of row -->
                 </div>
 
-                <br /><br />
-                <input type="hidden" value="<?=Token::generate();?>" name="csrf">
-              <input class='btn btn-primary' type='submit' name='addUser' value='اضافه کردن دستی' />
-              </div>
-               </form>
-               </div>
-               </div>
-        <div class="row">
-        <div class="col-xs-12">
-         <div class="alluinfo">&nbsp;</div>
-        <form name="adminUsers" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
-         <div class="allutable table-responsive" style="align-content: right;">
-          <table class='table table-hover table-list-search'>
-          <thead>
-          <tr>
-            <th>حذف</th><th>نام کاربری</th><th>ایمیل</th><th>نام</th><th>نام خانوادگی</th><th>تاریخ عضویت</th><th>آخرین ورود</th><th>تعداد ورود</th>
-           </tr>
-          </thead>
-         <tbody>
-          <?php
-          //Cycle through users
-          foreach ($userData as $v1) {
-              ?>
-          <tr>
-          <td><div class="form-group"><input type="checkbox" name="delete[<?=$v1->id?>]" value="<?=$v1->id?>" /></div></td>
-          <td><a href='admin_user.php?id=<?=$v1->id?>'><?=$v1->username?></a></td>
-          <td><?=$v1->email?></td>
-          <td><?=$v1->fname?></td>
-          <td><?=$v1->lname?></td>
-          <td><?=$v1->join_date?></td>
-          <td><?=$v1->last_login?></td>
-          <td><?=$v1->logins?></td>
-          </tr>
-              <?php } ?>
+<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->                
 
-          </tbody>
-        </table>
-        </div>
+                <div class="well well-sm">
+                <br /><br /><br />
+                <input class='btn btn-success center-block' type='submit' name='Submit' value='اضافه کردن برنامه'  style="width: 60%;" />
+                </div>
+            </form>
 
+            </div>
+            </div><!--End of row --> 
 
-        <input class='btn btn-danger' type='submit' name='Submit' value='حذف' /><br><br>
-        </form>
-
-      </div>
     </div>
+    </div><!--End of row --> 
 
-
-  </div>
 </div>
+</div> <!--End of page-wrapper --> 
+
 
 
   <!-- End of main content section -->
