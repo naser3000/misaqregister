@@ -134,7 +134,7 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 		direction: rtl;
 	}
 	.container i{
-		margin-left: 3px;
+		margin-left: 10px;
 	}
 	.navbar-left li{
 		float: right !important;
@@ -145,6 +145,12 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 	th, td, li{
 		text-align: right;
 	}
+	input[type=checkbox] {
+	padding-lef: 5px !important;
+}
+
+
+
 
 	.capacity-row [class*='col-'], 
 	.datetime-group [class*='col-'], 
@@ -152,14 +158,9 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 
   		float: right;
 	}
-
-
-div.scrollmenu {
-    overflow: auto;
-}
-
-
-
+	div.scrollmenu {
+   		overflow: auto;
+	}
 
 	.input-group {
 		direction: ltr !important;
@@ -183,6 +184,14 @@ div.scrollmenu {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <script src="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
 
+
+
+
+<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
+
+
+
 <script type="text/javascript">
     $(function () {
         $('#datepicker, #datepicker, #datepicker #datepicker, #datepicker').datetimepicker({
@@ -195,12 +204,31 @@ div.scrollmenu {
     });
 
     function changeStatusItems(){
-			var input = document.getElementById('yinter');
-			var select = document.getElementById('status');
-			if (select.value == 'دانشجو') {
-				input.disabled = '';
+			//var multiselect_buutons = document.querySelector('button#status');
+			var status = document.querySelector('select#status');
+			var yinter = document.querySelectorAll('button.multiselect');
+			if (status.value == ('دانشجو') & yinter[1].disabled) {
+				yinter[1].disabled = false;
 			}else{
-				input.disabled = 'disabled';
+				yinter[1].disabled = true;
 			}
 		}
+
+	$(document).ready(function() {
+		$('#status').multiselect({
+        	includeSelectAllOption: false
+    	});
+    	//$('#status').remove();
+
+    	$('#yinter').multiselect({
+        	includeSelectAllOption: false
+    	});
+    	//$('#yinter').remove();
+
+
+    	var yinter = document.querySelectorAll('button.multiselect');
+    	yinter[1].disabled = true;
+
+
+    });
 </script>

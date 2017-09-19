@@ -361,12 +361,12 @@ $userData = fetchAllUsers(); //Fetch information for all users
                 
                         <div class="col-xs-12 col-md-8 col-lg-6 capacity">
                             <div class="input-group">
-                                <select class="form-control multiselect multiselect-icon" id="status" oninput="changeStatusItems()">
-                                    <option>فارغ التحصیل</option>
-                                    <option>دانشجو</option>
-                                    <option>کارمند</option>
-                                    <option>استاد</option>
-                                    <option>آزاد</option>
+                                <select id="status" class="multiselect-ui form-control" multiple="multiple" onchange="changeStatusItems()">
+                                    <option>  فارغ التحصیل</option>
+                                    <option>  دانشجو</option>
+                                    <option>  کارمند</option>
+                                    <option>  استاد</option>
+                                    <option>  آزاد</option>
                                 
                                 </select>
                                 <span class="input-group-addon" >
@@ -377,22 +377,22 @@ $userData = fetchAllUsers(); //Fetch information for all users
 
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 capacity">
                             <div class="input-group">
-                                <select class="form-control" id="yinter" disabled="disabled">
-                                    <option>85</option>
-                                    <option>86</option>
-                                    <option>87</option>
-                                    <option>88</option>
-                                    <option>89</option>
-                                    <option>90</option>
-                                    <option>91</option>
-                                    <option>92</option>
-                                    <option>93</option>
-                                    <option>94</option>
-                                    <option>95</option>
-                                    <option>96</option>
-                                    <option>97</option>
-                                    <option>98</option>
-                                    <option>99</option>
+                                <select class="multiselect-ui form-control" id="yinter" multiple="multiple" >
+                                    <option  value="85">85</option>
+                                    <option  value="86">86</option>
+                                    <option  value="87">87</option>
+                                    <option  value="88">88</option>
+                                    <option  value="89">89</option>
+                                    <option  value="90">90</option>
+                                    <option  value="91">91</option>
+                                    <option  value="92">92</option>
+                                    <option  value="93">93</option>
+                                    <option  value="94">94</option>
+                                    <option  value="95">95</option>
+                                    <option  value="96">96</option>
+                                    <option  value="97">97</option>
+                                    <option  value="98">98</option>
+                                    <option  value="99">99</option>
                                 </select>
                                 <span class="input-group-addon" >
                                     <span class="capacity" >سال ورود</span>
