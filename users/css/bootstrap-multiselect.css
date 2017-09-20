@@ -72,7 +72,7 @@ ul {
 label.checkbox, label.radio {
 	margin-right: 30px !important;
 }
-input[type=checkbox], input[type=radio] {
+ul.multiselect-container input[type=checkbox], ul.multiselect-container input[type=radio] {
 	margin: 5px -20px 0px 10px !important;
 }
 button.multiselect {

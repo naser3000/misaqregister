@@ -204,15 +204,99 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
     });
 
     function changeStatusItems(){
-			//var multiselect_buutons = document.querySelector('button#status');
-			var status = document.querySelector('select#status');
-			var yinter = document.querySelectorAll('button.multiselect');
-			if (status.value == ('دانشجو') & yinter[1].disabled) {
-				yinter[1].disabled = false;
-			}else{
-				yinter[1].disabled = true;
+
+			var btn_multiselect = document.querySelectorAll('button.multiselect');
+			var std_checkbox = document.querySelector('ul.multiselect-container input[value="دانشجو"]');
+
+			if (std_checkbox.checked)
+				btn_multiselect[1].disabled = false;
+			else
+				btn_multiselect[1].disabled = true;
+		}
+
+	function addCapacity(){
+
+		var inp_multiselect = document.querySelectorAll('span.multiselect-selected-text');
+		var inp_gender = document.querySelector('select#gender');
+		var inp_cost = document.querySelector('input#cost');
+		var inp_participant_cost = document.querySelector('input#participant_cost');
+		var inp_participant_number = document.querySelector('input#participant_number');
+		var inp_capacity_number = document.querySelector('input#capacity_number');
+
+		var trow = document.createElement('tr');
+		var choice_input = document.createElement('input');
+		choice_input.setAttribute('id', 'delete');
+		choice_input.setAttribute('type', 'checkbox');
+		var hr = document.createElement('hr');
+		hr.setAttribute('style', 'border: 0.1px solid gray;');
+
+		var choice = document.createElement('td');
+		var status = document.createElement('td');
+		var yinter = document.createElement('td');
+        var gender = document.createElement('td');
+        var cost = document.createElement('td');
+        var participant_cost = document.createElement('td');
+        var participant_number = document.createElement('td');
+        var capacity_number = document.createElement('td');
+
+		var tbody = document.querySelector('tbody');
+		tbody.appendChild(trow);
+		trow.appendChild(choice);
+		trow.appendChild(status);
+		trow.appendChild(yinter);
+		trow.appendChild(gender);
+		trow.appendChild(cost);
+		trow.appendChild(participant_cost);
+		trow.appendChild(participant_number);
+		trow.appendChild(capacity_number);
+		choice.appendChild(choice_input);
+		trow.appendChild(hr);
+
+
+        status.innerHTML = "همه موارد"
+        yinter.innerHTML = "---------";
+        cost.innerHTML = 0;
+        participant_cost.innerHTML = 0;
+		participant_number.innerHTML = 0;
+		capacity_number.innerHTML = 0;
+
+		if(inp_multiselect[0].innerHTML != "انتخاب کنید")
+         	status.innerHTML = inp_multiselect[0].innerHTML;
+        if(inp_multiselect[1].innerHTML != "انتخاب کنید")
+         	yinter.innerHTML = inp_multiselect[1].innerHTML;
+        if (true)
+        gender.innerHTML = inp_gender.value;
+        if (inp_cost.value != 0)
+        	cost.innerHTML = inp_cost.value;
+        if (inp_participant_cost.value != 0)
+        	participant_cost.innerHTML = inp_participant_cost.value;
+        if (inp_participant_number.value != 0)
+        	participant_number.innerHTML = inp_participant_number.value;
+        if (inp_capacity_number.value != 0)
+        	capacity_number.innerHTML = inp_capacity_number.value;
+
+
+	}
+
+	function removeCapacity(){
+		var i = 0;
+		var j = 0;
+		var trow = document.querySelectorAll('tbody tr');
+		var trow_checkbox = document.querySelectorAll('tbody tr input');
+		var span = document.querySelector('span#remove_capacity_message');
+
+		for (i = 0; i < trow_checkbox.length; i++) {
+			if (trow_checkbox[i].checked){
+				trow[i].remove();
+				j++
 			}
 		}
+
+		if(j == 0)
+			span.innerHTML = "موردی انتخاب نشده است.";
+		else
+			span.innerHTML = "";
+	}
 
 	$(document).ready(function() {
 		$('#status').multiselect({

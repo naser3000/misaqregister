@@ -134,6 +134,15 @@ function fetchPermissionUsers($permission_id) {
 	}
 }
 
+
+//Retrieve information for all users
+function fetchAllCapacity() {
+	$db = DB::getInstance();
+	$query = $db->query("SELECT * FROM capacity");
+	$results = $query->results();
+	return ($results);
+}
+
 //Unmatch permission level(s) from user(s)
 function removePermission($permissions, $members) {
 	$db = DB::getInstance();

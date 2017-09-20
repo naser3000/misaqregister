@@ -44,12 +44,24 @@ if (!empty($_POST)) {
     }
   }
   //Manually Add User
-  if(!empty($_POST['addUser'])) {
-    $join_date = date("Y-m-d H:i:s");
-    $username = Input::get('username');
-    $fname = Input::get('fname');
-    $lname = Input::get('lname');
-    $email = Input::get('email');
+  if(!empty($_POST['addPlan'])) {
+
+    
+    //echo "\n***************************";
+    //echo "hiiiiiiiiiiiiiii\n";
+  //  $join_date = date("Y-m-d H:i:s");
+    $title = Input::get('title');
+    $description = Input::get('description');
+    $register_start_date = Input::get('register_start_date');
+    $register_end_date = Input::get('register_end_date');
+    $confirm_end_date = Input::get('confirm_end_date');
+    $plan_start_date = Input::get('plan_start_date');
+    $plan_end_date = Input::get('plan_end_date');
+    $register_start_time = Input::get('register_start_time');
+    $register_end_time = Input::get('register_end_time');
+    $confirm_end_time = Input::get('confirm_end_time');
+    $plan_start_time = Input::get('plan_start_time');
+    $plan_end_time = Input::get('plan_end_time');
     $token = $_POST['csrf'];
 
     if(!Token::check($token)){
@@ -59,25 +71,58 @@ if (!empty($_POST)) {
     $form_valid=FALSE; // assume the worst
     $validation = new Validate();
     $validation->check($_POST,array(
-      'username' => array(
-      'display' => 'Username',
+      'title' => array(
+      'display' => 'عنوان',
       'required' => true,
-      'min' => $settings->min_un,
-      'max' => $settings->max_un,
-      'unique' => 'users',
+      'max' => 100,
       ),
-      'fname' => array(
-      'display' => 'First Name',
+      'description' => array(
+      'display' => 'توضیحات',
       'required' => true,
-      'min' => 2,
-      'max' => 35,
+      'min' => 20,
+      'max' => 500,
       ),
-      'lname' => array(
-      'display' => 'Last Name',
+      'register_start_date' => array(
+      'display' => 'تاریخ شروع ثبت نام',
       'required' => true,
-      'min' => 2,
-      'max' => 35,
       ),
+      'register_end_date' => array(
+      'display' => 'تاریخ پایان ثبت نام',
+      'required' => true,
+      ),
+      'confirm_end_date' => array(
+      'display' => 'تاریخ مهلت لغو ثبت نام',
+      'required' => true,
+      ),
+      'plan_start_date' => array(
+      'display' => 'تاریخ شروع برنامه',
+      'required' => true,
+      ),
+      'plan_end_date' => array(
+      'display' => 'تاریخ پایان برنامه',
+      'required' => true,
+      ),
+      'register_start_time' => array(
+      'display' => 'زمان شروع ثبت نام',
+      'required' => true,
+      ),
+      'register_end_time' => array(
+      'display' => 'زمان پایان ثبت نام',
+      'required' => true,
+      ),
+      'confirm_end_time' => array(
+      'display' => 'زمان مهلت لغو برنامه',
+      'required' => true,
+      ),
+      'plan_start_time' => array(
+      'display' => 'زمان شروع برنامه',
+      'required' => true,
+      ),
+      'plan_end_time' => array(
+      'display' => 'زمان پایان برنامه',
+      'required' => true,
+      ),
+      /*
       'email' => array(
       'display' => 'Email',
       'required' => true,
@@ -94,40 +139,33 @@ if (!empty($_POST)) {
       'display' => 'Confirm Password',
       'required' => true,
       'matches' => 'password',
-      ),
+      ),*/
     ));
     if($validation->passed()) {
     $form_valid=TRUE;
       try {
         // echo "Trying to create user";
         $fields=array(
-          'username' => Input::get('username'),
-          'fname' => Input::get('fname'),
-          'lname' => Input::get('lname'),
-          'email' => Input::get('email'),
-          'password' =>
-          password_hash(Input::get('password'), PASSWORD_BCRYPT, array('cost' => 12)),
-          'permissions' => 1,
-          'account_owner' => 1,
-          'stripe_cust_id' => '',
-          'join_date' => $join_date,
-          'company' => Input::get('company'),
-          'email_verified' => 1,
-          'active' => 1,
-          'vericode' => 111111,
+
+
+          'title' => Input::get('title'),
+          'description' => Input::get('description'),
+          'register_start_date' => Input::get('register_start_date'),
+          'register_end_date' => Input::get('register_end_date'),
+          'confirm_end_date' => Input::get('confirm_end_date'),
+          'plan_start_date' => Input::get('plan_start_date'),
+          'plan_end_date' => Input::get('plan_end_date'),
+          'register_start_time' => Input::get('register_start_time'),
+          'register_end_time' => Input::get('register_end_time'),
+          'confirm_end_time' => Input::get('confirm_end_time'),
+          'plan_start_time' => Input::get('plan_start_time'),
+          'plan_end_time' => Input::get('plan_end_time'),
+
         );
-        $db->insert('users',$fields);
+        $db->insert('plans',$fields);
         $theNewId=$db->lastId();
         // bold($theNewId);
-        $perm = Input::get('perm');
-        $addNewPermission = array('user_id' => $theNewId, 'permission_id' => $perm);
-        $db->insert('user_permission_matches',$addNewPermission);
-        $db->insert('profiles',['user_id'=>$theNewId, 'bio'=>'This is your bio']);
 
-        if($perm != 1){
-          $addNewPermission2 = array('user_id' => $theNewId, 'permission_id' => 1);
-          $db->insert('user_permission_matches',$addNewPermission2);
-        }
 
         $successes[] = lang("ACCOUNT_USER_ADDED");
 
@@ -139,7 +177,7 @@ if (!empty($_POST)) {
   }
 }
 
-$userData = fetchAllUsers(); //Fetch information for all users
+$capacityData = fetchAllCapacity(); //Fetch information for all users
 
 
 ?>
@@ -181,10 +219,10 @@ $userData = fetchAllUsers(); //Fetch information for all users
                         }
                     ?>
 
-                    <form class="form-signup" action="admin_users.php" method="POST" id="payment-form">
+              
 
-                        
 
+              <form class="form-signup" action="admin_plans.php" method="POST" id="payment-form">
 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
@@ -196,13 +234,11 @@ $userData = fetchAllUsers(); //Fetch information for all users
                     </div>
                     <div class="row spec-row">
                         <div class="col-xs-6" >
-                            <input  class="form-control" type="text" name="username" id="username" placeholder="نام برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $username;} ?>" required autofocus>
+                            <input  class="form-control" type="text" name="title" id="title" placeholder="نام برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $title;} ?>" required autofocus>
                         </div>
-                        <div class="col-xs-6">
-                            <input type="text" class="form-control" id="fname" name="fname" placeholder="هزینه" value="<?php if (!$form_valid && !empty($_POST)){ echo $fname;} ?>" required>
-                        </div>
+                        
                         <div class="col-xs-12">
-                            <textarea class="form-control" id="lname" name="lname" placeholder="توضیحات" rows="5"></textarea>
+                            <textarea class="form-control" id="description" name="description" placeholder="توضیحات" rows="5"></textarea>
                         </div>
                     </div>
                 </div>
@@ -249,7 +285,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
-                                <input type='text' class="form-control" />
+                                <input type='text' class="form-control" name="register_start_date" id="register_start_date" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_start_date;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -258,7 +294,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
-                                <input type='text' class="form-control" />
+                                <input type='text' class="form-control" name="register_end_date" id="register_end_date" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_end_date;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -267,7 +303,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
-                                <input type='text' class="form-control" />
+                                <input type='text' class="form-control" name="confirm_end_date" id="confirm_end_date" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $confirm_end_date;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -276,7 +312,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
-                                <input type='text' class="form-control" />
+                                <input type='text' class="form-control" name="plan_start_date" id="plan_start_date" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_start_date;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -285,7 +321,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
-                                <input type='text' class="form-control" />
+                                <input type='text' class="form-control" name="plan_end_date" id="plan_end_date" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_end_date;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -303,7 +339,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-time" ></span>
                                 </span>     
-                                <input type='text' class="form-control" />
+                                <input type='text' class="form-control" name="register_start_time" id="register_start_time" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_start_time;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -312,7 +348,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-time" ></span>
                                 </span>
-                                <input type='text' class="form-control" />
+                                <input type='text' class="form-control" name="register_end_time" id="register_end_time" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_end_time;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -321,7 +357,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-time" ></span>
                                 </span>
-                                <input type='text' class="form-control" />
+                                <input type='text' class="form-control" name="confirm_end_time" id="confirm_end_time" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $confirm_end_time;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -330,7 +366,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-time" ></span>
                                 </span>
-                                <input type='text' class="form-control" />
+                                <input type='text' class="form-control" name="plan_start_time" id="plan_start_time" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_start_time;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -339,7 +375,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-time" ></span>
                                 </span>
-                                <input type='text' class="form-control" />
+                                <input type='text' class="form-control" name="plan_end_time" id="plan_end_time" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_end_time;} ?>" required autofocus/>
                             </div>
                         </div>                      
 
@@ -351,8 +387,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 <!--||||||||||||||||||||||||||||    F O R M   O F   A D D I N G   C A P A C I T Y    |||||||||||||||||||||||||||||||||-->
 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
-                <div class="well well-sm">
-                <form class="" action="#" method="POST" id="">                
+                <div class="well well-sm">                
                     <div class="row-fluid">
                         <h2>ظرفیت</h2>
                     </div>
@@ -361,7 +396,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                 
                         <div class="col-xs-12 col-md-8 col-lg-6 capacity">
                             <div class="input-group">
-                                <select id="status" class="multiselect-ui form-control" multiple="multiple" onchange="changeStatusItems()">
+                                <select name="status" id="status" class="multiselect-ui form-control" multiple="multiple" onchange="changeStatusItems()" required >
                                     <option>  فارغ التحصیل</option>
                                     <option>  دانشجو</option>
                                     <option>  کارمند</option>
@@ -377,7 +412,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
 
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 capacity">
                             <div class="input-group">
-                                <select class="multiselect-ui form-control" id="yinter" multiple="multiple" >
+                                <select name="yinter" class="multiselect-ui form-control" id="yinter" multiple="multiple" >
                                     <option  value="85">85</option>
                                     <option  value="86">86</option>
                                     <option  value="87">87</option>
@@ -402,10 +437,10 @@ $userData = fetchAllUsers(); //Fetch information for all users
 
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 capacity">
                             <div class="input-group">
-                                <select class="form-control">
-                                    <option value="0">بدون اهمیت</option>
-                                    <option value="1">آقا</option>
-                                    <option value="2">خانم</option>
+                                <select id="gender" class="form-control">
+                                    <option value="بدون اهمیت">بدون اهمیت</option>
+                                    <option value="آقا">آقا</option>
+                                    <option value="خانم">خانم</option>
                                 </select>
                                 <span class="input-group-addon" >
                                     <span class="capacity" >جنسیت</span>
@@ -418,7 +453,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="capacity" >تومان</span>
                                 </span>
-                                <input type="number" name="" class="form-control">
+                                <input type="number" id="cost" class="form-control" required>
                                 <span class="input-group-addon" >
                                     <span class="capacity" >هزینه</span>
                                 </span>
@@ -430,7 +465,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="capacity" >نفر</span>
                                 </span>
-                                <input type="number" name="" class="form-control">
+                                <input type="number" id="capacity_number" class="form-control" required>
                                 <span class="input-group-addon" >
                                     <span class="capacity" >ظرفیت</span>
                                 </span>
@@ -442,7 +477,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="capacity" >نفر</span>
                                 </span>
-                                <input type="number" name="" class="form-control">
+                                <input type="number" id="participant_number" class="form-control" required>
                                 <span class="input-group-addon" >
                                     <span class="capacity" >تعداد همراه</span>
                                 </span>
@@ -454,41 +489,15 @@ $userData = fetchAllUsers(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="capacity" >تومان</span>
                                 </span>
-                                <input type="number" name="" class="form-control">
+                                <input type="number" id="participant_cost" class="form-control" required>
                                 <span class="input-group-addon" >
                                     <span class="capacity" >هزینه همراه</span>
                                 </span>
                             </div>
                         </div>
-                    <!--
-                    <div class="col-xs-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" aria-label="Text input with dropdown button"> 
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                وضعیت
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a class="dropdown-item" >فارغ التحصیل</a></li>
-                                    <li><a class="dropdown-item" >دانشجو</a></li>
-                                    <li><a class="dropdown-item" >کارمند</a></li>
-                                    <li><a class="dropdown-item" >همراه</a></li>
-                                    <li><a class="dropdown-item" >استاد</a></li>
-                                    <li><a class="dropdown-item" >آزاد</a></li>
-                                    <li class="divider"></li>
-                                    <li><a class="dropdown-item" >بدون اهمیت</a></li>
-                                </ul>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    -->
-                    
                     </div> <!-- End of row  -->
 
-                    <input type="hidden" value="<?=Token::generate();?>" name="csrf">
-                    <input class='btn btn-success' type='submit' name='addUser' value='اضافه کردن ظرفیت' />
-                </form>
+                    <input class='btn btn-success' type='button' name='' onclick="addCapacity()" value='اضافه کردن ظرفیت' />
                 </div>
 
 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
@@ -498,7 +507,6 @@ $userData = fetchAllUsers(); //Fetch information for all users
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="alluinfo">&nbsp;</div>
-                        <form name="adminUsers" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
                             <div class="allutable table-responsive" style="align-content: right;">
                                 <table class='table table-hover table-list-search'>
                                     <thead>
@@ -507,32 +515,15 @@ $userData = fetchAllUsers(); //Fetch information for all users
                                             </tr>
                                     </thead>
                                     <tbody>
-                                    <?php
-                                        //Cycle through users
-                                        foreach ($userData as $v1) {
-                                    ?>
-                                        <tr>
-                                         <td><div class="form-group"><input type="checkbox" name="delete[<?=$v1->id?>]" value="<?=$v1->id?>" /></div></td>
-                                        <td><a href='admin_user.php?id=<?=$v1->id?>'><?=$v1->username?></a></td>
-                                        <td><?=$v1->email?></td>
-                                        <td><?=$v1->fname?></td>
-                                        <td><?=$v1->lname?></td>
-                                        <td><?=$v1->join_date?></td>
-                                        <td><?=$v1->last_login?></td>
-                                        <td><?=$v1->logins?></td>
-                                        </tr>
-                                    <?php } ?>
 
                                     </tbody>
                                 </table>
                             </div>
 
-                            <input class='btn btn-success' type='submit' name='Submit' value='ویرایش' style="width: 200px;" />
-                            <input class='btn btn-danger' type='submit' name='Submit' value='حذف'  style="width: 100px" />
+                            
+                            <input class='btn btn-danger' type='button' name='' onclick="removeCapacity()" value='حذف'  style="width: 100px" />
+                            <span class="" id="remove_capacity_message"></span>
                             <br><br>
-
-                        </form>
-
                     </div>
                 </div> <!-- End of row -->
                 </div>
@@ -543,7 +534,8 @@ $userData = fetchAllUsers(); //Fetch information for all users
 
                 <div class="well well-sm">
                 <br /><br /><br />
-                <input class='btn btn-success center-block' type='submit' name='Submit' value='اضافه کردن برنامه'  style="width: 60%;" />
+                <!--  <input type="hidden" value="<=Token::generate();?>" name="csrf"> -->
+                <input class='btn btn-success center-block' type='submit' name='addPlan' value='اضافه کردن برنامه'  style="width: 60%;" />
                 </div>
             </form>
 
