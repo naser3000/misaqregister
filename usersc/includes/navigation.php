@@ -1,7 +1,7 @@
 <?php
 ?>
 
-<div class="collapse navbar-collapse navbar-top-menu-collapse navbar-left"> <!-- Left navigation items -->
+<div class="collapse navbar-collapse navbar-top-menu-collapse navbar-right"> <!-- Left navigation items -->
 	<ul class="nav navbar-nav ">
 		<li><a href="<?=$us_url_root?>"><i class="fa fa-home"></i> Home</a></li>
 <!-- Custom menus. Uncomment or copy/paste to use
