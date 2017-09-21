@@ -197,6 +197,9 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
         $('#datepicker, #datepicker, #datepicker #datepicker, #datepicker').datetimepicker({
             format: 'YYYY/MM/DD',
             locale: 'fa',
+            //setDate: new Date(),
+        	//autoclose: true,
+        	defaultDate: "11/1/2013",
         });
         $('#timepicker, #timepicker, #timepicker, #timepicker, #timepicker').datetimepicker({
             format : 'HH:mm',
@@ -291,13 +294,13 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 
 
 
-        var data = "|" + status.innerHTML
+        var data = "" + status.innerHTML
         			+ "|" + yinter.innerHTML
         			+ "|" + gender.innerHTML
         			+ "|" + cost.innerHTML
         			+ "|" + capacity_number.innerHTML
         			+ "|" + participant_number.innerHTML
-        			+ "|" + participant_cost.innerHTML;
+        			+ "|" + participant_cost.innerHTML + "|";
 		send_data_input.setAttribute('value', data);
 
 	}

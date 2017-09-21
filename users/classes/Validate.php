@@ -36,7 +36,7 @@ class Validate{
 				$value = sanitize($value);
 
 				if ($rule === 'required' && empty($value)) {
-					$this->addError(["{$display} is required",$item]);
+					$this->addError(["تعیین کردن \"{$display}\" الزامی است.",$item]);
 				} else if(!empty($value)){
 					switch ($rule) {
 						case 'min':

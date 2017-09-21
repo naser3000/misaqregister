@@ -46,16 +46,6 @@ if (!empty($_POST)) {
   //Manually Add Plan
   if(!empty($_POST['addPlan'])) {
 
-    
-    echo "\n***************************";
-    echo "\n***************************";
-    echo "\n***************************";
-    echo "\n***************************";
-    echo "\n***************************";
-    print_r($_POST);
-    print_r($_POST);
-    print_r($_POST);
-    print_r($_POST);
   //  $join_date = date("Y-m-d H:i:s");
     $title = Input::get('title');
     $description = Input::get('description');
@@ -70,17 +60,16 @@ if (!empty($_POST)) {
     $plan_start_time = Input::get('plan_start_time');
     $plan_end_time = Input::get('plan_end_time');
 
-    for ($i = 0; $i <= 10; $i++) {
-        $status = Input::get('status');
-        $yinter = Input::get('yinter');
-        $gender = Input::get('gender');
-        $cost = Input::get('cost');
-        $capacity_number = Input::get('capacity_number');
-        $participant_number = Input::get('participant_number');
-        $participant_cost = Input::get('participant_cost');
-        $plan_id = Input::get('plan_id');
-    }
-    
+
+    $capacity_row = Input::get('send_to_db0');
+    /*$status = Input::get('status');
+    $yinter = Input::get('yinter');
+    $gender = Input::get('gender');
+    $cost = Input::get('cost');
+    $capacity_number = Input::get('capacity_number');
+    $participant_number = Input::get('participant_number');
+    $participant_cost = Input::get('participant_cost');
+    $plan_id = Input::get('plan_id');*/
     $token = $_POST['csrf'];
 
     if(!Token::check($token)){
@@ -142,32 +131,18 @@ if (!empty($_POST)) {
       'display' => 'زمان پایان برنامه',
       'required' => true,
       ),
-      /*
-      'email' => array(
-      'display' => 'Email',
+
+      
+      'send_to_db0' => array(
+      'display' => 'ظرفیت(ها)',
       'required' => true,
-      'valid_email' => true,
-      'unique' => 'users',
       ),
-      'password' => array(
-      'display' => 'Password',
-      'required' => true,
-      'min' => $settings->min_pw,
-      'max' => $settings->max_pw,
-      ),
-      'confirm' => array(
-      'display' => 'Confirm Password',
-      'required' => true,
-      'matches' => 'password',
-      ),*/
     ));
     if($validation->passed()) {
     $form_valid=TRUE;
       try {
         // echo "Trying to create user";
-        $fields=array(
-
-
+        $plan_fields=array(
           'title' => Input::get('title'),
           'description' => Input::get('description'),
           'register_start_date' => Input::get('register_start_date'),
@@ -180,14 +155,40 @@ if (!empty($_POST)) {
           'confirm_end_time' => Input::get('confirm_end_time'),
           'plan_start_time' => Input::get('plan_start_time'),
           'plan_end_time' => Input::get('plan_end_time'),
-
         );
-        $db->insert('plans',$fields);
-        $theNewId=$db->lastId();
+
+        $db->insert('plans',$plan_fields);
+        $theNewPlanId=$db->lastId();
         // bold($theNewId);
 
 
-        $successes[] = lang("ACCOUNT_USER_ADDED");
+        $capacity_row = Input::get('send_to_db0');
+        print_r(strlen($capacity_row));
+        $i = 0;
+        while (strlen($capacity_row) > 0) {
+
+          
+          $pieces_of_row = explode("|", $capacity_row);
+          $capacity_fields=array(
+          'status' => $pieces_of_row[0],
+          'yinter' => $pieces_of_row[1],
+          'gender' => $pieces_of_row[2],
+          'cost' => (int)$pieces_of_row[3],
+          'capacity_number' => (int)$pieces_of_row[4],
+          'participant_number' => (int)$pieces_of_row[5],
+          'participant_cost' => (int)$pieces_of_row[6],
+          'plan_id' => $theNewPlanId,
+        );
+
+          $db->insert('capacity',$capacity_fields);
+          $i++;
+          $next_data = "send_to_db".(string)$i;
+          $capacity_row = Input::get($next_data);
+        }
+        
+        
+
+        $successes[] = lang("ACCOUNT_PLAN_ADDED");
 
       } catch (Exception $e) {
         die($e->getMessage());
@@ -305,7 +306,7 @@ $capacityData = fetchAllCapacity(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="register_start_date" id="register_start_date" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_start_date;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="register_start_date" id="register_start_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_start_date;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -314,7 +315,7 @@ $capacityData = fetchAllCapacity(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="register_end_date" id="register_end_date" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_end_date;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="register_end_date" id="register_end_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_end_date;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -323,7 +324,7 @@ $capacityData = fetchAllCapacity(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="confirm_end_date" id="confirm_end_date" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $confirm_end_date;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="confirm_end_date" id="confirm_end_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $confirm_end_date;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -332,7 +333,7 @@ $capacityData = fetchAllCapacity(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="plan_start_date" id="plan_start_date" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_start_date;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="plan_start_date" id="plan_start_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_start_date;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -341,7 +342,7 @@ $capacityData = fetchAllCapacity(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="plan_end_date" id="plan_end_date" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_end_date;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="plan_end_date" id="plan_end_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_end_date;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -359,7 +360,7 @@ $capacityData = fetchAllCapacity(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-time" ></span>
                                 </span>     
-                                <input type='text' class="form-control" name="register_start_time" id="register_start_time" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_start_time;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="register_start_time" id="register_start_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_start_time;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -368,7 +369,7 @@ $capacityData = fetchAllCapacity(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-time" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="register_end_time" id="register_end_time" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_end_time;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="register_end_time" id="register_end_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_end_time;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -377,7 +378,7 @@ $capacityData = fetchAllCapacity(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-time" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="confirm_end_time" id="confirm_end_time" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $confirm_end_time;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="confirm_end_time" id="confirm_end_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $confirm_end_time;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -386,7 +387,7 @@ $capacityData = fetchAllCapacity(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-time" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="plan_start_time" id="plan_start_time" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_start_time;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="plan_start_time" id="plan_start_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_start_time;} ?>" required autofocus/>
                             </div>
                         </div>
 
@@ -395,7 +396,7 @@ $capacityData = fetchAllCapacity(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="glyphicon glyphicon-time" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="plan_end_time" id="plan_end_time" placeholder="تارخ شروع برنامه" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_end_time;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="plan_end_time" id="plan_end_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_end_time;} ?>" required autofocus/>
                             </div>
                         </div>                      
 
