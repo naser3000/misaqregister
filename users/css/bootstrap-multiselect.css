@@ -83,3 +83,7 @@ button.multiselect {
 	border-color: lightgray;
 	border-radius: 5px 0px 0px 5px;
 }
+ul.multiselect-container li{
+	display: block;
+    float: right;
+}

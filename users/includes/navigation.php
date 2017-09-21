@@ -147,11 +147,7 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 	}
 	input[type=checkbox] {
 	padding-lef: 5px !important;
-}
-
-
-
-
+	}
 	.capacity-row [class*='col-'], 
 	.datetime-group [class*='col-'], 
 	.spec-row [class*='col-'] { /* contains col-lg in class name */
@@ -178,6 +174,7 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 	.capacity {
 		margin-bottom: 10px;
 	}
+}
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -197,9 +194,6 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
         $('#datepicker, #datepicker, #datepicker #datepicker, #datepicker').datetimepicker({
             format: 'YYYY/MM/DD',
             locale: 'fa',
-            //setDate: new Date(),
-        	//autoclose: true,
-        	defaultDate: "11/1/2013",
         });
         $('#timepicker, #timepicker, #timepicker, #timepicker, #timepicker').datetimepicker({
             format : 'HH:mm',
@@ -209,18 +203,23 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
     function changeStatusItems(){
 
 			var btn_multiselect = document.querySelectorAll('button.multiselect');
+			var spn_multiselect = document.querySelectorAll('span.multiselect-selected-text');
 			var std_checkbox = document.querySelector('ul.multiselect-container input[value="دانشجو"]');
 
 			if (std_checkbox.checked)
 				btn_multiselect[1].disabled = false;
-			else
+			else{
+				btn_multiselect[1].title = 'انتخاب کنید';
+				spn_multiselect[1].innerHTML = 'انتخاب کنید';
 				btn_multiselect[1].disabled = true;
+			}
 		}
 
 	function addCapacity(){
 
+		var btn_multiselect = document.querySelectorAll('button.multiselect');
 		var inp_multiselect = document.querySelectorAll('span.multiselect-selected-text');
-		var table_rows = document.querySelectorAll('tbody tr');
+		var table_rows = document.querySelectorAll('tbody tr input[type="radio"');
 		var i = table_rows.length;
 		var radio_name = "send_to_db" + i;
 		var inp_gender = document.querySelector('select#gender');
@@ -278,9 +277,9 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 		capacity_number.innerHTML = 0;
 
 		if(inp_multiselect[0].innerHTML != "انتخاب کنید")
-         	status.innerHTML = inp_multiselect[0].innerHTML;
+         	status.innerHTML = btn_multiselect[0].getAttribute('title')
         if(inp_multiselect[1].innerHTML != "انتخاب کنید")
-         	yinter.innerHTML = inp_multiselect[1].innerHTML;
+         	yinter.innerHTML = btn_multiselect[1].getAttribute('title')
         if (true)
         gender.innerHTML = inp_gender.value;
         if (inp_cost.value != 0)
@@ -308,13 +307,13 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 	function removeCapacity(){
 		var i = 0;
 		var j = 0;
-		var trow = document.querySelectorAll('tbody tr');
-		var trow_checkbox = document.querySelectorAll('tbody tr input');
+		var trow = document.querySelectorAll('tbody tr input');
+		var trow_checkbox = document.querySelectorAll('tbody tr input[type="checkbox"');
 		var span = document.querySelector('span#remove_capacity_message');
 
 		for (i = 0; i < trow_checkbox.length; i++) {
 			if (trow_checkbox[i].checked){
-				trow[i].remove();
+				trow_checkbox[i].parentNode.parentNode.remove();
 				j++
 			}
 		}
@@ -339,6 +338,18 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 
     	var yinter = document.querySelectorAll('button.multiselect');
     	yinter[1].disabled = true;
+
+
+    	var ul = document.querySelectorAll('ul.multiselect-container');
+    	ul[1].setAttribute('style', 'width: 470px;');
+    	var li = ul[1].querySelectorAll('li');
+    	for (var i = 0; i < li.length; i+=4) {
+    		
+    		li[i].setAttribute('style', 'width: 28%;');
+    		li[i].setAttribute('style', 'width: 30%;');
+    		li[i].setAttribute('style', 'width: 27%;');
+    		li[i].setAttribute('style', 'width: 13%;');
+    	}
 
 
     });

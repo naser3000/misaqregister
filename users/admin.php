@@ -69,6 +69,9 @@ $user_count = $usersQ->count();
 $pagesQ = $db->query("SELECT * FROM pages");
 $page_count = $pagesQ->count();
 
+$pagesQ = $db->query("SELECT * FROM plans");
+$plan_count = $pagesQ->count();
+
 $levelsQ = $db->query("SELECT * FROM permissions");
 $level_count = $levelsQ->count();
 
@@ -346,7 +349,7 @@ if(!empty($_POST['social'])){
 	<div class="col-xs-6 col-md-2">
 	<div class="panel panel-default">
 	<div class="panel-heading"><strong>برنامه ها</strong></div>
-	<div class="panel-body text-center"><div class="huge"> <i class='fa fa-suitcase fa-1x'></i> 0</div></div>
+	<div class="panel-body text-center"><div class="huge"> <i class='fa fa-suitcase fa-1x'></i> <?=$plan_count?> </div></div>
 	<div class="panel-footer">
 	<span class="pull-left"><a href='admin_plans.php'>مدیریت</a></span>
 	<span class="pull-right"><i class='fa fa-arrow-circle-right'></i></span>
