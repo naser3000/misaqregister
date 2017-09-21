@@ -43,12 +43,19 @@ if (!empty($_POST)) {
       $errors[] = lang("SQL_ERROR");
     }
   }
-  //Manually Add User
+  //Manually Add Plan
   if(!empty($_POST['addPlan'])) {
 
     
-    //echo "\n***************************";
-    //echo "hiiiiiiiiiiiiiii\n";
+    echo "\n***************************";
+    echo "\n***************************";
+    echo "\n***************************";
+    echo "\n***************************";
+    echo "\n***************************";
+    print_r($_POST);
+    print_r($_POST);
+    print_r($_POST);
+    print_r($_POST);
   //  $join_date = date("Y-m-d H:i:s");
     $title = Input::get('title');
     $description = Input::get('description');
@@ -62,6 +69,18 @@ if (!empty($_POST)) {
     $confirm_end_time = Input::get('confirm_end_time');
     $plan_start_time = Input::get('plan_start_time');
     $plan_end_time = Input::get('plan_end_time');
+
+    for ($i = 0; $i <= 10; $i++) {
+        $status = Input::get('status');
+        $yinter = Input::get('yinter');
+        $gender = Input::get('gender');
+        $cost = Input::get('cost');
+        $capacity_number = Input::get('capacity_number');
+        $participant_number = Input::get('participant_number');
+        $participant_cost = Input::get('participant_cost');
+        $plan_id = Input::get('plan_id');
+    }
+    
     $token = $_POST['csrf'];
 
     if(!Token::check($token)){
@@ -106,6 +125,7 @@ if (!empty($_POST)) {
       'display' => 'زمان شروع ثبت نام',
       'required' => true,
       ),
+      
       'register_end_time' => array(
       'display' => 'زمان پایان ثبت نام',
       'required' => true,
@@ -396,7 +416,7 @@ $capacityData = fetchAllCapacity(); //Fetch information for all users
                 
                         <div class="col-xs-12 col-md-8 col-lg-6 capacity">
                             <div class="input-group">
-                                <select name="status" id="status" class="multiselect-ui form-control" multiple="multiple" onchange="changeStatusItems()" required >
+                                <select name="" id="status" class="multiselect-ui form-control" multiple="multiple" onchange="changeStatusItems()" >
                                     <option>  فارغ التحصیل</option>
                                     <option>  دانشجو</option>
                                     <option>  کارمند</option>
@@ -412,7 +432,7 @@ $capacityData = fetchAllCapacity(); //Fetch information for all users
 
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 capacity">
                             <div class="input-group">
-                                <select name="yinter" class="multiselect-ui form-control" id="yinter" multiple="multiple" >
+                                <select name="" class="multiselect-ui form-control" id="yinter" multiple="multiple" >
                                     <option  value="85">85</option>
                                     <option  value="86">86</option>
                                     <option  value="87">87</option>
@@ -453,7 +473,7 @@ $capacityData = fetchAllCapacity(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="capacity" >تومان</span>
                                 </span>
-                                <input type="number" id="cost" class="form-control" required>
+                                <input type="number" id="cost" class="form-control" >
                                 <span class="input-group-addon" >
                                     <span class="capacity" >هزینه</span>
                                 </span>
@@ -465,7 +485,7 @@ $capacityData = fetchAllCapacity(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="capacity" >نفر</span>
                                 </span>
-                                <input type="number" id="capacity_number" class="form-control" required>
+                                <input type="number" id="capacity_number" class="form-control" >
                                 <span class="input-group-addon" >
                                     <span class="capacity" >ظرفیت</span>
                                 </span>
@@ -477,7 +497,7 @@ $capacityData = fetchAllCapacity(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="capacity" >نفر</span>
                                 </span>
-                                <input type="number" id="participant_number" class="form-control" required>
+                                <input type="number" id="participant_number" class="form-control" >
                                 <span class="input-group-addon" >
                                     <span class="capacity" >تعداد همراه</span>
                                 </span>
@@ -489,7 +509,7 @@ $capacityData = fetchAllCapacity(); //Fetch information for all users
                                 <span class="input-group-addon" >
                                     <span class="capacity" >تومان</span>
                                 </span>
-                                <input type="number" id="participant_cost" class="form-control" required>
+                                <input type="number" id="participant_cost" class="form-control" >
                                 <span class="input-group-addon" >
                                     <span class="capacity" >هزینه همراه</span>
                                 </span>
@@ -534,7 +554,7 @@ $capacityData = fetchAllCapacity(); //Fetch information for all users
 
                 <div class="well well-sm">
                 <br /><br /><br />
-                <!--  <input type="hidden" value="<=Token::generate();?>" name="csrf"> -->
+                <input type="hidden" value="<?=Token::generate();?>" name="csrf">
                 <input class='btn btn-success center-block' type='submit' name='addPlan' value='اضافه کردن برنامه'  style="width: 60%;" />
                 </div>
             </form>

@@ -217,6 +217,9 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 	function addCapacity(){
 
 		var inp_multiselect = document.querySelectorAll('span.multiselect-selected-text');
+		var table_rows = document.querySelectorAll('tbody tr');
+		var i = table_rows.length;
+		var radio_name = "send_to_db" + i;
 		var inp_gender = document.querySelector('select#gender');
 		var inp_cost = document.querySelector('input#cost');
 		var inp_participant_cost = document.querySelector('input#participant_cost');
@@ -224,12 +227,19 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 		var inp_capacity_number = document.querySelector('input#capacity_number');
 
 		var trow = document.createElement('tr');
-		var choice_input = document.createElement('input');
-		choice_input.setAttribute('id', 'delete');
-		choice_input.setAttribute('type', 'checkbox');
+		var select_input = document.createElement('input');
+		select_input.setAttribute('id', 'delete');
+		select_input.setAttribute('type', 'checkbox');
+
+		var send_data_input = document.createElement('input');
+		send_data_input.setAttribute('name', radio_name);
+		send_data_input.setAttribute('id', radio_name);
+		send_data_input.setAttribute('type', 'radio');
+		send_data_input.setAttribute('checked', 'checked');
+
 		var hr = document.createElement('hr');
 		hr.setAttribute('style', 'border: 0.1px solid gray;');
-
+		
 		var choice = document.createElement('td');
 		var status = document.createElement('td');
 		var yinter = document.createElement('td');
@@ -238,8 +248,8 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
         var participant_cost = document.createElement('td');
         var participant_number = document.createElement('td');
         var capacity_number = document.createElement('td');
-
 		var tbody = document.querySelector('tbody');
+
 		tbody.appendChild(trow);
 		trow.appendChild(choice);
 		trow.appendChild(status);
@@ -249,8 +259,12 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 		trow.appendChild(participant_cost);
 		trow.appendChild(participant_number);
 		trow.appendChild(capacity_number);
-		choice.appendChild(choice_input);
-		trow.appendChild(hr);
+		choice.appendChild(select_input);
+		trow.appendChild(send_data_input);
+		//var status_input = document.createElement('input');
+		//status_input.setAttribute('name', 'status1');
+		//status_input.setAttribute('type', 'text');
+		//status.appendChild(status_input);
 
 
         status.innerHTML = "همه موارد"
@@ -275,6 +289,16 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
         if (inp_capacity_number.value != 0)
         	capacity_number.innerHTML = inp_capacity_number.value;
 
+
+
+        var data = "|" + status.innerHTML
+        			+ "|" + yinter.innerHTML
+        			+ "|" + gender.innerHTML
+        			+ "|" + cost.innerHTML
+        			+ "|" + capacity_number.innerHTML
+        			+ "|" + participant_number.innerHTML
+        			+ "|" + participant_cost.innerHTML;
+		send_data_input.setAttribute('value', data);
 
 	}
 
