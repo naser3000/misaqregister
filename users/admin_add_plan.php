@@ -456,7 +456,7 @@ if (!empty($_POST)) {
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 capacity">
                             <div class="input-group">
                                 <select id="gender" class="form-control">
-                                    <option value="بدون اهمیت">بدون اهمیت</option>
+                                    <option value="آقا, خانم">آقا, خانم</option>
                                     <option value="آقا">آقا</option>
                                     <option value="خانم">خانم</option>
                                 </select>

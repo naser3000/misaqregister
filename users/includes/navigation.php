@@ -308,7 +308,7 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 		var i = 0;
 		var j = 0;
 		var trow = document.querySelectorAll('tbody tr input');
-		var trow_checkbox = document.querySelectorAll('tbody tr input[type="checkbox"');
+		var trow_checkbox = document.querySelectorAll('tbody tr input[type="checkbox"]');
 		var span = document.querySelector('span#remove_capacity_message');
 
 		for (i = 0; i < trow_checkbox.length; i++) {
@@ -335,22 +335,43 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
     	});
     	//$('#yinter').remove();
 
+    	/*
+    	$('#register_modal').on('show.bs.modal', function(e) {
+    		var id = $(e.relatedTarget).data('id');
+    		var spn_plan_id = document.querySelector('span#plan_id');
+			$("input#plan_id").val(id);
+			spn_plan_id.innerHTML = id;
+			//$(".modal-header input#plan_id").val(id);
+    		//$(".modal-content h2").innerHTML += id;
+    		//alert(id);
+  		});
+  		*/
+
 
     	var yinter = document.querySelectorAll('button.multiselect');
-    	yinter[1].disabled = true;
+    	if (yinter.length > 1)
+    		yinter[1].disabled = true;
 
 
     	var ul = document.querySelectorAll('ul.multiselect-container');
-    	ul[1].setAttribute('style', 'width: 470px;');
-    	var li = ul[1].querySelectorAll('li');
-    	for (var i = 0; i < li.length; i+=4) {
-    		
-    		li[i].setAttribute('style', 'width: 28%;');
-    		li[i].setAttribute('style', 'width: 30%;');
-    		li[i].setAttribute('style', 'width: 27%;');
-    		li[i].setAttribute('style', 'width: 13%;');
+    	if (ul.length > 1) {
+    		ul[1].setAttribute('style', 'width: 470px;');
+    		var li = ul[1].querySelectorAll('li');
+    			for (var i = 0; i < li.length; i+=4) {
+    				li[i].setAttribute('style', 'width: 28%;');
+    				li[i].setAttribute('style', 'width: 30%;');
+    				li[i].setAttribute('style', 'width: 27%;');
+    				li[i].setAttribute('style', 'width: 13%;');
+    			}
     	}
 
 
     });
+
+
+
+
+
+
+
 </script>

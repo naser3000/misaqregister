@@ -511,21 +511,21 @@ if(!empty($_POST)) {
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 capacity">
                             <div class="input-group">
                                 <select name="" class="multiselect-ui form-control" id="yinter" multiple="multiple" >
-                                    <option  value="85">85</option>
-                                    <option  value="86">86</option>
-                                    <option  value="87">87</option>
-                                    <option  value="88">88</option>
-                                    <option  value="89">89</option>
-                                    <option  value="90">90</option>
-                                    <option  value="91">91</option>
-                                    <option  value="92">92</option>
-                                    <option  value="93">93</option>
-                                    <option  value="94">94</option>
-                                    <option  value="95">95</option>
-                                    <option  value="96">96</option>
-                                    <option  value="97">97</option>
-                                    <option  value="98">98</option>
-                                    <option  value="99">99</option>
+                                    <option  value="85">85</option><option  value="کارشناسی (85)">کارشناسی (85)</option><option  value="کارشناسی ارشد (85)">کارشناسی ارشد (85)</option><option  value="دکترا (85)">دکترا (85)</option>
+                                    <option  value="86">86</option><option  value="کارشناسی (86)">کارشناسی (86)</option><option  value="کارشناسی ارشد (86)">کارشناسی ارشد (86)</option><option  value="دکترا (86)">دکترا (86)</option>
+                                    <option  value="87">87</option><option  value="کارشناسی (87)">کارشناسی (87)</option><option  value="کارشناسی ارشد (87)">کارشناسی ارشد (87)</option><option  value="دکترا (87)">دکترا (87)</option>
+                                    <option  value="88">88</option><option  value="کارشناسی (88)">کارشناسی (88)</option><option  value="کارشناسی ارشد (88)">کارشناسی ارشد (88)</option><option  value="دکترا (88)">دکترا (88)</option>
+                                    <option  value="89">89</option><option  value="کارشناسی (89)">کارشناسی (89)</option><option  value="کارشناسی ارشد (89)">کارشناسی ارشد (89)</option><option  value="دکترا (89)">دکترا (89)</option>
+                                    <option  value="90">90</option><option  value="کارشناسی (90)">کارشناسی (90)</option><option  value="کارشناسی ارشد (90)">کارشناسی ارشد (90)</option><option  value="دکترا (90)">دکترا (90)</option>
+                                    <option  value="91">91</option><option  value="کارشناسی (91)">کارشناسی (91)</option><option  value="کارشناسی ارشد (91)">کارشناسی ارشد (91)</option><option  value="دکترا (91)">دکترا (91)</option>
+                                    <option  value="92">92</option><option  value="کارشناسی (92)">کارشناسی (92)</option><option  value="کارشناسی ارشد (92)">کارشناسی ارشد (92)</option><option  value="دکترا (92)">دکترا (92)</option>
+                                    <option  value="93">93</option><option  value="کارشناسی (93)">کارشناسی (93)</option><option  value="کارشناسی ارشد (93)">کارشناسی ارشد (93)</option><option  value="دکترا (93)">دکترا (93)</option>
+                                    <option  value="94">94</option><option  value="کارشناسی (94)">کارشناسی (94)</option><option  value="کارشناسی ارشد (94)">کارشناسی ارشد (94)</option><option  value="دکترا (94)">دکترا (94)</option>
+                                    <option  value="95">95</option><option  value="کارشناسی (95)">کارشناسی (95)</option><option  value="کارشناسی ارشد (95)">کارشناسی ارشد (95)</option><option  value="دکترا (95)">دکترا (95)</option>
+                                    <option  value="96">96</option><option  value="کارشناسی (96)">کارشناسی (96)</option><option  value="کارشناسی ارشد (96)">کارشناسی ارشد (96)</option><option  value="دکترا (96)">دکترا (96)</option>
+                                    <option  value="97">97</option><option  value="کارشناسی (97)">کارشناسی (97)</option><option  value="کارشناسی ارشد (97)">کارشناسی ارشد (97)</option><option  value="دکترا (97)">دکترا (97)</option>
+                                    <option  value="98">98</option><option  value="کارشناسی (98)">کارشناسی (98)</option><option  value="کارشناسی ارشد (98)">کارشناسی ارشد (98)</option><option  value="دکترا (98)">دکترا (98)</option>
+                                    <option  value="99">99</option><option  value="کارشناسی (99)">کارشناسی (99)</option><option  value="کارشناسی ارشد (99)">کارشناسی ارشد (99)</option><option  value="دکترا (99)">دکترا (99)</option>
                                 </select>
                                 <span class="input-group-addon" >
                                     <span class="capacity" >سال ورود</span>
@@ -536,7 +536,7 @@ if(!empty($_POST)) {
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 capacity">
                             <div class="input-group">
                                 <select id="gender" class="form-control">
-                                    <option value="بدون اهمیت">بدون اهمیت</option>
+                                    <option value="آقا, خانم">آقا, خانم</option>
                                     <option value="آقا">آقا</option>
                                     <option value="خانم">خانم</option>
                                 </select>

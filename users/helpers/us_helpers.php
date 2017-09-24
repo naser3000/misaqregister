@@ -112,6 +112,7 @@ function fetchAllUsers() {
 
 //Retrieve complete user information by username, token or ID
 function fetchUserDetails($username=NULL,$token=NULL, $id=NULL){
+	
 	if($username!=NULL) {
 		$column = "username";
 		$data = $username;
@@ -119,6 +120,7 @@ function fetchUserDetails($username=NULL,$token=NULL, $id=NULL){
 		$column = "id";
 		$data = $id;
 	}
+	//mysql_query("SET NAMES utf8");
 	$db = DB::getInstance();
 	$query = $db->query("SELECT * FROM users WHERE $column = $data LIMIT 1");
 	$results = $query->first();
@@ -136,6 +138,23 @@ function fetchPlanDetails($token=NULL, $id=NULL){
 	$results = $query->first();
 	return ($results);
 }
+
+/*
+//Retrieve complete capacity information by UserID & PlanID
+function fetchCapacityDetails($user_id, $plan_id) {
+	$db = DB::getInstance();
+	$userdetails = $db->query("SELECT * FROM users WHERE id = $user_id LIMIT 1");
+	
+	$status = $userdetails->first()->status;
+	$yinter = $userdetails->first()->yinter;
+	$gender = $userdetails->first()->gender;
+	$capacity_query = $db->query("SELECT * FROM capacity WHERE plan_id = $plan_id AND status = ?", array($status));
+	//$capacity_query = $db->query("SELECT * FROM capacity WHERE plan_id = $plan_id AND status IN ({$status}) AND yinter IN ({$yinter}) AND gender IN ({$gender})");
+	$capacity_results = $capacity_query->results();
+	print_r($capacity_results[1]);
+	return ($capacity_results);
+}
+*/
 
 //Retrieve list of permission levels a user has
 function fetchUserPermissions($user_id) {
@@ -158,16 +177,6 @@ function fetchPermissionUsers($permission_id) {
 	}
 }
 
-
-//Retrieve information for all capacities
-/*
-function fetchAllCapacity() {
-	$db = DB::getInstance();
-	$query = $db->query("SELECT * FROM capacity");
-	$results = $query->results();
-	return ($results);
-}
-*/
 
 //Fetch information for all capacities of plan by plan ID
 function fetchAllPlanCapacities($id) {

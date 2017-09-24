@@ -1,28 +1,3 @@
-<?php
-/*
-UserSpice 4
-An Open Source PHP User Management System
-by the UserSpice Team at http://UserSpice.com
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-Special thanks to John Bovey for the password strenth feature.
-*/
-
-
-?>
-
 <style type="text/css">
     
     h2{
@@ -37,6 +12,20 @@ Special thanks to John Bovey for the password strenth feature.
     }
 
 </style>
+<script language="javascript" type="text/javascript">
+		// disable or enable 'snumber' input according to status selections
+		function disableStdNumber(){
+			var input = document.getElementById('snumber');
+			var select = document.getElementById('status');
+			if (select.value == 'دانشجو') {
+				input.disabled = '';
+			}else{
+				input.value = '';
+				input.disabled = 'disabled';
+			}
+		}
+			
+</script>
 
 
 <div class="row">
@@ -67,35 +56,19 @@ if (!$form_valid && Input::exists()){
 		<input  class="form-control" type="text" name="email" id="email" placeholder="پست الکترونیک" value="<?php if (!$form_valid && !empty($_POST)){ echo $email;} ?>" required >
 
 		<label for="status">وضعیت*</label><br>
-		<select name="status" id = "status" class="form-control" oninput="changeStatusItems()">
-			<option value="student" >دانشجو</option>
-			<option value="alumnus">فارغ التحصیل</option>
-			<option value="professor">استاد</option>
-			<option value="employee">کارمند</option>
-			<option value="self-employed">آزاد</option>
+		<select name="status" id = "status" class="form-control" onchange="disableStdNumber()">
+			<option value="دانشجو" >دانشجو</option>
+			<option value="فارغ التحصیل">فارغ التحصیل</option>
+			<option value="استاد">استاد</option>
+			<option value="کارمند">کارمند</option>
+			<option value="آزاد">آزاد</option>
 		</select>
 
 		<label for="snumber">شماره دانشجویی*</label>
 		<input type="number" class="form-control" id="snumber" name="snumber" placeholder="شماره دانشجویی" value =''>
-
-		<script language="javascript" type="text/javascript">
-		// disable or enable 'snumber' input according to status selections
-		function changeStatusItems(){
-			var input = document.getElementById('snumber');
-			var select = document.getElementById('status');
-			if (select.value == 'student') {
-				input.disabled = '';
-			}else{
-				input.disabled = 'disabled';
-			}
-		}
-			
-		</script>
-
-
 		<label for="gender">جنسیت*</label><br>
-		<input type="radio" class="form-contro" id="gender" name="gender" value="male" required>آقا<br>
-		<input type="radio" class="form-contro" id="gender" name="gender" value="female" required>خانم<br>
+		<input type="radio" class="form-contro" id="gender" name="gender" value="آقا" required>آقا<br>
+		<input type="radio" class="form-contro" id="gender" name="gender" value="خانم" required>خانم<br>
 	
 <?php
 
@@ -231,6 +204,7 @@ if ($settings->req_num == 1){ ?>
 	<?php } ?>
 	<input type="hidden" value="<?=Token::generate();?>" name="csrf">
 	<button class="submit btn btn-primary " type="submit" id="next_button"><i class="fa fa-plus-square"></i> ثبت نام</button>
+	<br><br>
 </form>
 </div>
 </div>
