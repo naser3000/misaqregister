@@ -165,19 +165,34 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
 	<div class="col-xs-12 col-sm-4 col-md-3 pull-right">
 		<h1><?=$userdetails->username?></h1>
 		<p><?=$userdetails->fname." ".$userdetails->lname?></p>
+		
 		<p>وضعیت: <?=$userdetails->status?></p>
-		<p>مقطع: <?=$userdetails->grade?></p>
-		<p>تعداد ورود: <?=$userdetails->logins?></p>
-		<p>شماره تماس: <?=$userdetails->std_number?></p>
+		<?php if ($userdetails->status == "دانشجو") {?>
+			<p>مقطع: <?=$userdetails->grade?></p>
+		<?php } ?>
+		
+		<p>کد ملی: <?=$userdetails->icode?></p>
+		<p>شماره تماس: <?=$userdetails->phnumber?></p>
+		<?php if ($userdetails->status == "دانشجو") {?>
+			<p>شماره دانشجویی: <?=$userdetails->std_number?></p>
+		<?php } ?>
+		<?php if ($userdetails->status == "کارمند") {?>
+			<p>کد پرسنلی: <?=$userdetails->emp_number?></p>
+		<?php } ?>
+
+	</div>
+	<div class="col-xs-12 col-sm-4 col-md-3 pull-right">
+		<h1>اطلاعات حساب کاربری</h1>
+		<p>ایمیل: <?=$userdetails->email?></p>
 		<p>تاریخ عضویت: <?=$signupdate?></p>
-		<p>ایمیل: <?=$userdetails->email?></p>		
+		<p>تعداد ورود: <?=$userdetails->logins?></p>
 
 
 	</div>
 	<div class="col-xs-12 col-sm-4 col-md-3" style="text-align: center;">
 		<h1>میزان اعتبار</h1>
 		<p>موجودی حساب کاربری شما</p>
-		<p><?=ucfirst($user->data()->status)?> ریال</p>
+		<p><?=ucfirst($user->data()->account_charge)?> ریال</p>
 		<p>می باشد.</p>
 		<hr>
 		<p>برای افزایش اعتبار بر روی دکمه زیر کلیک کنید.</p>

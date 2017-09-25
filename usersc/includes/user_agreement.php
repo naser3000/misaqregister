@@ -25,4 +25,4 @@ From time to time this website may also include links to other websites. These l
 به موقع بیایید سوار اتوبوس بشید!
 کلاً بچه های خوبی باشید!
 شلوغ کاری نداریم!
-منطم باشید!
+منظم باشید!

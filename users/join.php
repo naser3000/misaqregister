@@ -49,9 +49,12 @@ if(Input::exists()){
 	$username = Input::get('username');
 	$fname = Input::get('fname');
 	$lname = Input::get('lname');
+	$phnumber = Input::get('phnumber');
+	$icode = Input::get('icode');
 	$email = Input::get('email');
 	$status = Input::get('status');
 	$snumber = Input::get('snumber');
+	$enumber = Input::get('enumber');
 	$gender = Input::get('gender');
 	$agreement_checkbox = Input::get('agreement_checkbox');
 
@@ -64,6 +67,9 @@ if(Input::exists()){
 	$std_number_requirment = false;
 	if ($status == 'دانشجو')
 		$std_number_requirment = true;
+	$emp_number_requirment = false;
+	if ($status == 'کارمند')
+		$emp_number_requirment = true;
 
 
 	$db = DB::getInstance();
@@ -90,6 +96,18 @@ if(Input::exists()){
 		'min' => 2,
 		'max' => 35,
 	  ),
+	  'icode' => array(
+		'display' => 'کد ملی',
+		'required' => true,
+		'min' => 10,
+		'max' => 10,
+	  ),
+	  'phnumber' => array(
+		'display' => 'شماره تماس',
+		'required' => true,
+		'min' => 11,
+		'max' => 11,
+	  ),
 	  'email' => array(
 		'display' => 'ایمیل',
 		'required' => true,
@@ -107,6 +125,10 @@ if(Input::exists()){
 		'max' => 8,
 	  ),
 
+	  'enumber' => array(
+		'display' => 'کد پرسنلی',
+		'required' => $emp_number_requirment,
+	  ),
 	  'password' => array(
 		'display' => 'رمز عبور',
 		'required' => true,
@@ -184,9 +206,12 @@ if(Input::exists()){
 					'username' => Input::get('username'),
 					'fname' => Input::get('fname'),
 					'lname' => Input::get('lname'),
+					'icode' => Input::get('icode'),
+					'phnumber' => Input::get('phnumber'),
 					'email' => Input::get('email'),
 					'status' => Input::get('status'),
 					'std_number' => Input::get('snumber'),
+					'emp_number' => Input::get('enumber'),
 					'yinter' => Input::get('snumber')/1000000,
 					'grade' => $grade,
 					'gender' => Input::get('gender'),

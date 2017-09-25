@@ -14,20 +14,29 @@
 </style>
 <script language="javascript" type="text/javascript">
 		// disable or enable 'snumber' input according to status selections
-		function disableStdNumber(){
-			var input = document.getElementById('snumber');
+		function disableInput(){
 			var select = document.getElementById('status');
+			var input = document.getElementById('snumber');
+			var input2 = document.getElementById('enumber');
 			if (select.value == 'دانشجو') {
 				input.disabled = '';
 			}else{
 				input.value = '';
 				input.disabled = 'disabled';
 			}
+			if (select.value == 'کارمند') {
+				input2.disabled = '';
+			}else{
+				input.value = '';
+				input2.disabled = 'disabled';
+			}
 		}
 			
 </script>
 
 
+<div id="page-wrapper">
+<div class="container">
 <div class="row">
 <div class="col-xs-12">
 <?php
@@ -41,36 +50,17 @@ if (!$form_valid && Input::exists()){
 
 	<h2 class="form-signin-heading"> <?=lang("SIGNUP_TEXT","");?></h2>
 
-	<div class="form-group">
-		<label for="username">نام کاربری* (بین <?=$settings->max_un?>-<?=$settings->min_un?> حرف)</label>
-		<input  class="form-control" type="text" name="username" id="username" placeholder="نام کاربری" value="<?php if (!$form_valid && !empty($_POST)){ echo $username;} ?>" required autofocus>
-		<p class="help-block"></p>
+	<div class=" panel panel-default ">
+		<div class="panel-heading">اطلاعات حساب کاربری</div>
+		<div class="panel-body">
 
-		<label for="fname">نام*</label>
-		<input type="text" class="form-control" id="fname" name="fname" placeholder="نام" value="<?php if (!$form_valid && !empty($_POST)){ echo $fname;} ?>" required>
+			<label for="username">نام کاربری* (بین <?=$settings->max_un?>-<?=$settings->min_un?> حرف)</label>
+			<input  class="form-control" type="text" name="username" id="username" placeholder="نام کاربری" value="<?php if (!$form_valid && !empty($_POST)){ echo $username;} ?>" required autofocus>
+			<p class="help-block"></p>
 
-		<label for="lname">نام خانوادگی*</label>
-		<input type="text" class="form-control" id="lname" name="lname" placeholder="نام خانوادگی" value="<?php if (!$form_valid && !empty($_POST)){ echo $lname;} ?>" required>
-
-		<label for="email">پست الکترونیک*</label>
-		<input  class="form-control" type="text" name="email" id="email" placeholder="پست الکترونیک" value="<?php if (!$form_valid && !empty($_POST)){ echo $email;} ?>" required >
-
-		<label for="status">وضعیت*</label><br>
-		<select name="status" id = "status" class="form-control" onchange="disableStdNumber()">
-			<option value="دانشجو" >دانشجو</option>
-			<option value="فارغ التحصیل">فارغ التحصیل</option>
-			<option value="استاد">استاد</option>
-			<option value="کارمند">کارمند</option>
-			<option value="آزاد">آزاد</option>
-		</select>
-
-		<label for="snumber">شماره دانشجویی*</label>
-		<input type="number" class="form-control" id="snumber" name="snumber" placeholder="شماره دانشجویی" value =''>
-		<label for="gender">جنسیت*</label><br>
-		<input type="radio" class="form-contro" id="gender" name="gender" value="آقا" required>آقا<br>
-		<input type="radio" class="form-contro" id="gender" name="gender" value="خانم" required>خانم<br>
-	
-<?php
+			<label for="email">پست الکترونیک*</label>
+			<input  class="form-control" type="text" name="email" id="email" placeholder="پست الکترونیک" value="<?php if (!$form_valid && !empty($_POST)){ echo $email;} ?>" required >
+			<?php
 
 		$character_range = 'بین '.$settings->min_pw . ' تا ' . $settings->max_pw;
 		$character_statement = '<span id="character_range" class="gray_out_text">' . $character_range . ' حرف باشد.</span>';
@@ -186,14 +176,69 @@ if ($settings->req_num == 1){ ?>
 <?php } ?>
 			<span id="password_match_icon" class="glyphicon glyphicon-ok gray_out_icon" style="color: green"></span>&nbsp;&nbsp;<?php echo $password_match_statement;?>
 		</div>
+
+		</div>
+	</div><!--END OF panel-default  -->
+
+	<div class=" panel panel-default ">
+		<div class="panel-heading">اطلاعات فردی </div>
+		<div class="panel-body">
+
+			<label for="fname">نام*</label>
+			<input type="text" class="form-control" id="fname" name="fname" placeholder="نام" value="<?php if (!$form_valid && !empty($_POST)){ echo $fname;} ?>" required>
+
+			<label for="lname">نام خانوادگی*</label>
+			<input type="text" class="form-control" id="lname" name="lname" placeholder="نام خانوادگی" value="<?php if (!$form_valid && !empty($_POST)){ echo $lname;} ?>" required>
+
+			<label for="icode">کد ملی*</label>
+			<input type="text" class="form-control" id="icode" name="icode" placeholder="کد ملی" value="<?php if (!$form_valid && !empty($_POST)){ echo $icode;} ?>" required>
+
+			<label for="phnumber">شماره تماس*</label>
+			<input type="text" class="form-control" id="phnumber" name="phnumber" placeholder="شماره تماس" value="<?php if (!$form_valid && !empty($_POST)){ echo $phnumber;} ?>" required>
+
+			<label for="gender">جنسیت*</label><br>
+			<input type="radio" class="form-contro" id="gender" name="gender" value="آقا" required>آقا<br>
+			<input type="radio" class="form-contro" id="gender" name="gender" value="خانم" required>خانم<br>
+		</div>
+	</div><!--END OF panel-default  -->
+
+	<div class=" panel panel-default">
+		<div class="panel-heading">اطلاعات تکمیلی</div>
+		<div class="panel-body">
+
+			<label for="status">وضعیت*</label><br>
+			<select name="status" id = "status" class="form-control" onchange="disableInput()">
+				<option value="فارغ التحصیل">فارغ التحصیل</option>
+				<option value="دانشجو" >دانشجو</option>
+				<option value="کارمند">کارمند</option>
+				<option value="استاد">استاد</option>
+				<option value="آزاد">آزاد</option>
+			</select>
+
+			<label for="snumber">شماره دانشجویی*</label>
+			<input type="text" class="form-control" id="snumber" name="snumber" disabled="disabled" placeholder="شماره دانشجویی" value =''>
+
+			<label for="enumber">کد کارمندی*</label>
+			<input type="text" class="form-control" id="enumber" name="enumber" disabled="disabled" placeholder="کد کارمندی" value =''>
+		</div>
+	</div><!--END OF panel-default  -->
+
+	<div class=" panel panel-default ">
+		<div class="panel-heading">قوانین و شرایط</div>
+		<div class="panel-body">
+
+			<label for="confirm">شرایط و قوانین ثبت نام کاربر</label>
+			<textarea id="agreement" name="agreement" rows="5" class="form-control" disabled ><?php require $abs_us_root.$us_url_root.'usersc/includes/user_agreement.php'; ?></textarea>
+			<input type="checkbox" id="agreement_checkbox" name="agreement_checkbox" class="form-controlaaaaa">
+			<label for="confirm">با قوانین موافقم.</label>			
+		</div>
+	</div><!--END OF panel-default  -->
+
+	<div class="form-group">
+
 		<br><br>
 
-		<label for="confirm">شرایط و قوانین ثبت نام کاربر</label>
-		<textarea id="agreement" name="agreement" rows="5" class="form-control" disabled ><?php require $abs_us_root.$us_url_root.'usersc/includes/user_agreement.php'; ?></textarea>
-
 		
-		<input type="checkbox" id="agreement_checkbox" name="agreement_checkbox" class="form-controlaaaaa">
-		<label for="confirm">با قوانین موافقم.</label>
 		
 	</div>
 
@@ -206,5 +251,7 @@ if ($settings->req_num == 1){ ?>
 	<button class="submit btn btn-primary " type="submit" id="next_button"><i class="fa fa-plus-square"></i> ثبت نام</button>
 	<br><br>
 </form>
+</div>
+</div>
 </div>
 </div>
