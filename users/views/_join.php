@@ -13,11 +13,12 @@
 
 </style>
 <script language="javascript" type="text/javascript">
-		// disable or enable 'snumber' input according to status selections
+	/*
+		// disable or enable 'std_number' input according to status selections
 		function disableInput(){
 			var select = document.getElementById('status');
-			var input = document.getElementById('snumber');
-			var input2 = document.getElementById('enumber');
+			var input = document.getElementById('std_number');
+			var input2 = document.getElementById('emp_number');
 			if (select.value == 'دانشجو') {
 				input.disabled = '';
 			}else{
@@ -30,7 +31,7 @@
 				input.value = '';
 				input2.disabled = 'disabled';
 			}
-		}
+		}*/
 			
 </script>
 
@@ -49,7 +50,7 @@ if (!$form_valid && Input::exists()){
 <form class="form-signup" action="<?=$form_action;?>" method="<?=$form_method;?>" id="payment-form">
 
 	<h2 class="form-signin-heading"> <?=lang("SIGNUP_TEXT","");?></h2>
-
+	<div class="col-md-6">
 	<div class=" panel panel-default ">
 		<div class="panel-heading">اطلاعات حساب کاربری</div>
 		<div class="panel-body">
@@ -179,7 +180,9 @@ if ($settings->req_num == 1){ ?>
 
 		</div>
 	</div><!--END OF panel-default  -->
+	</div><!--END OF col  -->
 
+	<div class="col-md-6">
 	<div class=" panel panel-default ">
 		<div class="panel-heading">اطلاعات فردی </div>
 		<div class="panel-body">
@@ -201,7 +204,9 @@ if ($settings->req_num == 1){ ?>
 			<input type="radio" class="form-contro" id="gender" name="gender" value="خانم" required>خانم<br>
 		</div>
 	</div><!--END OF panel-default  -->
+	</div><!--END OF col  -->
 
+	<div class="col-md-6">
 	<div class=" panel panel-default">
 		<div class="panel-heading">اطلاعات تکمیلی</div>
 		<div class="panel-body">
@@ -215,14 +220,16 @@ if ($settings->req_num == 1){ ?>
 				<option value="آزاد">آزاد</option>
 			</select>
 
-			<label for="snumber">شماره دانشجویی*</label>
-			<input type="text" class="form-control" id="snumber" name="snumber" disabled="disabled" placeholder="شماره دانشجویی" value =''>
+			<label for="std_number">شماره دانشجویی*</label>
+			<input type="text" class="form-control" id="std_number" name="std_number" disabled="disabled" placeholder="شماره دانشجویی" value =''>
 
-			<label for="enumber">کد کارمندی*</label>
-			<input type="text" class="form-control" id="enumber" name="enumber" disabled="disabled" placeholder="کد کارمندی" value =''>
+			<label for="emp_number">کد کارمندی*</label>
+			<input type="text" class="form-control" id="emp_number" name="emp_number" disabled="disabled" placeholder="کد کارمندی" value =''>
 		</div>
 	</div><!--END OF panel-default  -->
+	</div><!--END OF col  -->
 
+	<div class="col-md-6">
 	<div class=" panel panel-default ">
 		<div class="panel-heading">قوانین و شرایط</div>
 		<div class="panel-body">
@@ -233,6 +240,7 @@ if ($settings->req_num == 1){ ?>
 			<label for="confirm">با قوانین موافقم.</label>			
 		</div>
 	</div><!--END OF panel-default  -->
+	</div><!--END OF col  -->
 
 	<div class="form-group">
 

@@ -44,7 +44,11 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
 						//print_r($userdetails->yinter);
 						foreach ($capacities as $capacity) {
 							
-							if ( !in_array($userdetails->status, explode(', ', $capacity->status))) {
+							if ( !in_array($userdetails->status, explode(',   ', $capacity->status))) {
+								/*print_r($capacity->status."+++");
+								for ($iii=0; $iii < count(explode(',   ', $capacity->status)); $iii++) { 
+									print_r(explode(",   ", $capacity->status)[$iii]."*");
+								}*/
 								//print_r($capacity->status);
 								continue;
 							}
@@ -55,6 +59,7 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
 								}
 							}
 							if ( !in_array($userdetails->gender, explode(', ', $capacity->gender))) {
+								//print_r($capacity->gender);
 								continue;
 							}
 
@@ -158,7 +163,7 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
 <div class="row">
 	<div class="col-xs-12 col-sm-4 col-md-3 pull-right">
 		<p><img src="<?=$grav; ?>" class="img-thumbnail" alt="Generic placeholder thumbnail"></p>
-		<p><a href="#" class="btn btn-primary equal-btn">ویرایش اطلاعات</a></p>
+		<p><a href="user_settings.php" class="btn btn-primary equal-btn">ویرایش اطلاعات</a></p>
 		<p ><a class="btn btn-primary equal-btn" href="profile.php?id=<?=$get_info_id;?>" role="button">پروفایل</a></p>
 
 	</div>

@@ -51,6 +51,12 @@ class Validate{
 							}
 							break;
 
+						case 'exact':
+							if (strlen($value) != $rule_value) {
+								$this->addError(["{$display} باید {$rule_value} حرف داشته باشد.",$item]);
+							}
+							break;							
+
 						case 'matches':
 							if ($value != $source[$rule_value]) {
 								$match = $items[$rule_value]['display'];

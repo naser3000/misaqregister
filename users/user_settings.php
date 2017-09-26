@@ -1,20 +1,3 @@
-<?php
-/*
-UserSpice 4
-An Open Source PHP User Management System
-by the UserSpice Team at http://UserSpice.com
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-?>
 <?php require_once 'init.php'; ?>
 <?php require_once $abs_us_root.$us_url_root.'users/includes/header.php'; ?>
 <?php require_once $abs_us_root.$us_url_root.'users/includes/navigation.php'; ?>
@@ -133,6 +116,170 @@ if(!empty($_POST)) {
         }else{
             $lname=$userdetails->lname;
         }
+        //Update national code
+        if ($userdetails->icode != $_POST['icode']){
+            $icode = Input::get("icode");
+            $fields=array('icode'=>$icode);
+            $validation->check($_POST,array(
+                'icode' => array(
+                    'display' => 'کد ملی',
+                    'required' => true,
+                    'exact' => 10,
+                )
+            ));
+            if($validation->passed()){
+                $db->update('users',$userId,$fields);
+                $successes[]='کد ملی به روز رسانی شد.';
+            }else{
+                //validation did not pass
+                foreach ($validation->errors() as $error) {
+                    $errors[] = $error;
+                }
+            }
+        }else{
+            $icode=$userdetails->icode;
+        }
+        //Update phone number
+        if ($userdetails->phnumber != $_POST['phnumber']){
+            $phnumber = Input::get("phnumber");
+            $fields=array('phnumber'=>$phnumber);
+            $validation->check($_POST,array(
+                'phnumber' => array(
+                    'display' => 'شماره تماس',
+                    'required' => true,
+                    'exact' => 11,
+                )
+            ));
+            if($validation->passed()){
+                $db->update('users',$userId,$fields);
+                $successes[]='شماره تماس به روز رسانی شد.';
+            }else{
+                //validation did not pass
+                foreach ($validation->errors() as $error) {
+                    $errors[] = $error;
+                }
+            }
+        }else{
+            $phnumber=$userdetails->phnumber;
+        }
+        //Update status
+        if ($userdetails->status != $_POST['status']){
+            $status = Input::get("status");
+            if ($status == "دانشجو"){
+                    $std_number = Input::get("std_number");
+                    if ( ($std_number/100000)%10 == 1 )
+                        $grade = "کارشناسی";
+                    if ( ($std_number/100000)%10 == 2 )
+                        $grade = "کارشناسی ارشد";
+                    if ( ($std_number/100000)%10 == 3 )
+                        $grade = "دکترا";
+                    $fields=array('std_number'=>$std_number, 'yinter'=>$std_number/1000000, 'grade'=>$grade);
+                    $validation->check($_POST,array(
+                        'std_number' => array(
+                            'display' => 'شماره دانشجویی',
+                            'required' => true,
+                            'exact' => 8,
+                        )
+                    ));
+                    if($validation->passed()){
+                        $db->update('users',$userId,array('status'=>$status));
+                        $db->update('users',$userId,$fields);
+                        $db->update('users',$userId,array('emp_number'=>null));
+                        $successes[]='وضعیت به روز رسانی شد.';
+                    }else{
+                        //validation did not pass
+                        foreach ($validation->errors() as $error) {
+                            $errors[] = $error;
+                        }
+                    }
+            }
+            elseif ($status == "کارمند") {
+                    $emp_number = Input::get("emp_number");
+                    $fields=array('emp_number'=>$emp_number);
+                    $validation->check($_POST,array(
+                        'emp_number' => array(
+                            'display' => 'کد پرسنلی',
+                            'required' => true,
+                        )
+                    ));
+                    if($validation->passed()){
+                        $db->update('users',$userId,array('status'=>$status));
+                        $db->update('users',$userId,array('std_number'=>null, 'yinter'=>0, 'grade'=>null));
+                        $db->update('users',$userId,$fields);
+                        $successes[]='وضعیت به روز رسانی شد.';
+                    }else{
+                        //validation did not pass
+                        foreach ($validation->errors() as $error) {
+                            $errors[] = $error;
+                        }
+                    }
+            }
+            else{
+                $fields = array('status'=>$status);
+                $db->update('users',$userId,$fields);
+                $db->update('users',$userId,array('std_number'=>null, 'yinter'=>0, 'grade'=>null));
+                $db->update('users',$userId,array('emp_number'=>null));
+                $successes[]='وضعیت به روز رسانی شد.';
+
+            }
+        }else{
+            $status=$userdetails->status;
+        }
+        //Update std number
+    if ($status == "دانشجو"){
+        if ($userdetails->std_number != $_POST['std_number']){
+            $std_number = Input::get("std_number");
+            if ( ($std_number/100000)%10 == 1 )
+                $grade = "کارشناسی";
+            if ( ($std_number/100000)%10 == 2 )
+                $grade = "کارشناسی ارشد";
+            if ( ($std_number/100000)%10 == 3 )
+                $grade = "دکترا";
+                    $fields=array('std_number'=>$std_number, 'yinter'=>$std_number/1000000, 'grade'=>$grade);
+            $validation->check($_POST,array(
+                'std_number' => array(
+                    'display' => 'شماره دانشجویی',
+                    'required' => true,
+                    'exact' => 8,
+                )
+            ));
+            if($validation->passed()){
+                $db->update('users',$userId,$fields);
+                $successes[]='شماره دانشجویی به روز رسانی شد.';
+            }else{
+                //validation did not pass
+                foreach ($validation->errors() as $error) {
+                    $errors[] = $error;
+                }
+            }
+        }else{
+            $std_number=$userdetails->std_number;
+        }
+    }
+        //Update emp number
+    if ($status == "کارمند") {
+        if ($userdetails->emp_number != $_POST['emp_number']){
+            $emp_number = Input::get("emp_number");
+            $fields=array('emp_number'=>$emp_number);
+            $validation->check($_POST,array(
+                'emp_number' => array(
+                    'display' => 'کد پرسنلی',
+                    'required' => true,
+                )
+            ));
+            if($validation->passed()){
+                $db->update('users',$userId,$fields);
+                $successes[]='کد پرسنلی به روز رسانی شد.';
+            }else{
+                //validation did not pass
+                foreach ($validation->errors() as $error) {
+                    $errors[] = $error;
+                }
+            }
+        }else{
+            $emp_number=$userdetails->emp_number;
+        }
+    }
         //Update email
         if ($userdetails->email != $_POST['email']){
             $email = Input::get("email");
@@ -202,6 +349,11 @@ if(!empty($_POST)) {
     $fname=$userdetails->fname;
     $lname=$userdetails->lname;
     $email=$userdetails->email;
+    $icode=$userdetails->icode;
+    $phnumber=$userdetails->phnumber;
+    $status=$userdetails->status;
+    $std_number=$userdetails->std_number;
+    $emp_number=$userdetails->emp_number;
 }
 ?>
 <div id="page-wrapper">
@@ -217,8 +369,12 @@ if(!empty($_POST)) {
                     <span class="bg-danger" style="color: red"><?=display_errors($errors);?></span>
                     <span style=" color: green;"><?=display_successes($successes);?></span>
 
-                    <form name='updateAccount' action='user_settings.php' method='post'>
+                    <form name='updateAccount' action='user_settings.php' method='post'>                        
 
+<div class="col-md-6">
+    <div class=" panel panel-default">
+        <div class="panel-heading">اطلاعات حساب کاربری</div>
+        <div class="panel-body">
                         <div class="form-group">
                             <label>نام کاربری</label>
                             <?php if (($settings->change_un == 0) || (($settings->change_un == 2) && ($user->data()->un_changed == 1)) ) {
@@ -227,16 +383,6 @@ if(!empty($_POST)) {
                                 echo "<input  class='form-control' type='text' name='username' value='$displayname'>";
                             }
                             ?>
-                        </div>
-
-                        <div class="form-group">
-                            <label>نام</label>
-                            <input  class='form-control' type='text' name='fname' value='<?=$fname?>' />
-                        </div>
-
-                        <div class="form-group">
-                            <label>نام خانوادگی</label>
-                            <input  class='form-control' type='text' name='lname' value='<?=$lname?>' />
                         </div>
 
                         <div class="form-group">
@@ -258,6 +404,73 @@ if(!empty($_POST)) {
                             <label>تکرار رمز عبور</label>
                             <input class='form-control' type='password' name='confirm' />
                         </div>
+        </div>
+    </div><!--END OF panel-default  -->
+</div><!--END OF col  -->
+
+<div class="col-md-6">
+    <div class=" panel panel-default">
+        <div class="panel-heading">اطلاعات فردی</div>
+        <div class="panel-body">
+                        <div class="form-group">
+                            <label>نام</label>
+                            <input  class='form-control' type='text' name='fname' value='<?=$fname?>' />
+                        </div>
+
+                        <div class="form-group">
+                            <label>نام خانوادگی</label>
+                            <input  class='form-control' type='text' name='lname' value='<?=$lname?>' />
+                        </div>
+
+                        <div class="form-group">
+                            <label>کد ملی</label>
+                            <input  class='form-control' type='text' name='icode' value='<?=$icode?>' />
+                        </div>
+
+                        <div class="form-group">
+                            <label>شماره تماس</label>
+                            <input  class='form-control' type='text' name='phnumber' value='<?=$phnumber?>' />
+                        </div>
+        </div>
+    </div><!--END OF panel-default  -->
+</div><!--END OF col  -->                        
+                       
+
+<div class="col-md-6">
+    <div class=" panel panel-default">
+        <div class="panel-heading">اطلاعات تکمیلی</div>
+        <div class="panel-body">
+
+            <label for="status">وضعیت*</label><br>
+            <select name="status" id = "status" class="form-control" onchange="disableInput()" >
+                <option value="فارغ التحصیل"  <?php if($status == "فارغ التحصیل") echo "selected"; ?> >فارغ التحصیل</option>
+                <option value="دانشجو"  <?php if($status == "دانشجو") echo "selected"; ?> >دانشجو</option>
+                <option value="کارمند"  <?php if($status == "کارمند") echo "selected"; ?> >کارمند</option>
+                <option value="استاد"  <?php if($status == "استاد") echo "selected"; ?> >استاد</option>
+                <option value="آزاد"  <?php if($status == "آزاد") echo "selected"; ?> >آزاد</option>
+            </select>
+
+            <label for="std_number">شماره دانشجویی*</label>
+            <?php   
+            if ($status == "دانشجو"){
+                echo "<input type='text' class='form-control' id='std_number' name='std_number' placeholder='شماره دانشجویی' value='$std_number' >";
+            }else{
+                echo "<input type='text' class='form-control' id='std_number' name='std_number' placeholder='شماره دانشجویی' disabled='disabled' >";
+            }
+
+            ?>
+
+            <label for="emp_number">کد کارمندی*</label>
+            <?php
+            if ($status == "کارمند"){
+                echo "<input type='text' class='form-control' id='emp_number' name='emp_number' placeholder='کد کارمندی' value='$emp_number' >";
+            }else{
+                echo "<input type='text' class='form-control' id='emp_number' name='emp_number' placeholder='کد کارمندی' disabled='disabled' >";
+            }
+            ?>
+        </div>
+    </div><!--END OF panel-default  -->
+</div><!--END OF col  -->
 
                         <input type="hidden" name="csrf" value="<?=Token::generate();?>" />
 

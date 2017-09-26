@@ -53,8 +53,8 @@ if(Input::exists()){
 	$icode = Input::get('icode');
 	$email = Input::get('email');
 	$status = Input::get('status');
-	$snumber = Input::get('snumber');
-	$enumber = Input::get('enumber');
+	$std_number = Input::get('std_number');
+	$emp_number = Input::get('emp_number');
 	$gender = Input::get('gender');
 	$agreement_checkbox = Input::get('agreement_checkbox');
 
@@ -99,14 +99,12 @@ if(Input::exists()){
 	  'icode' => array(
 		'display' => 'کد ملی',
 		'required' => true,
-		'min' => 10,
-		'max' => 10,
+		'exact' => 10,
 	  ),
 	  'phnumber' => array(
 		'display' => 'شماره تماس',
 		'required' => true,
-		'min' => 11,
-		'max' => 11,
+		'exact' => 11,
 	  ),
 	  'email' => array(
 		'display' => 'ایمیل',
@@ -118,14 +116,13 @@ if(Input::exists()){
 		'display' => 'وضعیت',
 		'required' => true,
 	  ),
-	  'snumber' => array(
+	  'std_number' => array(
 		'display' => 'شماره دانشجویی',
 		'required' => $std_number_requirment,
-		'min' => 8,
-		'max' => 8,
+		'exact' => 8,
 	  ),
 
-	  'enumber' => array(
+	  'emp_number' => array(
 		'display' => 'کد پرسنلی',
 		'required' => $emp_number_requirment,
 	  ),
@@ -195,12 +192,12 @@ if(Input::exists()){
 			}
 			try {
 				// echo "Trying to create user";
-				$snumber = Input::get('snumber');
-				if ( ($snumber/100000)%10 == 1 )
+				$std_number = Input::get('std_number');
+				if ( ($std_number/100000)%10 == 1 )
 					$grade = "کارشناسی";
-				if ( ($snumber/100000)%10 == 2 )
+				if ( ($std_number/100000)%10 == 2 )
 					$grade = "کارشناسی ارشد";
-				if ( ($snumber/100000)%10 == 3 )
+				if ( ($std_number/100000)%10 == 3 )
 					$grade = "دکترا";
 				$user->create(array(
 					'username' => Input::get('username'),
@@ -210,9 +207,9 @@ if(Input::exists()){
 					'phnumber' => Input::get('phnumber'),
 					'email' => Input::get('email'),
 					'status' => Input::get('status'),
-					'std_number' => Input::get('snumber'),
-					'emp_number' => Input::get('enumber'),
-					'yinter' => Input::get('snumber')/1000000,
+					'std_number' => Input::get('std_number'),
+					'emp_number' => Input::get('emp_number'),
+					'yinter' => Input::get('std_number')/1000000,
 					'grade' => $grade,
 					'gender' => Input::get('gender'),
 					'password' =>
