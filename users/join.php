@@ -121,7 +121,6 @@ if(Input::exists()){
 		'required' => $std_number_requirment,
 		'exact' => 8,
 	  ),
-
 	  'emp_number' => array(
 		'display' => 'کد پرسنلی',
 		'required' => $emp_number_requirment,
@@ -192,6 +191,7 @@ if(Input::exists()){
 			}
 			try {
 				// echo "Trying to create user";
+				$grade = "";
 				$std_number = Input::get('std_number');
 				if ( ($std_number/100000)%10 == 1 )
 					$grade = "کارشناسی";
@@ -208,10 +208,13 @@ if(Input::exists()){
 					'email' => Input::get('email'),
 					'status' => Input::get('status'),
 					'std_number' => Input::get('std_number'),
+					'major' => Input::get('major'),
+					'dorms' => Input::get('dorms'),
 					'emp_number' => Input::get('emp_number'),
 					'yinter' => Input::get('std_number')/1000000,
 					'grade' => $grade,
 					'gender' => Input::get('gender'),
+					'interested' => Input::get('interested'),
 					'password' =>
 					password_hash(Input::get('password'), PASSWORD_BCRYPT, array('cost' => 12)),
 					'permissions' => 1,

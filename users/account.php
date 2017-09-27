@@ -169,18 +169,24 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
 	</div>
 	<div class="col-xs-12 col-sm-4 col-md-3 pull-right">
 		<h1><?=$userdetails->username?></h1>
-		<p><?=$userdetails->fname." ".$userdetails->lname?></p>
+		<?php 
+		if ($userdetails->gender == "آقا")
+			$space = "ی ";
+		else
+			$space = " ";
+		?>
+		<p><?=$userdetails->gender.$space.$userdetails->fname." ".$userdetails->lname?></p>
 		
 		<p>وضعیت: <?=$userdetails->status?></p>
+		<p>رشته تحصیلی: <?=$userdetails->major?></p>
 		<?php if ($userdetails->status == "دانشجو") {?>
 			<p>مقطع: <?=$userdetails->grade?></p>
+			<p>خوابگاه: <?=$userdetails->dorms?></p>
+			<p>شماره دانشجویی: <?=$userdetails->std_number?></p>
 		<?php } ?>
 		
 		<p>کد ملی: <?=$userdetails->icode?></p>
-		<p>شماره تماس: <?=$userdetails->phnumber?></p>
-		<?php if ($userdetails->status == "دانشجو") {?>
-			<p>شماره دانشجویی: <?=$userdetails->std_number?></p>
-		<?php } ?>
+
 		<?php if ($userdetails->status == "کارمند") {?>
 			<p>کد پرسنلی: <?=$userdetails->emp_number?></p>
 		<?php } ?>
@@ -188,7 +194,9 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
 	</div>
 	<div class="col-xs-12 col-sm-4 col-md-3 pull-right">
 		<h1>اطلاعات حساب کاربری</h1>
+		<p>شماره تماس: <?=$userdetails->phnumber?></p>
 		<p>ایمیل: <?=$userdetails->email?></p>
+		<p>علاقه مند به همکاری: <?=$userdetails->interested?></p>
 		<p>تاریخ عضویت: <?=$signupdate?></p>
 		<p>تعداد ورود: <?=$userdetails->logins?></p>
 

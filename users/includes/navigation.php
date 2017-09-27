@@ -126,7 +126,7 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 		text-align: right;
 	}
 	input[type=checkbox] {
-	padding-lef: 5px !important;
+		padding-lef: 5px !important;
 	}
 	.capacity-row [class*='col-'], 
 	.datetime-group [class*='col-'], 
@@ -182,19 +182,23 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 		// disable or enable 'std_number' input according to status selections
 		function disableInput(){
 			var select = document.getElementById('status');
-			var input = document.getElementById('std_number');
-			var input2 = document.getElementById('emp_number');
+			var std_number = document.getElementById('std_number');
+			var dorms = document.getElementById('dorms');
+			var emp_number = document.getElementById('emp_number');
 			if (select.value == 'دانشجو') {
-				input.disabled = '';
+				std_number.readOnly = false;
+				dorms.disabled = '';
 			}else{
-				input.value = '';
-				input.disabled = 'disabled';
+				std_number.value = '';
+				std_number.readOnly = true;
+				dorms.value = '';
+				dorms.disabled = 'disabled';
 			}
 			if (select.value == 'کارمند') {
-				input2.disabled = '';
+				emp_number.readOnly = false;
 			}else{
-				input.value = '';
-				input2.disabled = 'disabled';
+				emp_number.value = '';
+				emp_number.readOnly = true;
 			}
 		}
 

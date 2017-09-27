@@ -1,6 +1,18 @@
+<style type="text/css">
+    
+    input{
+        margin-left: 10px;
+    }
+    .container label{
+        margin-top: 5px;
+    }
+
+</style>
+
 <?php require_once 'init.php'; ?>
 <?php require_once $abs_us_root.$us_url_root.'users/includes/header.php'; ?>
 <?php require_once $abs_us_root.$us_url_root.'users/includes/navigation.php'; ?>
+
 
 <?php
 if (!securePage($_SERVER['PHP_SELF'])){die();}?>
@@ -167,13 +179,14 @@ if(!empty($_POST)) {
             $status = Input::get("status");
             if ($status == "دانشجو"){
                     $std_number = Input::get("std_number");
+                    $dorms = Input::get("dorms");
                     if ( ($std_number/100000)%10 == 1 )
                         $grade = "کارشناسی";
                     if ( ($std_number/100000)%10 == 2 )
                         $grade = "کارشناسی ارشد";
                     if ( ($std_number/100000)%10 == 3 )
                         $grade = "دکترا";
-                    $fields=array('std_number'=>$std_number, 'yinter'=>$std_number/1000000, 'grade'=>$grade);
+                    $fields=array('std_number'=>$std_number, 'yinter'=>$std_number/1000000, 'grade'=>$grade, 'dorms'=>$dorms);
                     $validation->check($_POST,array(
                         'std_number' => array(
                             'display' => 'شماره دانشجویی',
@@ -204,7 +217,7 @@ if(!empty($_POST)) {
                     ));
                     if($validation->passed()){
                         $db->update('users',$userId,array('status'=>$status));
-                        $db->update('users',$userId,array('std_number'=>null, 'yinter'=>0, 'grade'=>null));
+                        $db->update('users',$userId,array('std_number'=>null, 'yinter'=>0, 'grade'=>null, 'dorms'=>null));
                         $db->update('users',$userId,$fields);
                         $successes[]='وضعیت به روز رسانی شد.';
                     }else{
@@ -217,7 +230,7 @@ if(!empty($_POST)) {
             else{
                 $fields = array('status'=>$status);
                 $db->update('users',$userId,$fields);
-                $db->update('users',$userId,array('std_number'=>null, 'yinter'=>0, 'grade'=>null));
+                $db->update('users',$userId,array('std_number'=>null, 'yinter'=>0, 'grade'=>null, 'dorms'=>null));
                 $db->update('users',$userId,array('emp_number'=>null));
                 $successes[]='وضعیت به روز رسانی شد.';
 
@@ -225,8 +238,9 @@ if(!empty($_POST)) {
         }else{
             $status=$userdetails->status;
         }
-        //Update std number
+    //Update std number and dorms
     if ($status == "دانشجو"){
+        // std_number
         if ($userdetails->std_number != $_POST['std_number']){
             $std_number = Input::get("std_number");
             if ( ($std_number/100000)%10 == 1 )
@@ -235,7 +249,7 @@ if(!empty($_POST)) {
                 $grade = "کارشناسی ارشد";
             if ( ($std_number/100000)%10 == 3 )
                 $grade = "دکترا";
-                    $fields=array('std_number'=>$std_number, 'yinter'=>$std_number/1000000, 'grade'=>$grade);
+            $fields=array('std_number'=>$std_number, 'yinter'=>$std_number/1000000, 'grade'=>$grade);
             $validation->check($_POST,array(
                 'std_number' => array(
                     'display' => 'شماره دانشجویی',
@@ -254,6 +268,28 @@ if(!empty($_POST)) {
             }
         }else{
             $std_number=$userdetails->std_number;
+        }
+        // dorms
+        if ($userdetails->dorms != $_POST['dorms']){
+            $dorms = Input::get("dorms");
+            $fields=array('dorms'=>$dorms);
+            $validation->check($_POST,array(
+                'dorms' => array(
+                    'display' => 'خوابگاه',
+                    'required' => false,
+                )
+            ));
+            if($validation->passed()){
+                $db->update('users',$userId,$fields);
+                $successes[]='خوابگاه به روز رسانی شد.';
+            }else{
+                //validation did not pass
+                foreach ($validation->errors() as $error) {
+                    $errors[] = $error;
+                }
+            }
+        }else{
+            $dorms=$userdetails->dorms;
         }
     }
         //Update emp number
@@ -280,6 +316,72 @@ if(!empty($_POST)) {
             $emp_number=$userdetails->emp_number;
         }
     }
+        //Update major
+        if ($userdetails->major != $_POST['major']){
+            $major = Input::get("major");
+            $fields=array('major'=>$major);
+            $validation->check($_POST,array(
+                'major' => array(
+                    'display' => 'رشته تحصیلی',
+                    'required' => false,
+                )
+            ));
+            if($validation->passed()){
+                $db->update('users',$userId,$fields);
+                $successes[]='رشته تحصیلی به روز رسانی شد.';
+            }else{
+                //validation did not pass
+                foreach ($validation->errors() as $error) {
+                    $errors[] = $error;
+                }
+            }
+        }else{
+            $major=$userdetails->major;
+        }
+        //Update gender
+        if ($userdetails->gender != $_POST['gender']){
+            $gender = Input::get("gender");
+            $fields=array('gender'=>$gender);
+            $validation->check($_POST,array(
+                'gender' => array(
+                    'display' => 'جنسیت',
+                    'required' => true,
+                )
+            ));
+            if($validation->passed()){
+                $db->update('users',$userId,$fields);
+                $successes[]='جنسیت به روز رسانی شد.';
+            }else{
+                //validation did not pass
+                foreach ($validation->errors() as $error) {
+                    $errors[] = $error;
+                }
+            }
+        }else{
+            $gender=$userdetails->gender;
+        }
+        //Update interested
+        if ($userdetails->interested != $_POST['interested']){
+            $interested = Input::get("interested");
+            $fields=array('interested'=>$interested);
+            $validation->check($_POST,array(
+                'interested' => array(
+                    'display' => 'علاقه مندی',
+                    'required' => false,
+                )
+            ));
+            if($validation->passed()){
+                $db->update('users',$userId,$fields);
+                $successes[]='علاقه مندی به روز رسانی شد.';
+            }else{
+                //validation did not pass
+                foreach ($validation->errors() as $error) {
+                    $errors[] = $error;
+                }
+            }
+        }else{
+            $interested=$userdetails->interested;
+        }
         //Update email
         if ($userdetails->email != $_POST['email']){
             $email = Input::get("email");
@@ -348,12 +450,16 @@ if(!empty($_POST)) {
     $displayname=$userdetails->username;
     $fname=$userdetails->fname;
     $lname=$userdetails->lname;
+    $gender=$userdetails->gender;
     $email=$userdetails->email;
     $icode=$userdetails->icode;
     $phnumber=$userdetails->phnumber;
     $status=$userdetails->status;
+    $major=$userdetails->major;
+    $dorms=$userdetails->dorms;
     $std_number=$userdetails->std_number;
     $emp_number=$userdetails->emp_number;
+    $interested=$userdetails->interested;
 }
 ?>
 <div id="page-wrapper">
@@ -404,6 +510,10 @@ if(!empty($_POST)) {
                             <label>تکرار رمز عبور</label>
                             <input class='form-control' type='password' name='confirm' />
                         </div>
+
+                        <label for="interested">علاقه مند به همکاری</label><br>
+                        <input type="radio" class="form-contro" id="interested" name="interested" value="بله" <?php if($interested == "بله") echo "checked"; ?>>بله<br>
+                        <input type="radio" class="form-contro" id="interested" name="interested" value="خیر"  <?php if($interested == "خیر") echo "checked"; ?>>خیر<br>
         </div>
     </div><!--END OF panel-default  -->
 </div><!--END OF col  -->
@@ -431,43 +541,80 @@ if(!empty($_POST)) {
                             <label>شماره تماس</label>
                             <input  class='form-control' type='text' name='phnumber' value='<?=$phnumber?>' />
                         </div>
+                        <div class="form-group">
+                            <label for="gender">جنسیت</label><br>
+                            <input type="radio" class="form-contro" id="gender" name="gender" value="آقا" <?php if($gender == "آقا") echo "checked"; ?>>آقا<br>
+                            <input type="radio" class="form-contro" id="gender" name="gender" value="خانم"  <?php if($gender == "خانم") echo "checked"; ?>>خانم<br>
+                        </div>
         </div>
     </div><!--END OF panel-default  -->
-</div><!--END OF col  -->                        
+</div><!--END OF col  -->
                        
 
 <div class="col-md-6">
     <div class=" panel panel-default">
-        <div class="panel-heading">اطلاعات تکمیلی</div>
+        <div class="panel-heading">اطلاعات تحصیلی</div>
         <div class="panel-body">
 
-            <label for="status">وضعیت*</label><br>
-            <select name="status" id = "status" class="form-control" onchange="disableInput()" >
-                <option value="فارغ التحصیل"  <?php if($status == "فارغ التحصیل") echo "selected"; ?> >فارغ التحصیل</option>
-                <option value="دانشجو"  <?php if($status == "دانشجو") echo "selected"; ?> >دانشجو</option>
-                <option value="کارمند"  <?php if($status == "کارمند") echo "selected"; ?> >کارمند</option>
-                <option value="استاد"  <?php if($status == "استاد") echo "selected"; ?> >استاد</option>
-                <option value="آزاد"  <?php if($status == "آزاد") echo "selected"; ?> >آزاد</option>
-            </select>
+            <div class="form-group">
+                <label for="status">وضعیت*</label><br>
+                <select name="status" id = "status" class="form-control" onchange="disableInput()" >
+                    <option value="فارغ التحصیل"  <?php if($status == "فارغ التحصیل") echo "selected"; ?> >فارغ التحصیل</option>
+                    <option value="دانشجو"  <?php if($status == "دانشجو") echo "selected"; ?> >دانشجو</option>
+                    <option value="کارمند"  <?php if($status == "کارمند") echo "selected"; ?> >کارمند</option>
+                    <option value="استاد"  <?php if($status == "استاد") echo "selected"; ?> >استاد</option>
+                    <option value="آزاد"  <?php if($status == "آزاد") echo "selected"; ?> >آزاد</option>
+                </select>
+            </div>
 
-            <label for="std_number">شماره دانشجویی*</label>
-            <?php   
-            if ($status == "دانشجو"){
-                echo "<input type='text' class='form-control' id='std_number' name='std_number' placeholder='شماره دانشجویی' value='$std_number' >";
-            }else{
-                echo "<input type='text' class='form-control' id='std_number' name='std_number' placeholder='شماره دانشجویی' disabled='disabled' >";
-            }
+            <div class="form-group">
+                <label for="std_number">شماره دانشجویی*</label>
+                <?php   
+                if ($status == "دانشجو"){
+                    echo "<input type='text' class='form-control' id='std_number' name='std_number' placeholder='شماره دانشجویی' value='$std_number' >";
+                }else{
+                    echo "<input type='text' class='form-control' id='std_number' name='std_number' placeholder='شماره دانشجویی' readonly >";
+                }
+                ?>
+            </div>
 
-            ?>
+            <div class="form-group">
+                <label for="major">رشته تحصیلی</label>
+                <input type="text" class="form-control" id="major" name="major" placeholder="رشته تحصیلی" value='<?=$major?>'>
+            </div>
 
-            <label for="emp_number">کد کارمندی*</label>
-            <?php
-            if ($status == "کارمند"){
-                echo "<input type='text' class='form-control' id='emp_number' name='emp_number' placeholder='کد کارمندی' value='$emp_number' >";
-            }else{
-                echo "<input type='text' class='form-control' id='emp_number' name='emp_number' placeholder='کد کارمندی' disabled='disabled' >";
-            }
-            ?>
+            <div class="form-group">
+                <label for="dorms">خوابگاه</label><br>
+                <select name="dorms" id = "dorms" class="form-control" <?php if($status != "دانشجو") echo "disabled='disabled'"; ?> >
+                    <option ></option>
+                    <option value="تهرانی"  <?php if($dorms == "تهرانی") echo "selected"; ?>>تهرانی</option>
+                    <option value="طرشت 3"  <?php if($dorms == "طرشت 3") echo "selected"; ?>>طرشت 3</option>
+                    <option value="احمدی روشن"  <?php if($dorms == "احمدی روشن") echo "selected"; ?>>احمدی روشن</option>
+                    <option value="طرشت 2"  <?php if($dorms == "طرشت 2") echo "selected"; ?>>طرشت 2</option>
+                    <option value="آزادی"  <?php if($dorms == "آزادی") echo "selected"; ?>>آزادی</option>
+                    <option value="وزوایی"  <?php if($dorms == "وزوایی") echo "selected"; ?>>وزوایی</option>
+                    <option value="شادمان"  <?php if($dorms == "شادمان") echo "selected"; ?>>شادمان</option>
+                    <option value="صادقی"  <?php if($dorms == "صادقی") echo "selected"; ?>>صادقی</option>
+                    <option value="متأهلی"  <?php if($dorms == "متأهلی") echo "selected"; ?>>متأهلی</option>
+                    <option value="شوریده"  <?php if($dorms == "شوریده") echo "selected"; ?>>شوریده</option>
+                    <option value="ولیعصر"  <?php if($dorms == "ولیعصر") echo "selected"; ?>>ولیعصر</option>
+                    <option value="12 واحدی"  <?php if($dorms == "12 واحدی") echo "selected"; ?>>12 واحدی</option>
+                    <option value="حیدرتاش"  <?php if($dorms == "حیدرتاش") echo "selected"; ?>>حیدرتاش</option>
+                    <option value="مصلی نژاد"  <?php if($dorms == "مصلی نژاد") echo "selected"; ?>>مصلی نژاد</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="emp_number">کد کارمندی*</label>
+                <?php
+                if ($status == "کارمند"){
+                    echo "<input type='text' class='form-control' id='emp_number' name='emp_number' placeholder='کد کارمندی' value='$emp_number' >";
+                }else{
+                    echo "<input type='text' class='form-control' id='emp_number' name='emp_number' placeholder='کد کارمندی' readonly >";
+                }
+                ?>
+            </div>
+
         </div>
     </div><!--END OF panel-default  -->
 </div><!--END OF col  -->

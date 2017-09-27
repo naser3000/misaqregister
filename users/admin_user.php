@@ -218,44 +218,132 @@ $useravatar = '<img src="'.$grav.'" class="img-responsive img-thumbnail" alt="">
 	<div class="col-xs-12 col-sm-10">
 	<form class="form" name='adminUser' action='admin_user.php?id=<?=$userId?>' method='post'>
 
-	<h3>User Information</h3>
-	<div class="panel panel-default">
-	<div class="panel-heading">User ID: <?=$userdetails->id?></div>
-	<div class="panel-body">
+	<h3>اطلاعات کاربر</h3>
+  <div class="panel panel-default">
+    <div class="panel-heading">ID کاربر: <?=$userdetails->id?></div>
+    <div class="panel-body">
 
-	<label>Joined: </label> <?=$userdetails->join_date?><br/>
+      <label>عضویت: </label> <?=$userdetails->join_date?><br/>
+      <label>آخرین بازدید: </label> <?=$userdetails->last_login?><br/>
+      <label>تعداد ورود: </label> <?=$userdetails->logins?><br/>
 
-	<label>Last seen: </label> <?=$userdetails->last_login?><br/>
+      <label>نام کاربری:</label>
+      <input  class='form-control' type='text' name='username' value='<?=$userdetails->username?>' />
 
-	<label>Logins: </label> <?=$userdetails->logins?><br/>
+      <label>ایمیل:</label>
+      <input class='form-control' type='text' name='email' value='<?=$userdetails->email?>' />
 
-	<label>Username:</label>
-	<input  class='form-control' type='text' name='username' value='<?=$userdetails->username?>' />
+      <div class="form-group">
+        <label>رمز عبور جدید (حداقل <?=$settings->min_pw?> و حداکثر <?=$settings->max_pw?> حرف.)</label>
+        <input class='form-control' type='password' name='password' />
+      </div>
 
-	<label>Email:</label>
-	<input class='form-control' type='text' name='email' value='<?=$userdetails->email?>' />
+      <div class="form-group">
+        <label>تکرار رمز عبور</label>
+        <input class='form-control' type='password' name='confirm' />
+      </div>
 
-	<label>First Name:</label>
-	<input  class='form-control' type='text' name='fname' value='<?=$userdetails->fname?>' />
-
-	<label>Last Name:</label>
-	<input  class='form-control' type='text' name='lname' value='<?=$userdetails->lname?>' />
-  <div class="form-group">
-    <label>New Password (<?=$settings->min_pw?> char min, <?=$settings->max_pw?> max.)</label>
-    <input class='form-control' type='password' name='password' />
-  </div>
-
-  <div class="form-group">
-    <label>Confirm Password</label>
-    <input class='form-control' type='password' name='confirm' />
-  </div>
-
-	</div>
+    </div>
 	</div>
 
-	<h3>Permissions</h3>
+  <div class="col-md-6">
+    <div class=" panel panel-default">
+        <div class="panel-heading">اطلاعات فردی</div>
+        <div class="panel-body">
+                        <div class="form-group">
+                            <label>نام</label>
+                            <input  class='form-control' type='text' name='fname' value='<?=$userdetails->fname?>' />
+                        </div>
+
+                        <div class="form-group">
+                            <label>نام خانوادگی</label>
+                            <input  class='form-control' type='text' name='lname' value='<?=$userdetails->lname?>' />
+                        </div>
+
+                        <div class="form-group">
+                            <label>کد ملی</label>
+                            <input  class='form-control' type='text' name='icode' value='<?=$userdetails->icode?>' />
+                        </div>
+
+                        <div class="form-group">
+                            <label>شماره تماس</label>
+                            <input  class='form-control' type='text' name='phnumber' value='<?=$userdetails->phnumber?>' />
+                        </div>
+        </div>
+    </div><!--END OF panel-default  -->
+</div><!--END OF col  -->
+<div class="col-md-6">
+    <div class=" panel panel-default">
+        <div class="panel-heading">اطلاعات تحصیلی</div>
+        <div class="panel-body">
+
+            <div class="form-group">
+                <label for="status">وضعیت*</label><br>
+                <select name="status" id = "status" class="form-control" onchange="disableInput()" >
+                    <option value="فارغ التحصیل"  <?php if($userdetails->status == "فارغ التحصیل") echo "selected"; ?> >فارغ التحصیل</option>
+                    <option value="دانشجو"  <?php if($userdetails->status == "دانشجو") echo "selected"; ?> >دانشجو</option>
+                    <option value="کارمند"  <?php if($userdetails->status == "کارمند") echo "selected"; ?> >کارمند</option>
+                    <option value="استاد"  <?php if($userdetails->status == "استاد") echo "selected"; ?> >استاد</option>
+                    <option value="آزاد"  <?php if($userdetails->status == "آزاد") echo "selected"; ?> >آزاد</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="std_number">شماره دانشجویی*</label>
+                <?php   
+                if ($userdetails->status == "دانشجو"){
+                    echo "<input type='text' class='form-control' id='std_number' name='std_number' placeholder='شماره دانشجویی' value='$userdetails->std_number' >";
+                }else{
+                    echo "<input type='text' class='form-control' id='std_number' name='std_number' placeholder='شماره دانشجویی' readonly >";
+                }
+                ?>
+            </div>
+
+            <div class="form-group">
+                <label for="major">رشته تحصیلی</label>
+                <input type="text" class="form-control" id="major" name="major" placeholder="رشته تحصیلی" value='<?=$userdetails->major?>'>
+            </div>
+
+            <div class="form-group">
+                <label for="dorms">خوابگاه</label><br>
+                <select name="dorms" id = "dorms" class="form-control" <?php if($userdetails->status != "دانشجو") echo "disabled='disabled'"; ?> >
+                    <option ></option>
+                    <option value="تهرانی"  <?php if($userdetails->dorms == "تهرانی") echo "selected"; ?>>تهرانی</option>
+                    <option value="طرشت 3"  <?php if($userdetails->dorms == "طرشت 3") echo "selected"; ?>>طرشت 3</option>
+                    <option value="احمدی روشن"  <?php if($userdetails->dorms == "احمدی روشن") echo "selected"; ?>>احمدی روشن</option>
+                    <option value="طرشت 2"  <?php if($userdetails->dorms == "طرشت 2") echo "selected"; ?>>طرشت 2</option>
+                    <option value="آزادی"  <?php if($userdetails->dorms == "آزادی") echo "selected"; ?>>آزادی</option>
+                    <option value="وزوایی"  <?php if($userdetails->dorms == "وزوایی") echo "selected"; ?>>وزوایی</option>
+                    <option value="شادمان"  <?php if($userdetails->dorms == "شادمان") echo "selected"; ?>>شادمان</option>
+                    <option value="صادقی"  <?php if($userdetails->dorms == "صادقی") echo "selected"; ?>>صادقی</option>
+                    <option value="متأهلی"  <?php if($userdetails->dorms == "متأهلی") echo "selected"; ?>>متأهلی</option>
+                    <option value="شوریده"  <?php if($userdetails->dorms == "شوریده") echo "selected"; ?>>شوریده</option>
+                    <option value="ولیعصر"  <?php if($userdetails->dorms == "ولیعصر") echo "selected"; ?>>ولیعصر</option>
+                    <option value="12 واحدی"  <?php if($userdetails->dorms == "12 واحدی") echo "selected"; ?>>12 واحدی</option>
+                    <option value="حیدرتاش"  <?php if($userdetails->dorms == "حیدرتاش") echo "selected"; ?>>حیدرتاش</option>
+                    <option value="مصلی نژاد"  <?php if($userdetails->dorms == "مصلی نژاد") echo "selected"; ?>>مصلی نژاد</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="emp_number">کد کارمندی*</label>
+                <?php
+                if ($userdetails->status == "کارمند"){
+                    echo "<input type='text' class='form-control' id='emp_number' name='emp_number' placeholder='کد کارمندی' value='$userdetails->emp_number' >";
+                }else{
+                    echo "<input type='text' class='form-control' id='emp_number' name='emp_number' placeholder='کد کارمندی' readonly >";
+                }
+                ?>
+            </div>
+
+        </div>
+    </div><!--END OF panel-default  -->
+</div><!--END OF col  -->
+
+
+	<h3>دسترسی ها</h3>
 	<div class="panel panel-default">
-		<div class="panel-heading">Remove These Permission(s):</div>
+		<div class="panel-heading">پاک کردن این دسترسی(ها):</div>
 		<div class="panel-body">
 		<?php
 		//NEW List of permission levels user is apart of
@@ -277,7 +365,7 @@ $useravatar = '<img src="'.$grav.'" class="img-responsive img-thumbnail" alt="">
 	</div>
 
 	<div class="panel panel-default">
-		<div class="panel-heading">Add These Permission(s):</div>
+		<div class="panel-heading">اضافه کردن این دسترسی(ها):</div>
 		<div class="panel-body">
 		<?php
 		foreach ($permissionData as $v1){
@@ -291,19 +379,19 @@ $useravatar = '<img src="'.$grav.'" class="img-responsive img-thumbnail" alt="">
 	</div>
 
 	<div class="panel panel-default">
-		<div class="panel-heading">Miscellaneous:</div>
+		<div class="panel-heading">متفرقه:</div>
 		<div class="panel-body">
-		<label> Block?:</label>
+		<label> مسدود کردن؟:</label>
 		<select name="active" class="form-control">
-			<option <?php if ($userdetails->permissions==1){echo "selected='selected'";} ?> value="1">No</option>
-			<option <?php if ($userdetails->permissions==0){echo "selected='selected'";} ?>value="0">Yes</option>
+			<option <?php if ($userdetails->permissions==1){echo "selected='selected'";} ?> value="1">خیر</option>
+			<option <?php if ($userdetails->permissions==0){echo "selected='selected'";} ?>value="0">بله</option>
 		</select>
 		</div>
 	</div>
 
 	<input type="hidden" name="csrf" value="<?=Token::generate();?>" />
-	<input class='btn btn-primary' type='submit' value='Update' class='submit' />
-	<a class='btn btn-warning' href="admin_users.php">Cancel</a><br><br>
+	<input class='btn btn-primary' type='submit' value='به روز رسانی' class='submit' />
+	<a class='btn btn-warning' href="admin_users.php">انصراف</a><br><br>
 
 	</form>
 

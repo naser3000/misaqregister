@@ -1,9 +1,5 @@
 <style type="text/css">
-    
-    h2{
-        font-family: 'IRANSans';
-    }
-    
+
     .container input{
         margin-left: 5px;
     }
@@ -12,28 +8,6 @@
     }
 
 </style>
-<script language="javascript" type="text/javascript">
-	/*
-		// disable or enable 'std_number' input according to status selections
-		function disableInput(){
-			var select = document.getElementById('status');
-			var input = document.getElementById('std_number');
-			var input2 = document.getElementById('emp_number');
-			if (select.value == 'دانشجو') {
-				input.disabled = '';
-			}else{
-				input.value = '';
-				input.disabled = 'disabled';
-			}
-			if (select.value == 'کارمند') {
-				input2.disabled = '';
-			}else{
-				input.value = '';
-				input2.disabled = 'disabled';
-			}
-		}*/
-			
-</script>
 
 
 <div id="page-wrapper">
@@ -50,14 +24,13 @@ if (!$form_valid && Input::exists()){
 <form class="form-signup" action="<?=$form_action;?>" method="<?=$form_method;?>" id="payment-form">
 
 	<h2 class="form-signin-heading"> <?=lang("SIGNUP_TEXT","");?></h2>
-	<div class="col-md-6">
+	<div class="col-md-6 pull-right">
 	<div class=" panel panel-default ">
 		<div class="panel-heading">اطلاعات حساب کاربری</div>
 		<div class="panel-body">
 
 			<label for="username">نام کاربری* (بین <?=$settings->max_un?>-<?=$settings->min_un?> حرف)</label>
 			<input  class="form-control" type="text" name="username" id="username" placeholder="نام کاربری" value="<?php if (!$form_valid && !empty($_POST)){ echo $username;} ?>" required autofocus>
-			<p class="help-block"></p>
 
 			<label for="email">پست الکترونیک*</label>
 			<input  class="form-control" type="text" name="email" id="email" placeholder="پست الکترونیک" value="<?php if (!$form_valid && !empty($_POST)){ echo $email;} ?>" required >
@@ -176,13 +149,16 @@ if ($settings->req_num == 1){ ?>
 			<br>
 <?php } ?>
 			<span id="password_match_icon" class="glyphicon glyphicon-ok gray_out_icon" style="color: green"></span>&nbsp;&nbsp;<?php echo $password_match_statement;?>
-		</div>
+		</div><br>
 
+			<label for="interested">علاقه مند به همکاری</label><br>
+			<input type="radio" class="form-contro" id="interested" name="interested" value="بله" required>بله<br>
+			<input type="radio" class="form-contro" id="interested" name="interested" value="خیر" required>خیر<br>
 		</div>
 	</div><!--END OF panel-default  -->
 	</div><!--END OF col  -->
 
-	<div class="col-md-6">
+	<div class="col-md-6 pull-right">
 	<div class=" panel panel-default ">
 		<div class="panel-heading">اطلاعات فردی </div>
 		<div class="panel-body">
@@ -197,7 +173,7 @@ if ($settings->req_num == 1){ ?>
 			<input type="text" class="form-control" id="icode" name="icode" placeholder="کد ملی" value="<?php if (!$form_valid && !empty($_POST)){ echo $icode;} ?>" required>
 
 			<label for="phnumber">شماره تماس*</label>
-			<input type="text" class="form-control" id="phnumber" name="phnumber" placeholder="شماره تماس" value="<?php if (!$form_valid && !empty($_POST)){ echo $phnumber;} ?>" required>
+			<input type="text" class="form-control" id="phnumber" name="phnumber" placeholder="شماره تماس" value="<?php if (!$form_valid && !empty($_POST)){ echo $phnumber;} ?>" required><br>
 
 			<label for="gender">جنسیت*</label><br>
 			<input type="radio" class="form-contro" id="gender" name="gender" value="آقا" required>آقا<br>
@@ -206,9 +182,9 @@ if ($settings->req_num == 1){ ?>
 	</div><!--END OF panel-default  -->
 	</div><!--END OF col  -->
 
-	<div class="col-md-6">
+	<div class="col-md-6 pull-right">
 	<div class=" panel panel-default">
-		<div class="panel-heading">اطلاعات تکمیلی</div>
+		<div class="panel-heading">اطلاعات تحصیلی</div>
 		<div class="panel-body">
 
 			<label for="status">وضعیت*</label><br>
@@ -221,15 +197,38 @@ if ($settings->req_num == 1){ ?>
 			</select>
 
 			<label for="std_number">شماره دانشجویی*</label>
-			<input type="text" class="form-control" id="std_number" name="std_number" disabled="disabled" placeholder="شماره دانشجویی" value =''>
+			<input type="text" class="form-control" id="std_number" name="std_number" readonly="" placeholder="شماره دانشجویی" value =''>
+
+			<label for="major">رشته تحصیلی</label>
+			<input type="text" class="form-control" id="major" name="major" placeholder="رشته تحصیلی">
+
+			<label for="dorms">خوابگاه</label><br>
+			<select name="dorms" id = "dorms" class="form-control" disabled="disabled" >
+				<option></option>
+				<option value="تهرانی">تهرانی</option>
+				<option value="طرشت 3" >طرشت 3</option>
+				<option value="احمدی روشن">احمدی روشن</option>
+				<option value="طرشت 2">طرشت 2</option>
+				<option value="آزادی">آزادی</option>
+				<option value="وزوایی">وزوایی</option>
+				<option value="شادمان">شادمان</option>
+				<option value="صادقی">صادقی</option>
+				<option value="متأهلی">متأهلی</option>
+				<option value="شوریده">شوریده</option>
+				<option value="ولیعصر">ولیعصر</option>
+				<option value="12 واحدی">12 واحدی</option>
+				<option value="حیدرتاش">حیدرتاش</option>
+				<option value="مصلی نژاد">مصلی نژاد</option>
+				
+			</select>
 
 			<label for="emp_number">کد کارمندی*</label>
-			<input type="text" class="form-control" id="emp_number" name="emp_number" disabled="disabled" placeholder="کد کارمندی" value =''>
+			<input type="text" class="form-control" id="emp_number" name="emp_number" readonly="" placeholder="کد کارمندی" value =''>
 		</div>
 	</div><!--END OF panel-default  -->
 	</div><!--END OF col  -->
 
-	<div class="col-md-6">
+	<div class="col-md-6 pull-right">
 	<div class=" panel panel-default ">
 		<div class="panel-heading">قوانین و شرایط</div>
 		<div class="panel-body">
@@ -241,14 +240,6 @@ if ($settings->req_num == 1){ ?>
 		</div>
 	</div><!--END OF panel-default  -->
 	</div><!--END OF col  -->
-
-	<div class="form-group">
-
-		<br><br>
-
-		
-		
-	</div>
 
 	<?php if($settings->recaptcha == 1|| $settings->recaptcha == 2){ ?>
 	<div class="form-group" align="center">
