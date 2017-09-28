@@ -51,7 +51,7 @@ if(!empty($_POST)) {
       $fields=array('username'=>$displayname);
       $validation->check($_POST,array(
         'username' => array(
-          'display' => 'Username',
+          'display' => 'نام کاربری',
           'required' => true,
           'unique_update' => 'users,'.$userId,
           'min' => 1,
@@ -60,9 +60,10 @@ if(!empty($_POST)) {
       ));
     if($validation->passed()){
       $db->update('users',$userId,$fields);
-     $successes[] = "Username Updated";
+     $successes[] = "نام کاربری به روز رسانی شد.";
     }else{
-
+          ?><div id="form-errors"><?=$validation->display_errors();?></div>
+            <?php
       }
     }
 
@@ -74,7 +75,7 @@ if(!empty($_POST)) {
       $fields=array('fname'=>$fname);
       $validation->check($_POST,array(
         'fname' => array(
-          'display' => 'First Name',
+          'display' => 'نام',
           'required' => true,
           'min' => 1,
           'max' => 25
@@ -82,23 +83,20 @@ if(!empty($_POST)) {
       ));
     if($validation->passed()){
       $db->update('users',$userId,$fields);
-      $successes[] = "First Name Updated";
+      $successes[] = "نام به روز رسانی شد.";
     }else{
-          ?><div id="form-errors">
-            <?=$validation->display_errors();?></div>
-            <?php
+          
       }
     }
 
     //Update last name
-
     if ($userdetails->lname != $_POST['lname']){
       $lname = Input::get("lname");
 
       $fields=array('lname'=>$lname);
       $validation->check($_POST,array(
         'lname' => array(
-          'display' => 'Last Name',
+          'display' => 'نام خانوادگی',
           'required' => true,
           'min' => 1,
           'max' => 25
@@ -106,24 +104,217 @@ if(!empty($_POST)) {
       ));
     if($validation->passed()){
       $db->update('users',$userId,$fields);
-      $successes[] = "Last Name Updated";
+      $successes[] = "نام خانوادگی به روز رسانی شد.";
     }else{
-          ?><div id="form-errors">
-            <?=$validation->display_errors();?></div>
+          ?>
             <?php
       }
     }
 
+    //Update national code
+    if ($userdetails->icode != $_POST['icode']){
+      $icode = Input::get("icode");
+
+      $fields=array('icode'=>$icode);
+      $validation->check($_POST,array(
+        'icode' => array(
+          'display' => 'کد ملی',
+          'required' => true,
+          'exact' => 10,
+        )
+      ));
+    if($validation->passed()){
+      $db->update('users',$userId,$fields);
+      $successes[] = "کد ملی به روز رسانی شد.";
+    }else{
+          ?>
+            <?php
+      }
+    }
+
+    
+    //Update phone number
+    if ($userdetails->phnumber != $_POST['phnumber']){
+      $phnumber = Input::get("phnumber");
+
+      $fields=array('phnumber'=>$phnumber);
+      $validation->check($_POST,array(
+        'phnumber' => array(
+          'display' => 'شماره تماس',
+          'required' => true,
+          'exact' => 11,
+        )
+      ));
+    if($validation->passed()){
+      $db->update('users',$userId,$fields);
+      $successes[] = "شماره تماس به روز رسانی شد.";
+    }else{
+          ?>
+            <?php
+      }
+    }
+    
+    //Update major
+    if ($userdetails->major != $_POST['major']){
+      $major = Input::get("major");
+
+      $fields=array('major'=>$major);
+      $validation->check($_POST,array(
+        'major' => array(
+          'display' => 'رشته تحصیلی',
+        )
+      ));
+    if($validation->passed()){
+      $db->update('users',$userId,$fields);
+      $successes[] = "رشته تحصیلی به روز رسانی شد.";
+    }else{
+          ?>
+            <?php
+      }
+    }
+    //Update status
+        if ($userdetails->status != $_POST['status']){
+            $status = Input::get("status");
+            if ($status == "دانشجو"){
+                    $std_number = Input::get("std_number");
+                    $dorms = Input::get("dorms");
+                    $grade = "";
+                    if ( ($std_number/100000)%10 == 1 )
+                        $grade = "کارشناسی";
+                    if ( ($std_number/100000)%10 == 2 )
+                        $grade = "کارشناسی ارشد";
+                    if ( ($std_number/100000)%10 == 3 )
+                        $grade = "دکترا";
+                    $fields=array('std_number'=>$std_number, 'yinter'=>$std_number/1000000, 'grade'=>$grade, 'dorms'=>$dorms);
+                    $validation->check($_POST,array(
+                        'std_number' => array(
+                            'display' => 'شماره دانشجویی',
+                            'required' => true,
+                            'exact' => 8,
+                        )
+                    ));
+                    if($validation->passed()){
+                        $db->update('users',$userId,array('status'=>$status));
+                        $db->update('users',$userId,$fields);
+                        $db->update('users',$userId,array('emp_number'=>null));
+                        $successes[]='وضعیت به روز رسانی شد.';
+                    }else{
+                        ?>
+                            <?php
+                    }
+            }
+            elseif ($status == "کارمند") {
+                    $emp_number = Input::get("emp_number");
+                    $fields=array('emp_number'=>$emp_number);
+                    $validation->check($_POST,array(
+                        'emp_number' => array(
+                            'display' => 'کد پرسنلی',
+                            'required' => true,
+                        )
+                    ));
+                    if($validation->passed()){
+                        $db->update('users',$userId,array('status'=>$status));
+                        $db->update('users',$userId,array('std_number'=>null, 'yinter'=>0, 'grade'=>null, 'dorms'=>null));
+                        $db->update('users',$userId,$fields);
+                        $successes[]='وضعیت به روز رسانی شد.';
+                    }else{
+                        ?>
+                            <?php
+                    }
+            }
+            else{
+                $fields = array('status'=>$status);
+                $db->update('users',$userId,$fields);
+                $db->update('users',$userId,array('std_number'=>null, 'yinter'=>0, 'grade'=>null, 'dorms'=>null));
+                $db->update('users',$userId,array('emp_number'=>null));
+                $successes[]='وضعیت به روز رسانی شد.';
+
+            }
+        }else{
+                $status = $userdetails->status;
+        }
+
+    //Update std number and dorms
+
+    if ($status == "دانشجو" ){
+        // std_number
+        if ($userdetails->std_number != $_POST['std_number']){
+            $std_number = Input::get("std_number");
+            $grade = "";
+            if ( ($std_number/100000)%10 == 1 )
+                $grade = "کارشناسی";
+            if ( ($std_number/100000)%10 == 2 )
+                $grade = "کارشناسی ارشد";
+            if ( ($std_number/100000)%10 == 3 )
+                $grade = "دکترا";
+            $fields=array('std_number'=>$std_number, 'yinter'=>$std_number/1000000, 'grade'=>$grade);
+            $validation->check($_POST,array(
+                'std_number' => array(
+                    'display' => 'شماره دانشجویی',
+                    'required' => true,
+                    'exact' => 8,
+                )
+            ));
+            if($validation->passed()){
+                $db->update('users',$userId,$fields);
+                $successes[]='شماره دانشجویی به روز رسانی شد.';
+            }else{
+                ?>
+                    <?php
+            }
+        }
+        // dorms
+        if ($userdetails->dorms != $_POST['dorms']){
+            $dorms = Input::get("dorms");
+            $fields=array('dorms'=>$dorms);
+            $validation->check($_POST,array(
+                'dorms' => array(
+                    'display' => 'خوابگاه',
+                    'required' => false,
+                )
+            ));
+            if($validation->passed()){
+                $db->update('users',$userId,$fields);
+                $successes[]='خوابگاه به روز رسانی شد.';
+            }else{
+                ?>
+                    <?php
+            }
+        }
+    }
+
+    //Update emp number
+    if ($status == "کارمند") {
+        if ($userdetails->emp_number != $_POST['emp_number']){
+            $emp_number = Input::get("emp_number");
+            $fields=array('emp_number'=>$emp_number);
+            $validation->check($_POST,array(
+                'emp_number' => array(
+                    'display' => 'کد پرسنلی',
+                    'required' => true,
+                )
+            ));
+            if($validation->passed()){
+                $db->update('users',$userId,$fields);
+                $successes[]='کد پرسنلی به روز رسانی شد.';
+            }else{
+                ?>
+                    <?php
+            }
+        }
+    }
+
+    //Update password
     if(!empty($_POST['password'])) {
       $validation->check($_POST,array(
         'password' => array(
-          'display' => 'New Password',
+          'display' => 'رمز جدید',
           'required' => true,
           'min' => $settings->min_pw,
 					'max' => $settings->max_pw,
         ),
         'confirm' => array(
-          'display' => 'Confirm New Password',
+          'display' => 'تکرار رمز جدید',
           'required' => true,
           'matches' => 'password',
         ),
@@ -133,7 +324,7 @@ if(!empty($_POST)) {
       //process
       $new_password_hash = password_hash(Input::get('password'),PASSWORD_BCRYPT,array('cost' => 12));
       $user->update(array('password' => $new_password_hash,),$userId);
-      $successes[]='Password updated.';
+      $successes[]='رمز عبور به روز رسانی شد.';
     }
     }
 
@@ -151,7 +342,7 @@ if(!empty($_POST)) {
       $fields=array('email'=>$email);
       $validation->check($_POST,array(
         'email' => array(
-          'display' => 'Email',
+          'display' => 'ایمیل',
           'required' => true,
           'valid_email' => true,
           'unique_update' => 'users,'.$userId,
@@ -161,7 +352,7 @@ if(!empty($_POST)) {
       ));
     if($validation->passed()){
       $db->update('users',$userId,$fields);
-      $successes[] = "Email Updated";
+      $successes[] = "ایمیل به روز رسانی شد.";
     }else{
           ?><div id="form-errors">
             <?=$validation->display_errors();?></div>

@@ -174,12 +174,14 @@ if(!empty($_POST)) {
         }else{
             $phnumber=$userdetails->phnumber;
         }
+
         //Update status
         if ($userdetails->status != $_POST['status']){
             $status = Input::get("status");
             if ($status == "دانشجو"){
                     $std_number = Input::get("std_number");
                     $dorms = Input::get("dorms");
+                    $grade = "";
                     if ( ($std_number/100000)%10 == 1 )
                         $grade = "کارشناسی";
                     if ( ($std_number/100000)%10 == 2 )
@@ -238,11 +240,13 @@ if(!empty($_POST)) {
         }else{
             $status=$userdetails->status;
         }
+
     //Update std number and dorms
     if ($status == "دانشجو"){
         // std_number
         if ($userdetails->std_number != $_POST['std_number']){
             $std_number = Input::get("std_number");
+            $grade = "";
             if ( ($std_number/100000)%10 == 1 )
                 $grade = "کارشناسی";
             if ( ($std_number/100000)%10 == 2 )
