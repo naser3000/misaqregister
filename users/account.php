@@ -86,62 +86,51 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
 					?>
 					<br>
 					<h2 class="modal-title">ثبت نام در <?=$pld->title?> .</h2>
-					<input class="form-control" type="text" name="" id="" readonly="" value="هزینه 10000 تومان">
+					<input class="form-control" type="text" name="" id="plan_cost" readOnly="" value="هزینه <?=$related_capacity->cost?> تومان">
 				</div>
 				<div class="modal-body">
 					<form>
 						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
 							<label>نام</label>
-							<input class="form-control" type="text" name="" id="name" readonly="" value="<?=ucfirst($user->data()->fname)." ".ucfirst($user->data()->lname)?>">
+							<input class="form-control" type="text" name="" id="name" readOnly="" value="<?=ucfirst($user->data()->fname)." ".ucfirst($user->data()->lname)?>">
 						</div>
 						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
 							<label>کدملی</label>
-							<input class="form-control" type="text" name="" id="code" readonly="" value="<?=ucfirst($user->data()->status)?>">
+							<input class="form-control" type="text" name="" id="code" readOnly="" value="<?=ucfirst($user->data()->status)?>">
 						</div>
 						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
 							<label>شماره دانشجویی</label>
-							<input class="form-control" type="text" name="" id="stdn" readonly="" value="<?=ucfirst($user->data()->std_number)?>">
+							<input class="form-control" type="text" name="" id="stdn" readOnly="" value="<?=ucfirst($user->data()->std_number)?>">
 						</div>
 						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
 							<label>شماره تماس</label>
-							<input class="form-control" type="text" name="" id="stdn" readonly="" value="<?=ucfirst($user->data()->std_number)?>">
+							<input class="form-control" type="text" name="" id="stdn" readOnly="" value="<?=ucfirst($user->data()->std_number)?>">
 						</div>
-			
+							
+			<?php 
+			$i = 1;
+			while ($i <= $related_capacity->participant_number) { ?>
 						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
 							<label>انتخاب</label><br>
-							<input type="checkbox" name="" id="firs_participant">
+							<input type="checkbox" name="" id="participant_choise<?=$i?>" <?php if($i>1){echo 'disabled="disabled"';} ?> onClick="participant_active(<?=$i?>)">
 						</div>
 						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
-							<label>نام همراه اول</label>
-							<input class="form-control" type="text" name="" id="name" placeholder="نام">
+							<label>نام همراه <?=$i?></label>
+							<input class="form-control" type="text" name="participant_name<?=$i?>" id="participant_name<?=$i?>" readOnly="" placeholder="نام">
 						</div>
 						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
-							<label>کدملی همراه اول</label>
-							<input class="form-control" type="text" name="" id="code" placeholder="کدملی">
+							<label>کدملی همراه <?=$i?></label>
+							<input class="form-control" type="text" name="participant_code<?=$i?>" id="participant_code<?=$i?>" readOnly="" placeholder="کدملی">
 						</div>
 						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
 							<label>هزینه همراه</label>
-							<input class="form-control" type="text" name="" id="stdn" readonly="" value="<?=$related_capacity->participant_cost?> تومان">
+							<input class="form-control" type="text" name="participant_cost<?=$i?>" id="participant_cost<?=$i?>" readOnly="" value="<?=$related_capacity->participant_cost?> تومان">
 						</div>
+			<?php $i++;} ?>
 			
-						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
-							<label>انتخاب</label><br />
-							<input type="checkbox" name="" id="second_participant">
-						</div>
-						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
-							<label>نام همراه دوم</label>
-							<input class="form-control" type="text" name="" id="name" placeholder="نام">
-						</div>
-						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
-							<label>کدملی همراه دوم</label>
-							<input class="form-control" type="text" name="" id="code" placeholder="کدملی">
-						</div>
-						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
-							<label>هزینه همراه</label>
-							<input class="form-control" type="text" name="" id="stdn" readonly="" value="<?=$related_capacity->participant_cost?> تومان">
-						</div>
+						
 						<div class="clearfix"></div>
-						<input class="form-control" type="text" name="" id="" readonly="" value="مجموع هزینه ها: 10000 تومان" style="margin: 0px;">
+						<input class="form-control" type="text" name="total_cost" id="total_cost" readOnly="" value="مجموع هزینه ها: <?=$related_capacity->cost?> تومان" style="margin: 0px;">
 						
 					</form>
 				</div>
@@ -291,6 +280,81 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
 	.modal-body div.pull-right{
 		text-align: center;
 	}
+	input#total_cost, input#plan_cost{
+		height: 60px;
+		font-size: 25px;
+	}
 
 
 </style>
+<script type="text/javascript">
+	function participant_active(i) {
+
+		var selector = 'participant_choise'+i;
+		var participant_choise = document.getElementById(selector);
+
+		selector = 'participant_name'+i;
+		var participant_name = document.getElementById(selector);
+
+		selector = 'participant_code'+i;
+		var participant_code = document.getElementById(selector);
+
+		i+=1;
+		var selector = 'participant_choise'+i;
+		var participant_choise2 = document.getElementById(selector);
+
+		
+
+		if (participant_choise.checked) {
+			participant_name.readOnly = false;
+			participant_code.readOnly = false;
+			addOneParticipantCostToTotalCost()
+			if (participant_choise2 != null)
+				participant_choise2.disabled = false;
+		}else{
+			participant_name.readOnly = true;
+			participant_code.readOnly = true;
+			removeOneParticipantCostToTotalCost();
+			if (participant_choise2 != null)
+				participant_choise2.disabled = true;
+
+			participant_name.value = null;
+			participant_code.value = null;
+			if (participant_choise2 != null && participant_choise2.checked == true){
+				participant_choise2.checked = false;
+				participant_active(i);
+			}
+			
+		}
+		
+	}
+
+	function addOneParticipantCostToTotalCost() {
+
+		var total_cost = document.getElementById('total_cost');
+		var participant_cost = document.getElementById('participant_cost1');
+		var i = total_cost.value.indexOf(':');
+		var j = total_cost.value.indexOf('تومان');
+		var total = parseInt(total_cost.value.substring(i+2, j-1));
+
+		j = participant_cost.value.indexOf('تومان');
+		total += parseInt(participant_cost.value.substring(0, j-1));
+
+		total_cost.value = "مجموع هزینه ها: " + total +" تومان";
+	}
+	function removeOneParticipantCostToTotalCost() {
+
+		var total_cost = document.getElementById('total_cost');
+		var participant_cost = document.getElementById('participant_cost1');
+
+		var i = total_cost.value.indexOf(':');
+		var j = total_cost.value.indexOf('تومان');
+		var total = parseInt(total_cost.value.substring(i+2, j-1));
+
+		j = participant_cost.value.indexOf('تومان');
+console.log(parseInt(participant_cost.value.substring(0, j-1)));		
+		total -= parseInt(participant_cost.value.substring(0, j-1));
+
+		total_cost.value = "مجموع هزینه ها: " + total +" تومان";
+	}
+</script>
