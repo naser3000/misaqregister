@@ -49,15 +49,15 @@ if (Input::get('forgotten_password')) {
               'email' => rawurlencode($email),
               'vericode' => $fuser->data()->vericode,
             );
-            $subject = 'Password Reset';
+            $subject = 'بازیابی رمز عبور';
             $encoded_email=rawurlencode($email);
             $body =  email_body('_email_template_forgot_password.php',$options);
             $email_sent=email($email,$subject,$body);
             if(!$email_sent){
-                $errors[] = 'Email NOT sent due to error. Please contact site administrator.';
+                $errors[] = 'خطا در ارسال ایمیل. با مدیریت سایت تماس بگیرید.';
             }
         }else{
-            $errors[] = 'That email does not exist in our database';
+            $errors[] = 'ایمل وجود ندارد.';
         }
     }else{
         //display the errors

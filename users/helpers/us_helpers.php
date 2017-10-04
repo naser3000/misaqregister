@@ -66,6 +66,18 @@ function userIdExists($id) {
 	}
 }
 
+//Check if a plan ID exists in the DB
+function planIdExists($id) {
+	$db = DB::getInstance();
+	$query = $db->query("SELECT * FROM plans WHERE id = ?",array($id));
+	$num_returns = $query->count();
+	if ($num_returns > 0){
+		return true;
+	}else{
+		return false;
+	}
+}
+
 //Retrieve information for a single permission level
 function fetchPermissionDetails($id) {
 	$db = DB::getInstance();
@@ -100,6 +112,7 @@ function fetchAllUsers() {
 
 //Retrieve complete user information by username, token or ID
 function fetchUserDetails($username=NULL,$token=NULL, $id=NULL){
+	
 	if($username!=NULL) {
 		$column = "username";
 		$data = $username;
@@ -107,11 +120,41 @@ function fetchUserDetails($username=NULL,$token=NULL, $id=NULL){
 		$column = "id";
 		$data = $id;
 	}
+	//mysql_query("SET NAMES utf8");
 	$db = DB::getInstance();
 	$query = $db->query("SELECT * FROM users WHERE $column = $data LIMIT 1");
 	$results = $query->first();
 	return ($results);
 }
+
+//Retrieve complete plan information by token or ID
+function fetchPlanDetails($token=NULL, $id=NULL){
+	if($id!=NULL) {
+		$column = "id";
+		$data = $id;
+	}
+	$db = DB::getInstance();
+	$query = $db->query("SELECT * FROM plans WHERE $column = $data LIMIT 1");
+	$results = $query->first();
+	return ($results);
+}
+
+/*
+//Retrieve complete capacity information by UserID & PlanID
+function fetchCapacityDetails($user_id, $plan_id) {
+	$db = DB::getInstance();
+	$userdetails = $db->query("SELECT * FROM users WHERE id = $user_id LIMIT 1");
+	
+	$status = $userdetails->first()->status;
+	$yinter = $userdetails->first()->yinter;
+	$gender = $userdetails->first()->gender;
+	$capacity_query = $db->query("SELECT * FROM capacity WHERE plan_id = $plan_id AND status = ?", array($status));
+	//$capacity_query = $db->query("SELECT * FROM capacity WHERE plan_id = $plan_id AND status IN ({$status}) AND yinter IN ({$yinter}) AND gender IN ({$gender})");
+	$capacity_results = $capacity_query->results();
+	print_r($capacity_results[1]);
+	return ($capacity_results);
+}
+*/
 
 //Retrieve list of permission levels a user has
 function fetchUserPermissions($user_id) {
@@ -132,6 +175,24 @@ function fetchPermissionUsers($permission_id) {
 	if (isset($row)){
 		return ($row);
 	}
+}
+
+
+//Fetch information for all capacities of plan by plan ID
+function fetchAllPlanCapacities($id) {
+	$db = DB::getInstance();
+	$query = $db->query("SELECT * FROM capacity WHERE plan_id = $id");
+	$results = $query->results();
+	return ($results);
+}
+
+
+//Retrieve information for all plans
+function fetchAllPlans() {
+	$db = DB::getInstance();
+	$query = $db->query("SELECT * FROM plans");
+	$results = $query->results();
+	return ($results);
 }
 
 //Unmatch permission level(s) from user(s)

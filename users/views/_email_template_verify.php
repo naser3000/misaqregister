@@ -9,11 +9,11 @@ $results = $query->first();
     <meta charset="utf-8">
     <title></title>
   </head>
-  <body>
-    <p>Congratulations <?=$fname;?>,</p>
-    <p>Thanks for signing up Please click the link below to verify your email address.</p>
-    <p><a href="<?=$results->verify_url?>users/verify.php?email=<?=$email;?>&vericode=<?=$vericode;?>">Verify Your Email</a></p>
-    <p>Once you verify your email address you will be ready to login!</p>
-    <p>See you soon!</p>
+  <body style="direction: rtl;">
+    <p>مبارک باشد <?=$fname;?>,</p>
+    <p>از ثبت نام شما سپاس گزاریم. لطفاً جهت تأیید آدرس ایمیل خود، بر روی لینک زیر کلیک کنید.</p>
+    <p><a href="<?=$results->verify_url?>users/verify.php?email=<?=$email;?>&vericode=<?=$vericode;?>">تأیید آدرس ایمیل</a></p>
+    <p>با یک بار تأیید آدرس ایمیل شما می توانید وارد سایت شوید!</p>
+    <p>به زودی شما را خواهیم دید!</p>
   </body>
 </html>

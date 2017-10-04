@@ -35,33 +35,39 @@ class Validate{
 				$value = trim($source[$item]);
 				$value = sanitize($value);
 
-				if ($rule === 'required' && empty($value)) {
-					$this->addError(["{$display} is required",$item]);
+				if ($rule === 'required' && empty($value) && $rule_value == true) {
+					$this->addError(["تعیین کردن \"{$display}\" الزامی است.",$item]);
 				} else if(!empty($value)){
 					switch ($rule) {
 						case 'min':
 							if (strlen($value) < $rule_value) {
-								$this->addError(["{$display} must be a minimum of {$rule_value} characters.",$item]);
+								$this->addError(["{$display} باید حداکثر {$rule_value} حرف داشته باشد.",$item]);
 							}
 							break;
 
 						case 'max':
 							if (strlen($value) > $rule_value) {
-								$this->addError(["{$display} must be a maximum of {$rule_value} characters.",$item]);
+								$this->addError(["{$display} باید حداقل {$rule_value} حرف داشته باشد.",$item]);
 							}
 							break;
+
+						case 'exact':
+							if (strlen($value) != $rule_value) {
+								$this->addError(["{$display} باید {$rule_value} حرف داشته باشد.",$item]);
+							}
+							break;							
 
 						case 'matches':
 							if ($value != $source[$rule_value]) {
 								$match = $items[$rule_value]['display'];
-								$this->addError(["{$match} and {$display} must match.",$item]);
+								$this->addError(["{$match} و {$display} باید یکسان باشد.",$item]);
 							}
 							break;
 
 						case 'unique':
 							$check = $this->_db->get($rule_value, array($item, '=', $value));
 							if ($check->count()) {
-								$this->addError(["{$display} already exists. Please choose another {$display}.",$item]);
+								$this->addError(["{$display} وجود دارد. لطفاً یک {$display} دیگر انتخاب کنید.",$item]);
 							}
 							break;
 
@@ -72,7 +78,7 @@ class Validate{
 							$query = "SELECT * FROM {$table} WHERE id != {$id} AND {$item} = '{$value}'";
 							$check = $this->_db->query($query);
 							if ($check->count()) {
-								$this->addError(["{$display} already exists. Please choose another {$display}.",$item]);
+								$this->addError(["{$display} وجود دارد. لطفاً یک {$display} دیگر انتخاب کنید.",$item]);
 							}
 							break;
 
@@ -84,7 +90,7 @@ class Validate{
 
 						case 'valid_email':
 							if(!filter_var($value,FILTER_VALIDATE_EMAIL)){
-								$this->addError(["{$display} must be a valid email address.",$item]);
+								$this->addError(["{$display} باید یک آدرس ایمیل معتبر باشد.",$item]);
 							}
 							break;
 					}

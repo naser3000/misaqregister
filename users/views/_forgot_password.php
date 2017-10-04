@@ -20,23 +20,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ?>
 <div class="row">
 <div class="col-xs-12">
-<h1>Reset your password.</h1>
+<h1 style="font-family: 'IRANSans'; ">بازیابی رمز عبور</h1>
 <ol>
-	<li>Enter your email address and click Reset</li>
-	<li>Check your email and click the link that is sent to you.</li>
-	<li>Follow the on screen instructions</li>
+	<li>آدرس پست الکترونیک خود را وارد کرده و بر روی دکمه بازیابی کلیک کنید.</li>
+	<li>ایمیل خود را بررسی کرده و بر روی لینکی که برای شما فرستاده شده کلیک کنید.</li>
+	<li>دستورالعمل روی صفحه را دنبال کنید.</li>
 </ol>
 <span class="bg-danger"><?=display_errors($errors);?></span>
 <form action="forgot_password.php" method="post" class="form ">
 	
 	<div class="form-group">
-		<label for="email">Email</label>
-		<input type="text" name="email" placeholder="Email Address" class="form-control" autofocus>
+		<label for="email">پست الکترونیک</label>
+		<input type="text" name="email" placeholder="آدرس پست الکترونیک" class="form-control" autofocus>
 	</div>
 
 	<input type="hidden" name="csrf" value="<?=Token::generate();?>">
-	<p><input type="submit" name="forgotten_password" value="Reset" class="btn btn-primary"></p>
+	<p><input type="submit" name="forgotten_password" value="بازیابی" class="btn btn-primary"></p>
 </form>
 
 </div><!-- /.col -->
 </div><!-- /.row -->
+
+

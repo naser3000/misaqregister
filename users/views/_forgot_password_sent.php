@@ -21,8 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div class="row">
 <div class="col-xs-12">
 <div class="jumbotron">
-<p>Your password reset link has been sent to your email address.</p>
-<p>Click the link in the email to Reset your password. Be sure to check your spam folder if the email isn't in your inbox.</p>
+<p>لینک بازیابی رمز عبور به آدرس ایمیل شما ارسال شده است.</p>
+<p>برای بازیابی رمز عبور بر روی لینک درون ایمیل کلیک کنید. در صورت پیدا نکردن ایمیل، پوشه اسپم خود را بررسی کنید.</p>
 </div>	
 </div><!-- /.col -->
 </div><!-- /.row -->

@@ -1,25 +1,17 @@
-<?php
-/*
-UserSpice 4
-An Open Source PHP User Management System
-by the UserSpice Team at http://UserSpice.com
+<style type="text/css">
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+    .container input{
+        margin-left: 5px;
+    }
+    .container label{
+        margin-top: 20px;
+    }
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+</style>
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Special thanks to John Bovey for the password strenth feature.
-*/
-?>
+<div id="page-wrapper">
+<div class="container">
 <div class="row">
 <div class="col-xs-12">
 <?php
@@ -28,66 +20,31 @@ if (!$form_valid && Input::exists()){
 }
 ?>
 
+
 <form class="form-signup" action="<?=$form_action;?>" method="<?=$form_method;?>" id="payment-form">
 
 	<h2 class="form-signin-heading"> <?=lang("SIGNUP_TEXT","");?></h2>
+	<div class="col-md-6 pull-right">
+	<div class=" panel panel-default ">
+		<div class="panel-heading">اطلاعات حساب کاربری</div>
+		<div class="panel-body">
 
-	<div class="form-group">
-		<label for="username">نام کاربری* (Between <?=$settings->min_un?> - <?=$settings->max_un?> characters)</label>
-		<input  class="form-control" type="text" name="username" id="username" placeholder="نام کاربری" value="<?php if (!$form_valid && !empty($_POST)){ echo $username;} ?>" required autofocus>
-		<p class="help-block"></p>
+			<label for="username">نام کاربری* (بین <?=$settings->max_un?>-<?=$settings->min_un?> حرف)</label>
+			<input  class="form-control" type="text" name="username" id="username" placeholder="نام کاربری" value="<?php if (!$form_valid && !empty($_POST)){ echo $username;} ?>" required autofocus>
 
-		<label for="fname">نام*</label>
-		<input type="text" class="form-control" id="fname" name="fname" placeholder="نام" value="<?php if (!$form_valid && !empty($_POST)){ echo $fname;} ?>" required>
+			<label for="email">پست الکترونیک*</label>
+			<input  class="form-control" type="text" name="email" id="email" placeholder="پست الکترونیک" value="<?php if (!$form_valid && !empty($_POST)){ echo $email;} ?>" required >
+			<?php
 
-		<label for="lname">نام خانوادگی*</label>
-		<input type="text" class="form-control" id="lname" name="lname" placeholder="نام خانوادگی" value="<?php if (!$form_valid && !empty($_POST)){ echo $lname;} ?>" required>
-
-		<label for="email">پست الکترونیک*</label>
-		<input  class="form-control" type="text" name="email" id="email" placeholder="پست الکترونیک" value="<?php if (!$form_valid && !empty($_POST)){ echo $email;} ?>" required >
-
-		<label for="status">وضعیت*</label><br>
-		<select name="status" id = "status" class="form-control" oninput="changeStatusItems()">
-			<option value="student" >دانشجو</option>
-			<option value="alumnus">فارغ التحصیل</option>
-			<option value="professor">استاد</option>
-			<option value="employee">کارمند</option>
-			<option value="self-employed">آزاد</option>
-		</select>
-
-		<label for="snumber">شماره دانشجویی*</label>
-		<input type="number" class="form-control" id="snumber" name="snumber" placeholder="شماره دانشجویی" value =''>
-
-		<script language="javascript" type="text/javascript">
-		// disable or enable 'snumber' input according to status selections
-		function changeStatusItems(){
-			var input = document.getElementById('snumber');
-			var select = document.getElementById('status');
-			if (select.value == 'student') {
-				input.disabled = '';
-			}else{
-				input.disabled = 'disabled';
-			}
-		}
-			
-		</script>
-
-
-		<label for="gender">جنسیت*</label><br>
-		<input type="radio" class="form-contro" id="gender" name="gender" value="male" required>آقا<br>
-		<input type="radio" class="form-contro" id="gender" name="gender" value="female" required>خانم<br>
-	
-<?php
-
-		$character_range = 'Be between '.$settings->min_pw . ' and ' . $settings->max_pw;
-		$character_statement = '<span id="character_range" class="gray_out_text">' . $character_range . ' characters</span>';
+		$character_range = 'بین '.$settings->min_pw . ' تا ' . $settings->max_pw;
+		$character_statement = '<span id="character_range" class="gray_out_text">' . $character_range . ' حرف باشد.</span>';
 
 if ($settings->req_cap == 1){
 		$num_caps = '1'; //Password must have at least 1 capital
 		if($num_caps != 1){
 			$num_caps_s = 's';
 		}
-		$num_caps_statement = '<span id="caps" class="gray_out_text">Have at least ' . $num_caps . ' capital letter </span>';
+		$num_caps_statement = '<span id="caps" class="gray_out_text">حداقل دارای ' . $num_caps . ' حرف بزرگ باشد. </span>';
 }
 
 if ($settings->req_num == 1){
@@ -96,9 +53,9 @@ if ($settings->req_num == 1){
 			$num_numbers_s = 's';
 		}
 
-		$num_numbers_statement = '<span id="number" class="gray_out_text">Have at least ' . $num_numbers . ' number</span>';
+		$num_numbers_statement = '<span id="number" class="gray_out_text">حداقل دارای ' . $num_numbers . ' عدد باشد.</span>';
 }
-		$password_match_statement = '<span id="password_match" class="gray_out_text">Be typed correctly twice</span>';
+		$password_match_statement = '<span id="password_match" class="gray_out_text">تکرار رمز عبور صحیح باشد.</span>';
 
 
 		//2.) Apply default class to gray out green check icon
@@ -171,14 +128,14 @@ if ($settings->req_num == 1){
 ?>
 
 		<div style="display: inline-block">
-			<label for="password">Choose a Password* (Between <?=$settings->min_pw?> and <?=$settings->max_pw?> characters)</label>
-			<input  class="form-control" type="password" name="password" id="password" placeholder="Password" required autocomplete="off" aria-describedby="passwordhelp">
+			<label for="password">رمز عبور* (بین <?=$settings->max_pw?>-<?=$settings->min_pw?>  حرف)</label>
+			<input  class="form-control" type="password" name="password" id="password" placeholder="رمز عبور" required autocomplete="off" aria-describedby="passwordhelp">
 
-			<label for="confirm">Confirm Password*</label>
-			<input  type="password" id="confirm" name="confirm" class="form-control" placeholder="Confirm Password" required autocomplete="off" >
+			<label for="confirm">تکرار رمز عبور*</label>
+			<input  type="password" id="confirm" name="confirm" class="form-control" placeholder="تکرار رمز عبور" required autocomplete="off" >
 		</div>
-		<div style="display: inline-block; padding-left: 20px">
-			<strong>Passwords Should...</strong><br>
+		<div style="display: inline-block; padding-right: 20px">
+			<strong>رمز عبور باید...</strong><br>
 			<span id="character_range_icon" class="glyphicon glyphicon-ok gray_out_icon" style="color: green"></span>&nbsp;&nbsp;<?php echo $character_statement;?>
 			<br>
 <?php
@@ -192,15 +149,97 @@ if ($settings->req_num == 1){ ?>
 			<br>
 <?php } ?>
 			<span id="password_match_icon" class="glyphicon glyphicon-ok gray_out_icon" style="color: green"></span>&nbsp;&nbsp;<?php echo $password_match_statement;?>
+		</div><br>
+
+			<label for="interested">علاقه مند به همکاری</label><br>
+			<input type="radio" class="form-contro" id="interested" name="interested" value="بله" required>بله<br>
+			<input type="radio" class="form-contro" id="interested" name="interested" value="خیر" required>خیر<br>
 		</div>
-		<br><br>
+	</div><!--END OF panel-default  -->
+	</div><!--END OF col  -->
 
-		<label for="confirm">Registration User Terms and Conditions</label>
-		<textarea id="agreement" name="agreement" rows="5" class="form-control" disabled ><?php require $abs_us_root.$us_url_root.'usersc/includes/user_agreement.php'; ?></textarea>
+	<div class="col-md-6 pull-right">
+	<div class=" panel panel-default ">
+		<div class="panel-heading">اطلاعات فردی </div>
+		<div class="panel-body">
 
-		<label for="confirm">Check box to agree to terms</label>
-		<input type="checkbox" id="agreement_checkbox" name="agreement_checkbox" class="form-control">
-	</div>
+			<label for="fname">نام*</label>
+			<input type="text" class="form-control" id="fname" name="fname" placeholder="نام" value="<?php if (!$form_valid && !empty($_POST)){ echo $fname;} ?>" required>
+
+			<label for="lname">نام خانوادگی*</label>
+			<input type="text" class="form-control" id="lname" name="lname" placeholder="نام خانوادگی" value="<?php if (!$form_valid && !empty($_POST)){ echo $lname;} ?>" required>
+
+			<label for="icode">کد ملی*</label>
+			<input type="text" class="form-control" id="icode" name="icode" placeholder="کد ملی" value="<?php if (!$form_valid && !empty($_POST)){ echo $icode;} ?>" required>
+
+			<label for="phnumber">شماره تماس*</label>
+			<input type="text" class="form-control" id="phnumber" name="phnumber" placeholder="شماره تماس" value="<?php if (!$form_valid && !empty($_POST)){ echo $phnumber;} ?>" required><br>
+
+			<label for="gender">جنسیت*</label><br>
+			<input type="radio" class="form-contro" id="gender" name="gender" value="آقا" required>آقا<br>
+			<input type="radio" class="form-contro" id="gender" name="gender" value="خانم" required>خانم<br>
+		</div>
+	</div><!--END OF panel-default  -->
+	</div><!--END OF col  -->
+
+	<div class="col-md-6 pull-right">
+	<div class=" panel panel-default">
+		<div class="panel-heading">اطلاعات تحصیلی</div>
+		<div class="panel-body">
+
+			<label for="status">وضعیت*</label><br>
+			<select name="status" id = "status" class="form-control" onchange="disableInput()">
+				<option value="فارغ التحصیل">فارغ التحصیل</option>
+				<option value="دانشجو" >دانشجو</option>
+				<option value="کارمند">کارمند</option>
+				<option value="استاد">استاد</option>
+				<option value="آزاد">آزاد</option>
+			</select>
+
+			<label for="std_number">شماره دانشجویی*</label>
+			<input type="text" class="form-control" id="std_number" name="std_number" readonly="" placeholder="شماره دانشجویی" value =''>
+
+			<label for="major">رشته تحصیلی</label>
+			<input type="text" class="form-control" id="major" name="major" placeholder="رشته تحصیلی">
+
+			<label for="dorms">خوابگاه</label><br>
+			<select name="dorms" id = "dorms" class="form-control" disabled="disabled" >
+				<option></option>
+				<option value="تهرانی">تهرانی</option>
+				<option value="طرشت 3" >طرشت 3</option>
+				<option value="احمدی روشن">احمدی روشن</option>
+				<option value="طرشت 2">طرشت 2</option>
+				<option value="آزادی">آزادی</option>
+				<option value="وزوایی">وزوایی</option>
+				<option value="شادمان">شادمان</option>
+				<option value="صادقی">صادقی</option>
+				<option value="متأهلی">متأهلی</option>
+				<option value="شوریده">شوریده</option>
+				<option value="ولیعصر">ولیعصر</option>
+				<option value="12 واحدی">12 واحدی</option>
+				<option value="حیدرتاش">حیدرتاش</option>
+				<option value="مصلی نژاد">مصلی نژاد</option>
+				
+			</select>
+
+			<label for="emp_number">کد کارمندی*</label>
+			<input type="text" class="form-control" id="emp_number" name="emp_number" readonly="" placeholder="کد کارمندی" value =''>
+		</div>
+	</div><!--END OF panel-default  -->
+	</div><!--END OF col  -->
+
+	<div class="col-md-6 pull-right">
+	<div class=" panel panel-default ">
+		<div class="panel-heading">قوانین و شرایط</div>
+		<div class="panel-body">
+
+			<label for="confirm">شرایط و قوانین ثبت نام کاربر</label>
+			<textarea id="agreement" name="agreement" rows="5" class="form-control" disabled ><?php require $abs_us_root.$us_url_root.'usersc/includes/user_agreement.php'; ?></textarea>
+			<input type="checkbox" id="agreement_checkbox" name="agreement_checkbox" class="form-controlaaaaa">
+			<label for="confirm">با قوانین موافقم.</label>			
+		</div>
+	</div><!--END OF panel-default  -->
+	</div><!--END OF col  -->
 
 	<?php if($settings->recaptcha == 1|| $settings->recaptcha == 2){ ?>
 	<div class="form-group" align="center">
@@ -208,7 +247,10 @@ if ($settings->req_num == 1){ ?>
 	</div>
 	<?php } ?>
 	<input type="hidden" value="<?=Token::generate();?>" name="csrf">
-	<button class="submit btn btn-primary " type="submit" id="next_button"><i class="fa fa-plus-square"></i> Register</button>
+	<button class="submit btn btn-primary " type="submit" id="next_button"><i class="fa fa-plus-square"></i> ثبت نام</button>
+	<br><br>
 </form>
+</div>
+</div>
 </div>
 </div>

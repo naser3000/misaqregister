@@ -151,14 +151,14 @@ $userData = fetchAllUsers(); //Fetch information for all users
     <div class="row">
 
 	    <div class="col-xs-12 col-md-6">
-		<h1>Manage Users</h1>
+		<h1>مدیریت کاربران</h1>
 	  </div>
 
 	  <div class="col-xs-12 col-md-6">
 			<form class="">
-				<label for="system-search">Search:</label>
+				<label for="system-search">جستجو:</label>
 				<div class="input-group">
-                    <input class="form-control" id="system-search" name="q" placeholder="Search Users..." type="text">
+                    <input class="form-control" id="system-search" name="q" placeholder="جستجوی کاربران..." type="text">
                     <span class="input-group-btn">
 						<button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
                     </span>
@@ -186,7 +186,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
                <form class="form-signup" action="admin_users.php" method="POST" id="payment-form">
 
                 <div class="well well-sm">
-               	<h3 class="form-signin-heading"> Manually Add a New
+               	<h3 class="form-signin-heading"> اضافه کردن دستی
                 <select name="perm">
                   <?php
 
@@ -197,30 +197,30 @@ $userData = fetchAllUsers(); //Fetch information for all users
                   </select>
                   </h3>
 
-               	<div class="form-group">
-                  <div class="col-xs-2">
-               		<input  class="form-control" type="text" name="username" id="username" placeholder="Username" value="<?php if (!$form_valid && !empty($_POST)){ echo $username;} ?>" required autofocus>
+               	<div class="form-group" >
+                  <div class="col-xs-2" >
+               		<input  class="form-control" type="text" name="username" id="username" placeholder="نام کاربری" value="<?php if (!$form_valid && !empty($_POST)){ echo $username;} ?>" required autofocus>
 </div>
                   <div class="col-xs-2">
-               		<input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" value="<?php if (!$form_valid && !empty($_POST)){ echo $fname;} ?>" required>
+               		<input type="text" class="form-control" id="fname" name="fname" placeholder="نام" value="<?php if (!$form_valid && !empty($_POST)){ echo $fname;} ?>" required>
 </div>
                   <div class="col-xs-2">
-               		<input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" value="<?php if (!$form_valid && !empty($_POST)){ echo $lname;} ?>" required>
+               		<input type="text" class="form-control" id="lname" name="lname" placeholder="نام خانوادگی" value="<?php if (!$form_valid && !empty($_POST)){ echo $lname;} ?>" required>
 </div>
                   <div class="col-xs-2">
-               		<input  class="form-control" type="text" name="email" id="email" placeholder="Email Address" value="<?php if (!$form_valid && !empty($_POST)){ echo $email;} ?>" required >
+               		<input  class="form-control" type="text" name="email" id="email" placeholder="آدرس ایمیل" value="<?php if (!$form_valid && !empty($_POST)){ echo $email;} ?>" required >
 </div>
                   <div class="col-xs-2">
-               		<input  class="form-control" type="password" name="password" id="password" placeholder="Password" required aria-describedby="passwordhelp">
+               		<input  class="form-control" type="password" name="password" id="password" placeholder="رمز عبور" required aria-describedby="passwordhelp">
 </div>
                   <div class="col-xs-2">
-               		<input  type="password" id="confirm" name="confirm" class="form-control" placeholder="Confirm Password" required >
+               		<input  type="password" id="confirm" name="confirm" class="form-control" placeholder="تکرار رمز عبور" required >
 </div>
                	</div>
 
                 <br /><br />
                	<input type="hidden" value="<?=Token::generate();?>" name="csrf">
-	            <input class='btn btn-primary' type='submit' name='addUser' value='Manually Add User' />
+	            <input class='btn btn-primary' type='submit' name='addUser' value='اضافه کردن دستی' />
               </div>
                </form>
                </div>
@@ -229,11 +229,11 @@ $userData = fetchAllUsers(); //Fetch information for all users
         <div class="col-xs-12">
 				 <div class="alluinfo">&nbsp;</div>
 				<form name="adminUsers" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
-				 <div class="allutable table-responsive">
+				 <div class="allutable table-responsive" style="align-content: right;">
 					<table class='table table-hover table-list-search'>
 					<thead>
 					<tr>
-						<th>Delete</th><th>Username</th><th>Email</th><th>First Name</th><th>Last Name</th><th>Join Date</th><th>Last Sign In</th><th>Logins</th>
+						<th>حذف</th><th>نام کاربری</th><th>ایمیل</th><th>نام</th><th>نام خانوادگی</th><th>تاریخ عضویت</th><th>آخرین ورود</th><th>تعداد ورود</th>
 					 </tr>
 					</thead>
 				 <tbody>
@@ -258,7 +258,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
 				</div>
 
 
-				<input class='btn btn-danger' type='submit' name='Submit' value='Delete' /><br><br>
+				<input class='btn btn-danger' type='submit' name='Submit' value='حذف' /><br><br>
 				</form>
 
 		  </div>

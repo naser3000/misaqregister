@@ -1,3 +1,5 @@
+<?php  
+/*
 Welcome to our website. If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern our relationship with you in relation to this website. If you disagree with any part of these terms and conditions, please do not use our website.
 
 The use of this website is subject to the following terms of use:
@@ -18,3 +20,9 @@ All trade marks reproduced in this website which are not the property of, or lic
 Unauthorised use of this website may give rise to a claim for damages and/or be a criminal offence.
 
 From time to time this website may also include links to other websites. These links are provided for your convenience to provide further information. They do not signify that we endorse the website(s). We have no responsibility for the content of the linked website(s).
+*/
+?>
+به موقع بیایید سوار اتوبوس بشید!
+کلاً بچه های خوبی باشید!
+شلوغ کاری نداریم!
+منظم باشید!

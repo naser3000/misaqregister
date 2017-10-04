@@ -21,8 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div class="row">
 <div class="col-xs-12">
 <div class="jumbotron text-center">
-<h1>Welcome To <?=$settings->site_name?></h1>
-<p>Thanks for registering! Please check your email to verify your account.</p>
+<h1>به <?=$settings->site_name?> خوش آمدید</h1>
+<p>از ثبت نام شما سپاس گزاریم! لطفاً جهت تأیید حساب کاربری ایمیل خود را بررسی کنید.</p>
 </div>
 </div>
 </div>

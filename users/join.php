@@ -1,22 +1,4 @@
 <?php
-/*
-UserSpice 4
-An Open Source PHP User Management System
-by the UserSpice Team at http://UserSpice.com
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
 // error_reporting(E_ALL);
 // ini_set('display_errors', 1);
 ini_set("allow_url_fopen", 1);
@@ -67,9 +49,12 @@ if(Input::exists()){
 	$username = Input::get('username');
 	$fname = Input::get('fname');
 	$lname = Input::get('lname');
+	$phnumber = Input::get('phnumber');
+	$icode = Input::get('icode');
 	$email = Input::get('email');
 	$status = Input::get('status');
-	$snumber = Input::get('snumber');
+	$std_number = Input::get('std_number');
+	$emp_number = Input::get('emp_number');
 	$gender = Input::get('gender');
 	$agreement_checkbox = Input::get('agreement_checkbox');
 
@@ -79,53 +64,75 @@ if(Input::exists()){
 		$agreement_checkbox=FALSE;
 	}
 
+	$std_number_requirment = false;
+	if ($status == 'دانشجو')
+		$std_number_requirment = true;
+	$emp_number_requirment = false;
+	if ($status == 'کارمند')
+		$emp_number_requirment = true;
+
+
 	$db = DB::getInstance();
 	$settingsQ = $db->query("SELECT * FROM settings");
 	$settings = $settingsQ->first();
 	$validation = new Validate();
 	$validation->check($_POST,array(
 	  'username' => array(
-		'display' => 'Username',
+		'display' => 'نام کاربری',
 		'required' => true,
 		'min' => $settings->min_un,
 		'max' => $settings->max_un,
 		'unique' => 'users',
 	  ),
 	  'fname' => array(
-		'display' => 'First Name',
+		'display' => 'نام',
 		'required' => true,
 		'min' => 2,
 		'max' => 35,
 	  ),
 	  'lname' => array(
-		'display' => 'Last Name',
+		'display' => 'نام خانوادگی',
 		'required' => true,
 		'min' => 2,
 		'max' => 35,
 	  ),
+	  'icode' => array(
+		'display' => 'کد ملی',
+		'required' => true,
+		'exact' => 10,
+	  ),
+	  'phnumber' => array(
+		'display' => 'شماره تماس',
+		'required' => true,
+		'exact' => 11,
+	  ),
 	  'email' => array(
-		'display' => 'Email',
+		'display' => 'ایمیل',
 		'required' => true,
 		'valid_email' => true,
 		'unique' => 'users',
 	  ),
 	  'status' => array(
-		'display' => 'Status',
+		'display' => 'وضعیت',
 		'required' => true,
 	  ),
-	  'snumber' => array(
-		'display' => 'Snumber',
-		'required' => true,
+	  'std_number' => array(
+		'display' => 'شماره دانشجویی',
+		'required' => $std_number_requirment,
+		'exact' => 8,
 	  ),
-
+	  'emp_number' => array(
+		'display' => 'کد پرسنلی',
+		'required' => $emp_number_requirment,
+	  ),
 	  'password' => array(
-		'display' => 'Password',
+		'display' => 'رمز عبور',
 		'required' => true,
 		'min' => $settings->min_pw,
 		'max' => $settings->max_pw,
 	  ),
 	  'confirm' => array(
-		'display' => 'Confirm Password',
+		'display' => 'تکرار رمز عبور',
 		'required' => true,
 		'matches' => 'password',
 	  ),
@@ -133,7 +140,7 @@ if(Input::exists()){
 
 	//if the agreement_checkbox is not checked, add error
 	if (!$agreement_checkbox){
-		$validation->addError(["Please read and accept terms and conditions"]);
+		$validation->addError(["لطفاً قوانین و شرایط را بخوانید و قبول کنید."]);
 	}
 
 	if($validation->passed() && $agreement_checkbox){
@@ -184,14 +191,30 @@ if(Input::exists()){
 			}
 			try {
 				// echo "Trying to create user";
+				$grade = "";
+				$std_number = Input::get('std_number');
+				if ( ($std_number/100000)%10 == 1 )
+					$grade = "کارشناسی";
+				if ( ($std_number/100000)%10 == 2 )
+					$grade = "کارشناسی ارشد";
+				if ( ($std_number/100000)%10 == 3 )
+					$grade = "دکترا";
 				$user->create(array(
 					'username' => Input::get('username'),
 					'fname' => Input::get('fname'),
 					'lname' => Input::get('lname'),
+					'icode' => Input::get('icode'),
+					'phnumber' => Input::get('phnumber'),
 					'email' => Input::get('email'),
-					'custom1' => Input::get('status'),
-					'custom2' => Input::get('snumber'),
+					'status' => Input::get('status'),
+					'std_number' => Input::get('std_number'),
+					'major' => Input::get('major'),
+					'dorms' => Input::get('dorms'),
+					'emp_number' => Input::get('emp_number'),
+					'yinter' => Input::get('std_number')/1000000,
+					'grade' => $grade,
 					'gender' => Input::get('gender'),
+					'interested' => Input::get('interested'),
 					'password' =>
 					password_hash(Input::get('password'), PASSWORD_BCRYPT, array('cost' => 12)),
 					'permissions' => 1,
