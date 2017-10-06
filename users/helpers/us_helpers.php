@@ -139,6 +139,22 @@ function fetchPlanDetails($token=NULL, $id=NULL){
 	return ($results);
 }
 
+//Retrieve complete capacity information by ID
+function fetchCapacityDetails($id){
+	$db = DB::getInstance();
+	$query = $db->query("SELECT * FROM capacity WHERE id = $id LIMIT 1");
+	$results = $query->first();
+	return ($results);
+}
+
+//Retrieve complete register information by user_id, plan_id, capacity_id
+function fetchPlanRegisterDetails($user_id, $plan_id, $capacity_id){
+	$db = DB::getInstance();
+	$query = $db->query("SELECT * FROM plan_register WHERE user_id = $user_id AND plan_id = $plan_id AND capacity_id = $capacity_id");
+	$results = $query->results();
+	return ($results);
+}
+
 /*
 //Retrieve complete capacity information by UserID & PlanID
 function fetchCapacityDetails($user_id, $plan_id) {

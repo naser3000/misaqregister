@@ -26,8 +26,7 @@ $lang = array();
 
 //Account
 $lang = array_merge($lang,array(
-	"ACCOUNT_USER_ADDED" 		=> "New user added!",
-	"ACCOUNT_PLAN_ADDED" 		=> "برنامه جدید با موفقیت اضافه شد!",
+	"ACCOUNT_USER_ADDED" 		=> "کاربر جدید اضافه شد!",
 	"ACCOUNT_SPECIFY_USERNAME" 		=> "Please enter your username",
 	"ACCOUNT_SPECIFY_PASSWORD" 		=> "Please enter your password",
 	"ACCOUNT_SPECIFY_EMAIL"			=> "Please enter your email address",
@@ -73,6 +72,13 @@ $lang = array_merge($lang,array(
 	"ACCOUNT_INVALID_USERNAME"		=> "Invalid username",
 	"CAPTCHA_ERROR"		=> "You failed the Captcha Test, Robot!",
 	));
+
+//plan
+$lang = array_merge($lang,array(
+	"PLAN_ADDED" 		=> "برنامه جدید با موفقیت اضافه شد!",
+	"PLAN_REGISTER" 		=> "ثبت نام شما با موفقیت انجام شد!",
+	"PLAN_RESERVE" 		=> "شما هم اکنون به صف رزرو اضافه شدید!",
+));
 
 //Configuration
 $lang = array_merge($lang,array(

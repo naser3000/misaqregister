@@ -40,7 +40,6 @@ if (!empty($_POST)) {
     $plan_start_time = Input::get('plan_start_time');
     $plan_end_time = Input::get('plan_end_time');
 
-
     $capacity_row = Input::get('send_to_db0');
     /*$status = Input::get('status');
     $yinter = Input::get('yinter');
@@ -111,8 +110,6 @@ if (!empty($_POST)) {
       'display' => 'زمان پایان برنامه',
       'required' => true,
       ),
-
-      
       'send_to_db0' => array(
       'display' => 'ظرفیت(ها)',
       'required' => true,
