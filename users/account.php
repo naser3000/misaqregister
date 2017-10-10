@@ -27,7 +27,9 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
  <?php
 // REGISTER IN PLAN
 $successes=[];
+$successes2=[];
 $form_valid = TRUE;
+$validation = new Validate();
  //Forms posted
 if(!empty($_POST)) {
 	///echo "2222222222222222222222222222222222222222";
@@ -39,6 +41,7 @@ if(!empty($_POST)) {
     }
     //else
     {
+
     	///echo "0000000000000000000000000000000000000000000";
 
 /*
@@ -46,8 +49,389 @@ if(!empty($_POST)) {
 		echo "**************************************************";
     	print_r('=================');
 ?></div><?php  
-*/
+*/		//Update display name
 
+
+		$user_id = Input::get('user_id');
+    	$plan_id = Input::get('plan_id');
+    	$capacity_id = Input::get('capacity_id');
+		$registered_plan_details = fetchPlanRegisterDetails($user_id, $plan_id, $capacity_id);
+
+		if(isset($registered_plan_details[0])){
+		// user registered in this plan
+			$RPD = $registered_plan_details[0];
+
+			if ($RPD->participant_name1 == "" & $RPD->participant_name1 != $_POST['participant_name1']) {
+			// participant1 DONT EXIST (add it)
+				$participant_cost1 = Input::get('participant_cost1');
+
+				$plan_capacity = fetchCapacityDetails($capacity_id);
+        		$blank_space = $plan_capacity->capacity_number - $plan_capacity->registered;
+        		$reserved_number1 = 0;
+
+        		
+        		$register_status = "ثبت نام";
+        		if ( $blank_space < 1 ){
+        			$register_status = "رزرو";
+        			$reserved_number1 = $plan_capacity->reserved+1;
+        		}
+
+				$displayname = Input::get("participant_name1");
+	    	  	$fields=array(
+	    	  		'participant_name1'=> Input::get("participant_name1"),
+	    	  		'participant_code1'=> Input::get("participant_code1"),
+	    	  		'participant_gender1'=> Input::get("participant_gender1"),
+	    	  		'status' => $register_status,
+	    	  		'reserved_number1' => $reserved_number1,
+	    	  		);
+	    	  	$validation->check($_POST,array(
+	    	    	'participant_name1' => array(
+	    	      	'display' => 'نام همراه 1',
+	    	      	'required' => true,
+	    	      	'min' => 2,
+	    	      	'max' => 35,
+	    	    	),
+	    	    	'participant_code1' => array(
+	    	      	'display' => 'کد ملی همراه 1',
+	    	      	'required' => true,
+	    	      	'exact' => 10,
+	    	    	),
+	    	    	'participant_gender1' => array(
+	    	      	'display' => 'جنسیت همراه 1',
+	    	      	'required' => true,
+	    	    	),
+	    	  	));
+	    		if($validation->passed()){
+	    	 		$db->update('plan_register',$RPD->id,$fields);
+	    			$successes[] = "همراه 1 به برنامه اضافه شد.";
+
+	    			// update user charge
+	    			$charge_fields=array('account_charge'=> ($userdetails->account_charge-$participant_cost1) );
+					$db->update('users',$user_id,$charge_fields);
+
+					// update capacity_number
+					if ($register_status == "ثبت نام") {
+						$fields=array('registered'=> ($plan_capacity->registered + 1) );
+						$db->update('capacity',$capacity_id,$fields);
+					}elseif ($register_status == "رزرو") {
+						$fields=array('reserved'=> ($plan_capacity->reserved + 1) );
+						$db->update('capacity',$capacity_id,$fields);
+					}
+
+	    		}else{
+	    	      	?><div id="form-errors"><?=$validation->display_errors();?></div>
+	    	        <?php
+	    	  	}
+			}
+			else{
+			// participant1 EXIST (uppdate it)
+
+				if ($RPD->participant_name1 != $_POST['participant_name1']){
+			    	$displayname = Input::get("participant_name1");
+		    	  	$fields=array('participant_name1'=>$displayname);
+		    	  	$validation->check($_POST,array(
+		    	    	'participant_name1' => array(
+		    	      	'display' => 'نام همراه 1',
+		    	      	'required' => true,
+		    	      	'min' => 2,
+		    	      	'max' => 35
+		    	    	)
+		    	  	));
+		    		if($validation->passed()){
+		    	 		$db->update('plan_register',$RPD->id,$fields);
+		    			$successes2[] = "نام همراه 1 به روز رسانی شد.";
+		    		}else{
+		    	      	?><div id="form-errors"><?=$validation->display_errors();?></div>
+		    	        <?php
+		    	  	}
+		    	}
+
+		    	if ($RPD->participant_code1 != $_POST['participant_code1']){
+			    	$displayname = Input::get("participant_code1");
+		    	  	$fields=array('participant_code1'=>$displayname);
+		    	  	$validation->check($_POST,array(
+		    	    	'participant_code1' => array(
+		    	      	'display' => 'کد ملی همراه 1',
+		    	      	'required' => true,
+		    	      	'exact' => 10,
+		    	    	)
+		    	  	));
+		    		if($validation->passed()){
+		    	 		$db->update('plan_register',$RPD->id,$fields);
+		    			$successes2[] = "کد ملی همراه 1 به روز رسانی شد.";
+		    		}else{
+		    	      	?><div id="form-errors"><?=$validation->display_errors();?></div>
+		    	        <?php
+		    	  	}
+		    	}
+
+		    	if ($RPD->participant_gender1 != $_POST['participant_gender1']){
+			    	$displayname = Input::get("participant_gender1");
+		    	  	$fields=array('participant_gender1'=>$displayname);
+		    	  	$validation->check($_POST,array(
+		    	    	'participant_gender1' => array(
+		    	      	'display' => 'جنسیت همراه 1',
+		    	      	'required' => true,
+		    	    	)
+		    	  	));
+		    		if($validation->passed()){
+		    	 		$db->update('plan_register',$RPD->id,$fields);
+		    			$successes2[] = "جنسیت همراه 1 به روز رسانی شد.";
+		    		}else{
+		    	      	?><div id="form-errors"><?=$validation->display_errors();?></div>
+		    	        <?php
+		    	  	}
+		    	}
+			}// END OF ELSE ---> participant1 EXIST (uppdate it)
+
+			if ($RPD->participant_name2 == "" & $RPD->participant_name2 != $_POST['participant_name2']) {
+			// participant2 DONT EXIST (add it)
+				$participant_cost2 = Input::get('participant_cost2');
+
+				$plan_capacity = fetchCapacityDetails($capacity_id);
+        		$blank_space = $plan_capacity->capacity_number - $plan_capacity->registered;
+        		$reserved_number2 = 0;
+
+        		$register_status = "ثبت نام";
+        		if ( $blank_space < 1 ){
+        			$register_status = "رزرو";
+        			$reserved_number2 = $plan_capacity->reserved+1;
+        		}
+
+				$displayname = Input::get("participant_name2");
+	    	  	$fields=array(
+	    	  		'participant_name2'=> Input::get("participant_name2"),
+	    	  		'participant_code2'=> Input::get("participant_code2"),
+	    	  		'participant_gender2'=> Input::get("participant_gender2"),
+	    	  		'status' => ($register_status),
+	    	  		'reserved_number2' => ($reserved_number2),
+	    	  		);
+	    	  	$validation->check($_POST,array(
+	    	    	'participant_name2' => array(
+	    	      	'display' => 'نام همراه 2',
+	    	      	'required' => true,
+	    	      	'min' => 2,
+	    	      	'max' => 35,
+	    	    	),
+	    	    	'participant_code2' => array(
+	    	      	'display' => 'کد ملی همراه 2',
+	    	      	'required' => true,
+	    	      	'exact' => 10,
+	    	    	),
+	    	    	'participant_gender2' => array(
+	    	      	'display' => 'جنسیت همراه 2',
+	    	      	'required' => true,
+	    	    	),
+	    	  	));
+	    		if($validation->passed()){
+	    	 		$db->update('plan_register', $RPD->id, $fields);
+	    			$successes[] = "همراه 2 به برنامه اضافه شد.";
+
+	    			// update user charge
+	    			$charge_fields=array('account_charge'=> ($userdetails->account_charge-$participant_cost2) );
+					$db->update('users',$user_id,$charge_fields);
+
+					// update capacity_number
+					if ($register_status == "ثبت نام") {
+						$fields=array('registered'=> ($plan_capacity->registered + 1) );
+						$db->update('capacity', $capacity_id, $fields);
+					}elseif ($register_status == "رزرو") {
+						$fields=array('reserved'=> ($plan_capacity->reserved + 1) );
+						$db->update('capacity', $capacity_id, $fields);
+					}
+
+	    		}else{
+	    	      	?><div id="form-errors"><?=$validation->display_errors();?></div>
+	    	        <?php
+	    	  	}
+			}
+			else{
+			// participant2 EXIST (uppdate it)
+
+				if ($RPD->participant_name2 != $_POST['participant_name2']){
+			    	$displayname = Input::get("participant_name2");
+		    	  	$fields=array('participant_name2'=>$displayname);
+		    	  	$validation->check($_POST,array(
+		    	    	'participant_name2' => array(
+		    	      	'display' => 'نام همراه 2',
+		    	      	'required' => true,
+		    	      	'min' => 2,
+		    	      	'max' => 35
+		    	    	)
+		    	  	));
+		    		if($validation->passed()){
+		    	 		$db->update('plan_register',$RPD->id,$fields);
+		    			$successes2[] = "نام همراه 2 به روز رسانی شد.";
+		    		}else{
+		    	      	?><div id="form-errors"><?=$validation->display_errors();?></div>
+		    	        <?php
+		    	  	}
+		    	}
+
+		    	if ($RPD->participant_code2 != $_POST['participant_code2']){
+			    	$displayname = Input::get("participant_code2");
+		    	  	$fields=array('participant_code2'=>$displayname);
+		    	  	$validation->check($_POST,array(
+		    	    	'participant_code2' => array(
+		    	      	'display' => 'کد ملی همراه 2',
+		    	      	'required' => true,
+		    	      	'exact' => 10,
+		    	    	)
+		    	  	));
+		    		if($validation->passed()){
+		    	 		$db->update('plan_register',$RPD->id,$fields);
+		    			$successes2[] = "کد ملی همراه 2 به روز رسانی شد.";
+		    		}else{
+		    	      	?><div id="form-errors"><?=$validation->display_errors();?></div>
+		    	        <?php
+		    	  	}
+		    	}
+
+		    	if ($RPD->participant_gender2 != $_POST['participant_gender2']){
+			    	$displayname = Input::get("participant_gender2");
+		    	  	$fields=array('participant_gender2'=>$displayname);
+		    	  	$validation->check($_POST,array(
+		    	    	'participant_gender2' => array(
+		    	      	'display' => 'جنسیت همراه 2',
+		    	      	'required' => true,
+		    	    	)
+		    	  	));
+		    		if($validation->passed()){
+		    	 		$db->update('plan_register',$RPD->id,$fields);
+		    			$successes2[] = "جنسیت همراه 2 به روز رسانی شد.";
+		    		}else{
+		    	      	?><div id="form-errors"><?=$validation->display_errors();?></div>
+		    	        <?php
+		    	  	}
+		    	}
+			}// END OF ELSE ---> participant2 EXIST (uppdate it)
+
+			if ($RPD->participant_name3 == "" & $RPD->participant_name3 != $_POST['participant_name3']) {
+			// participant3 DONT EXIST (add it)
+				$participant_cost3 = Input::get('participant_cost3');
+
+				$plan_capacity = fetchCapacityDetails($capacity_id);
+        		$blank_space = $plan_capacity->capacity_number - $plan_capacity->registered;
+        		$reserved_number3 = 0;
+
+        		
+        		$register_status = "ثبت نام";
+        		if ( $blank_space < 1 ){
+        			$register_status = "رزرو";
+        			$reserved_number3 = $plan_capacity->reserved+1;
+        		}
+
+				$displayname = Input::get("participant_name3");
+	    	  	$fields=array(
+	    	  		'participant_name3'=> Input::get("participant_name3"),
+	    	  		'participant_code3'=> Input::get("participant_code3"),
+	    	  		'participant_gender3'=> Input::get("participant_gender3"),
+	    	  		'status' => $register_status,
+	    	  		'reserved_number3' => $reserved_number3,
+	    	  		);
+	    	  	$validation->check($_POST,array(
+	    	    	'participant_name3' => array(
+	    	      	'display' => 'نام همراه 3',
+	    	      	'required' => true,
+	    	      	'min' => 2,
+	    	      	'max' => 35,
+	    	    	),
+	    	    	'participant_code3' => array(
+	    	      	'display' => 'کد ملی همراه 3',
+	    	      	'required' => true,
+	    	      	'exact' => 10,
+	    	    	),
+	    	    	'participant_gender3' => array(
+	    	      	'display' => 'جنسیت همراه 3',
+	    	      	'required' => true,
+	    	    	),
+	    	  	));
+	    		if($validation->passed()){
+	    	 		$db->update('plan_register',$RPD->id,$fields);
+	    			$successes[] = "همراه 3 به برنامه اضافه شد.";
+
+	    			// update user charge
+	    			$charge_fields=array('account_charge'=> ($userdetails->account_charge-$participant_cost3) );
+					$db->update('users',$user_id,$charge_fields);
+
+					// update capacity_number
+					if ($register_status == "ثبت نام") {
+						$fields=array('registered'=> ($plan_capacity->registered + 1) );
+						$db->update('capacity',$capacity_id,$fields);
+					}elseif ($register_status == "رزرو") {
+						$fields=array('reserved'=> ($plan_capacity->reserved + 1) );
+						$db->update('capacity',$capacity_id,$fields);
+					}
+
+	    		}else{
+	    	      	?><div id="form-errors"><?=$validation->display_errors();?></div>
+	    	        <?php
+	    	  	}
+			}
+			else{
+			// participant3 EXIST (uppdate it)
+
+				if ($RPD->participant_name3 != $_POST['participant_name3']){
+			    	$displayname = Input::get("participant_name3");
+		    	  	$fields=array('participant_name3'=>$displayname);
+		    	  	$validation->check($_POST,array(
+		    	    	'participant_name3' => array(
+		    	      	'display' => 'نام همراه 3',
+		    	      	'required' => true,
+		    	      	'min' => 2,
+		    	      	'max' => 35
+		    	    	)
+		    	  	));
+		    		if($validation->passed()){
+		    	 		$db->update('plan_register',$RPD->id,$fields);
+		    			$successes2[] = "نام همراه 3 به روز رسانی شد.";
+		    		}else{
+		    	      	?><div id="form-errors"><?=$validation->display_errors();?></div>
+		    	        <?php
+		    	  	}
+		    	}
+
+		    	if ($RPD->participant_code3 != $_POST['participant_code3']){
+			    	$displayname = Input::get("participant_code3");
+		    	  	$fields=array('participant_code3'=>$displayname);
+		    	  	$validation->check($_POST,array(
+		    	    	'participant_code3' => array(
+		    	      	'display' => 'کد ملی همراه 3',
+		    	      	'required' => true,
+		    	      	'exact' => 10,
+		    	    	)
+		    	  	));
+		    		if($validation->passed()){
+		    	 		$db->update('plan_register',$RPD->id,$fields);
+		    			$successes2[] = "کد ملی همراه 3 به روز رسانی شد.";
+		    		}else{
+		    	      	?><div id="form-errors"><?=$validation->display_errors();?></div>
+		    	        <?php
+		    	  	}
+		    	}
+
+		    	if ($RPD->participant_gender3 != $_POST['participant_gender3']){
+			    	$displayname = Input::get("participant_gender3");
+		    	  	$fields=array('participant_gender3'=>$displayname);
+		    	  	$validation->check($_POST,array(
+		    	    	'participant_gender3' => array(
+		    	      	'display' => 'جنسیت همراه 3',
+		    	      	'required' => true,
+		    	    	)
+		    	  	));
+		    		if($validation->passed()){
+		    	 		$db->update('plan_register',$RPD->id,$fields);
+		    			$successes2[] = "جنسیت همراه 3 به روز رسانی شد.";
+		    		}else{
+		    	      	?><div id="form-errors"><?=$validation->display_errors();?></div>
+		    	        <?php
+		    	  	}
+		    	}
+			}// END OF ELSE ---> participant3 EXIST (uppdate it)
+
+
+	    	
+    	} else{
 
     	$user_id = Input::get('user_id');
     	$plan_id = Input::get('plan_id');
@@ -74,7 +458,7 @@ if(!empty($_POST)) {
     	$participant_gender3 = Input::get('participant_gender3');
 
 
-    	$participant_requirement1 = false;
+    	$participant_requirement1 = true;
     	$participant_requirement2 = false;
     	$participant_requirement3 = false;
     	if ($participant_select1 == "1")
@@ -85,7 +469,6 @@ if(!empty($_POST)) {
     		$participant_requirement3 = true;
 
    		$form_valid=FALSE; // assume the worst
-    	$validation = new Validate();
     	$validation->check($_POST,array(
     		'participant_name1' => array(
     		'display' => 'نام همراه 1',
@@ -229,7 +612,8 @@ if(!empty($_POST)) {
         		die($e->getMessage());
       		}
     	}// passed validate
-    }
+    	}// END OF ELSE ---> (isset($registered_plan_details[0]))
+    }//// END OF ELSE ---> (!Token::check($token))
 }
 
  ?>
@@ -283,7 +667,7 @@ if(!empty($_POST)) {
 	<div class="col-xs-12 col-sm-4 col-md-3" style="text-align: center;">
 		<h1>میزان اعتبار</h1>
 		<p>موجودی حساب کاربری شما</p>
-		<p><?=ucfirst($user->data()->account_charge)?> ریال</p>
+		<p><?=$userdetails->account_charge?> ریال</p>
 		<p>می باشد.</p>
 		<hr>
 		<p>برای افزایش اعتبار بر روی دکمه زیر کلیک کنید.</p>
@@ -350,9 +734,11 @@ if(!empty($_POST)) {
 		///////////////////////////////  End of Cycle through capacity  /////////////////////////////////////////////////
 						if ($related_capacity_n == 0) {
 
+							$rgs = false;
+
 							?>
 								<br>
-								<h2 class="modal-title">ثبت نام در <?=$pld->title?> .</h2>
+								<h2 class="modal-title">ثبت نام در <?=$pld->title?></h2>
 							</div>
 							<div class="modal-body">شما نمی توانید در این برنامه شرکت کنید.</div>
 							<div class="modal-footer"></div>
@@ -363,13 +749,13 @@ if(!empty($_POST)) {
 
 				<?php
 						// continue;  (clean else if u want dont show plans that user cant register in it.)
-						} 
+						}
 						else{
 						///////(can register)
 					?>
 
 					<br>
-					<h2 class="modal-title">ثبت نام در <?=$pld->title?> .</h2>
+					<h2 class="modal-title">ثبت نام در <?=$pld->title?></h2>
 					<input class="form-control" type="text" name="" id="plan_cost" readOnly="" value="هزینه <?=$related_capacity->cost?> تومان">
 				</div>
 				<form class="form-signup"  method="post" action="account.php" id="register-plan-form">
@@ -378,7 +764,7 @@ if(!empty($_POST)) {
 							<?php
 							if (isset($plan_id)) {
 								if($plan_id == $pld->id){
-						           	if (!$form_valid && Input::exists()){
+						           	if (count($validation->errors()) != 0 && Input::exists()){
 						     ?>
 						                <ul class="bg-danger">
 						    <?php
@@ -391,32 +777,49 @@ if(!empty($_POST)) {
 						         		</ul>
 						    <?php
 						        	}
+						        	if (count($successes2) != 0 && Input::exists()){
+						     ?>
+						                <ul class="bg-warning">
+						    <?php
+						                foreach($successes2 as $message){
+						    ?>
+						                    <li class="text-success"><?=$message?></li>
+						    <?php
+						             	}
+						    ?>
+						         		</ul>
+						    <?php
+						        	}
 						        }
 						    }
 						    ?>
 						</div>
-
-						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
-							<label>نام</label>
-							<input class="form-control" type="text" name="" id="name" readOnly="" value="<?=ucfirst($user->data()->fname)." ".ucfirst($user->data()->lname)?>">
-						</div>
-						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
-							<label>کدملی</label>
-							<input class="form-control" type="text" name="" id="code" readOnly="" value="<?=$user->data()->status?>">
-						</div>
-						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
-							<label>شماره دانشجویی</label>
-							<input class="form-control" type="text" name="" id="stdn" readOnly="" value="<?=$user->data()->std_number?>">
-						</div>
-						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
+						<?php
+						     if($userdetails->status == "دانشجو"){
+						 ?>
+							<div class="col-md-3 col-sm-3 col-xs-12 pull-right form-group">
+								<label>شماره دانشجویی</label>
+								<input class="form-control" type="text" name="" id="stdn" readOnly="" value="<?=$userdetails->std_number?>">
+							</div>
+						<?php } ?>
+						<?php
+						     if($userdetails->status == "کارمند"){
+						 ?>
+							<div class="col-md-3 col-sm-3 col-xs-12 pull-right form-group">
+								<label>کد پرسنلی</label>
+								<input class="form-control" type="text" name="" id="sempn" readOnly="" value="<?=$userdetails->emp_number?>">
+							</div>
+						<?php } ?>
+						<div class="col-md-3 col-sm-3 col-xs-12 pull-right form-group">
 							<label>شماره تماس</label>
-							<input class="form-control" type="text" name="" id="stdn" readOnly="" value="<?=$user->data()->std_number?>">
+							<input class="form-control" type="text" name="" id="phnumber" readOnly="" value="<?=$userdetails->phnumber?>">
 						</div>
 							
-		<?php 
+		<?php
 			$plan_register_details = fetchPlanRegisterDetails($userdetails->id, $pld->id, $related_capacity->id);
 			//print_r($plan_register_details[0]);
 			$rgs = isset($plan_register_details[0]);
+			/*
 			$i = 1;
 			while ($i <= $related_capacity->participant_number) { ?>
 						<div class="col-md-1 col-sm-1 col-xs-12 pull-right">
@@ -425,12 +828,14 @@ if(!empty($_POST)) {
 						</div>
 						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
 							<label>نام همراه <?=$i?></label>
-							<input class="form-control" type="text" name="participant_name<?=$i?>" id="participant_name<?=$i?>" readOnly="" placeholder="نام">
+							<input class="form-control" type="text" name="participant_name<?=$i?>" id="participant_name<?=$i?>" readOnly="" placeholder="نام" 
+							<?php if($rgs){ ?> value="<?=$plan_register_details[0]->participant_name1?>" <?php } ?> >
 						</div>
 						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
 							<label>کدملی همراه <?=$i?></label>
-							<input class="form-control" type="text" name="participant_code<?=$i?>" id="participant_code<?=$i?>" readOnly="" placeholder="کدملی">
+							<input class="form-control" type="text" name="participant_code<?=$i?>" id="participant_code<?=$i?>" readOnly="" placeholder="کدملی" <?php if($rgs){ ?> value="<?=$plan_register_details[0]->participant_code1?>" <?php } ?> >
 						</div>
+
 						<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
 							<label>جنسیت</label>
 							<Select class="form-control" name="participant_gender<?=$i?>" id="participant_gender<?=$i?>" >
@@ -443,20 +848,113 @@ if(!empty($_POST)) {
 							<label>هزینه همراه</label>
 							<input class="form-control" type="text" name="participant_cost<?=$i?>" id="participant_cost<?=$i?>" readOnly="" value="<?=$related_capacity->participant_cost?> تومان">
 						</div>
-			<?php $i++;} ?>
+			<?php $i++;}*/ ?>
 			
 						
 						<div class="clearfix"></div>
+
+					<?php
+							$rgs_status = $rgs_status1 = $rgs_status2 = $rgs_status3 = '---';
+                    		if ($rgs) {
+                    			$rgs_status = "ثبت نام ";
+                    			if ($plan_register_details[0]->reserved_number > 0)
+                    					$rgs_status = "رزرو (".$plan_register_details[0]->reserved_number.")";
+                    			if ($plan_register_details[0]->participant_name1 != ""){
+                    				$rgs_status1 = "ثبت نام ";
+                    				if ($plan_register_details[0]->reserved_number1 > 0)
+                    					$rgs_status1 = "رزرو (".$plan_register_details[0]->reserved_number1.")";
+                    			}
+                    			if ($plan_register_details[0]->participant_name2 != ""){
+                    				$rgs_status2 = "ثبت نام ";
+                    				if ($plan_register_details[0]->reserved_number2 > 0)
+                    					$rgs_status2 = "رزرو (".$plan_register_details[0]->reserved_number2.")";
+                    			}
+                    			if ($plan_register_details[0]->participant_name3 != ""){
+                    				$rgs_status3 = "ثبت نام ";
+                    				if ($plan_register_details[0]->reserved_number3 > 0)
+                    					$rgs_status3 = "رزرو (".$plan_register_details[0]->reserved_number3.")";
+                    			}
+                    		}
+                    ?> 
+                    <div class="allutable table-responsive">
+                    	<table class='table table-hover'>
+							<thead>
+								<tr>
+									<th>نام و نام خانوادگی</th><th>کدملی</th><th>جنسیت</th><th>هزینه (تومان)</th><th>وضعیت</th><th>حذف</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><input class="form-control" type="text" name="" value="<?=$userdetails->gender.$space.$userdetails->fname.' '.$userdetails->lname?>"></td>
+									<td><input class="form-control" type="number" name="" value="<?=$userdetails->icode?>"></td>
+									<td><input class="form-control" type="text" name="" value="<?=$userdetails->gender?>"></td>
+									<td><input class="form-control" type="text" name="participant_cost" id="participant_cost" readOnly="" value="<?=$related_capacity->cost?>"></td>
+									<td><?=$rgs_status?></td>
+									<td><span class="pull-right margin-left"><a class="btn btn-danger mini-btn" data-toggle="modal" data-target="#delete_user_register<?=$pld->id?>">لغو ثبت نام</a></td>
+								</tr>
+								<tr>
+									<td><input class="form-control" type="text" name="participant_name1" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_name1);}?>"></td>
+									<td><input class="form-control" type="number" name="participant_code1" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_code1);}?>"></td>
+									<td><Select class="form-control" name="participant_gender1" id="participant_gender1" >
+											<option value=""></option>
+											<option value="آقا" <?php if ($rgs) { if($plan_register_details[0]->participant_gender1 == "آقا"){ echo "selected";} } ?> >آقا</option>
+											<option value="خانم" <?php if ($rgs) { if($plan_register_details[0]->participant_gender1 == "خانم"){ echo "selected";} } ?> >خانم</option>
+										</Select>
+									</td>
+									<td><input class="form-control" type="text" name="participant_cost1" id="participant_cost1" readOnly="" value="<?=$related_capacity->participant_cost?>"></td>
+									<td><?=$rgs_status1?></td>
+									<td><?php if ($rgs & $plan_register_details[0]->participant_name1 != "") { ?> 
+										<span class="pull-right margin-left"><a class="btn btn-warning mini-btn" data-toggle="modal" data-target="#delete_participant_register<?=$pld->id?>">حذف همراه</a><?php } ?>
+									</td>
+								</tr>
+								<tr>
+									<td><input class="form-control" type="text" name="participant_name2" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_name2);}?>" ></td>
+									<td><input class="form-control" type="number" name="participant_code2" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_code2);}?>" ></td>
+									<td><Select class="form-control" name="participant_gender2" id="participant_gender2" >
+											<option value=""></option>
+											<option value="آقا" <?php if ($rgs) { if($plan_register_details[0]->participant_gender2 == "آقا"){ echo "selected";} } ?> >آقا</option>
+											<option value="خانم" <?php if ($rgs) { if($plan_register_details[0]->participant_gender2 == "خانم"){ echo "selected";} } ?> >خانم</option>
+										</Select>
+									</td>
+									<td><input class="form-control" type="text" name="participant_cost2" id="participant_cost2" readOnly="" value="<?=$related_capacity->participant_cost?>"></td>
+									<td><?=$rgs_status2?></td>
+									<td><?php if ($rgs & $plan_register_details[0]->participant_name2 != "") { ?> 
+										<span class="pull-right margin-left"><a class="btn btn-warning mini-btn" data-toggle="modal" data-target="#delete_participant_register<?=$pld->id?>">حذف همراه</a><?php } ?>
+									</td>
+								</tr>
+								<tr>
+									<td><input class="form-control" type="text" name="participant_name3" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_name3);}?>" ></td>
+									<td><input class="form-control" type="number" name="participant_code3" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_code3);}?>" ></td>
+									<td><Select class="form-control" name="participant_gender3" id="participant_gender3" >
+											<option value=""></option>
+											<option value="آقا" <?php if ($rgs) { if($plan_register_details[0]->participant_gender3 == "آقا"){ echo "selected";} } ?> >آقا</option>
+											<option value="خانم" <?php if ($rgs) { if($plan_register_details[0]->participant_gender3 == "خانم"){ echo "selected";} } ?> >خانم</option>
+										</Select>
+									</td>
+									<td><input class="form-control" type="text" name="participant_cost3" id="participant_cost3" readOnly="" value="<?=$related_capacity->participant_cost?>"></td>
+									<td><?=$rgs_status3?></td>
+									<td><?php if ($rgs & $plan_register_details[0]->participant_name3 != "") { ?> 
+										<span class="pull-right margin-left"><a class="btn btn-warning mini-btn" data-toggle="modal" data-target="#delete_participant_register<?=$pld->id?>">حذف همراه</a> <?php } ?>
+									</td>
+								</tr>
+						 	</tbody>
+						</table>
+                    </div>
+
 						<input class="form-control" type="text" name="total_cost" id="total_cost" readOnly="" value="مجموع هزینه ها: <?=$related_capacity->cost?> تومان" style="margin: 0px;">
 						
 					</div><!-- end .modal-body -->
 					<div class="modal-footer">
-						<input type="hidden" value="<?=$user->data()->id;?>" name="user_id">
+						<input type="hidden" value="<?=$userdetails->id;?>" name="user_id">
 						<input type="hidden" value="<?=$related_capacity->plan_id?>" name="plan_id">
 						<input type="hidden" value="<?=$related_capacity->id?>" name="capacity_id">
 						<input type="hidden" value="<?=Token::generate();?>" name="csrf">
-						<button class="submit btn btn-success mini-btn" id="<?=$pld->id?>" type="submit">تأیید اطلاعات و پرداخت</button>
-						<span class="close pull-left" data-dismiss="modal"><a href="#" class="btn btn-warning mini-btn">انصراف</a></span>
+						<?php if($rgs) { ?>
+							<button class="submit btn btn-primary mini-btn" id="<?=$pld->id?>" type="submit">به روز رسانی</button>
+						<?php } else{ ?>
+							<button class="submit btn btn-success mini-btn" id="<?=$pld->id?>" type="submit">ثبت نام و پرداخت</button>
+						<?php } ?>
+						<span class="close pull-left" data-dismiss="modal"><a href="#" class="btn btn-danger mini-btn">انصراف</a></span>
 					</div>
 				</form>
 				
@@ -470,19 +968,54 @@ if(!empty($_POST)) {
 						// end of ELSE (can register)
 					?>
 	<!--  MODAL POPUP -->
+	<div class="modal" id="delete_user_register<?=$pld->id?>">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+				</div>
+				<div class="modal-body">
+					با لغو کردن ثبت نام، شما و همه همراهان از برنامه حذف خواهید شد، آیا از این کار مطمئن هستید؟
+				</div>
+				<div class="modal-footer">
+					<span class="pull-left" data-dismiss="modal"><a class="btn btn-danger mini-btn" data-toggle="modal" >بله ثبت نام لغو شود</a></span>
+				</div>
+			</div><!-- end .modal-content -->
+		</div><!-- end .modal-dialog -->
+	</div><!-- end .modal -->
+	<!-- END MODAL -->
+
+	<div class="modal" id="delete_participant_register<?=$pld->id?>">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+				</div>
+				<div class="modal-body">
+					آیا مطمئن هستید می خواهید همراه خود را از برنامه حذف کنید؟
+				</div>
+				<div class="modal-footer">
+					<span class="pull-left" data-dismiss="modal"><a class="btn btn-danger mini-btn" data-toggle="modal" >بله همراه حذف شود</a></span>
+				</div>
+			</div><!-- end .modal-content -->
+		</div><!-- end .modal-dialog -->
+	</div><!-- end .modal -->
+	<!-- END MODAL -->
+
+
+	<!--  MODAL POPUP -->
 	<div class="modal" id="edit_register_modal<?=$pld->id?>">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
+					<h2>اضافه شدن به برنامه</h2>
 				</div>
 				<div class="modal-body">
 					<div class="modal-success-feedback<?=$pld->id?>">
 					<?php
 					if (isset($plan_id)) {
 						if($plan_id == $pld->id){
-                        	if (!$form_valid && Input::exists()){
+                        	if (!$form_valid && Input::exists() ){
  								
-                        	}else{
+                        	}else if(count($validation->errors()) == 0 & count($successes2) == 0){
                     ?>
                         		<ul class="bg-warning">
                         			<li class="text-success"><?=$successes[0]?></li>
@@ -493,62 +1026,9 @@ if(!empty($_POST)) {
                     }
                     ?>
                     </div>
-                    <?php 
-                    		if ($rgs) {
-                    			$rgs_status = $rgs_status1 = $rgs_status2 = $rgs_status3 = 'ثبت نام شده';
-                    			if ($plan_register_details[0]->reserved_number > 0)
-                    				$rgs_status = "رزرو شماره ".$plan_register_details[0]->reserved_number;
-                    			if ($plan_register_details[0]->reserved_number1 > 0)
-                    				$rgs_status1 = "رزرو شماره ".$plan_register_details[0]->reserved_number1;
-                    			if ($plan_register_details[0]->reserved_number2 > 0)
-                    				$rgs_status2 = "رزرو شماره ".$plan_register_details[0]->reserved_number2;
-                    			if ($plan_register_details[0]->reserved_number3 > 0)
-                    				$rgs_status3 = "رزرو شماره ".$plan_register_details[0]->reserved_number3;
-                    ?>
-                    <div class="allutable table-responsive">
-                    	<table class='table table-hover table-list-search'>
-							<thead>
-								<tr>
-									<th>حذف</th><th>نام و نام خانوادگی</th><th>کدملی</th><th>وضعیت</th><th>ویرایش</th><th>حذف</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td><div class="form-group"><input type="checkbox" name="delete[<?=$v1->id?>]" value="<?=$v1->id?>" /></div></td>
-									<td><input class="form-control" type="text" name="" value="<?=$userdetails->gender.$space.$userdetails->fname." ".$userdetails->lname?>"></td>
-									<td><input class="form-control" type="number" name="" value="<?=$userdetails->icode?>"></td>
-									<td><?=$rgs_status?></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td><div class="form-group"><input type="checkbox" name="delete[<?=$v1->id?>]" value="<?=$v1->id?>" /></div></td>
-									<td><input class="form-control" type="text" name="" value="<?=$plan_register_details[0]->participant_name1?>"></td>
-									<td><input class="form-control" type="number" name="" value="<?=$plan_register_details[0]->participant_code1?>"></td>
-									<td><?=$rgs_status1?></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td><div class="form-group"><input type="checkbox" name="delete[<?=$v1->id?>]" value="<?=$v1->id?>" /></div></td>
-									<td><input class="form-control" type="text" name="" value="<?=$plan_register_details[0]->participant_name2?>"></td>
-									<td><input class="form-control" type="number" name="" value="<?=$plan_register_details[0]->participant_code2?>"></td>
-									<td><?=$rgs_status2?></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td><div class="form-group"><input type="checkbox" name="delete[<?=$v1->id?>]" value="<?=$v1->id?>" /></div></td>
-									<td><input class="form-control" type="text" name="" value="<?=$plan_register_details[0]->participant_name3?>"></td>
-									<td><input class="form-control" type="number" name="" value="<?=$plan_register_details[0]->participant_code3?>"></td>
-									<td><?=$rgs_status3?></td>
-									<td></td>
-								</tr>
-						 	</tbody>
-						</table>
-                    </div>
-
-                    <?php 	} ?>
 				</div>
 				<div class="modal-footer">
-					<span class="pull-right margin-left" data-dismiss="modal"><a class="btn btn-success mini-btn" href="account.php" data-toggle="modal" >تأیید</a></span>
+					<span class="pull-left margin-left" data-dismiss="modal"><a class="btn btn-success mini-btn" data-toggle="modal" >تأیید</a></span>
 				</div>
 			</div><!-- end .modal-content -->
 		</div><!-- end .modal-dialog -->
@@ -564,12 +1044,17 @@ if(!empty($_POST)) {
 			</div>
 			<div class="panel-body text-center"><div class="huge" style="font-size: 16px; text-align: justify;"><span><?=$pld->description?>	</span></div></div>	
 			<div class="panel-footer">	
-				<span class="pull-left" ><a class="btn btn-info mini-btn" href="user_plan.php?id=<?=$pld->id?>">بیشتر</a></span>	
+				<span class="pull-left" ><a class="btn btn-info mini-btn" href="user_plan.php?id=<?=$pld->id?>">بیشتر</a></span>
+				<?php if($rgs) { ?>
+				<span class="pull-right margin-left"><a class="btn btn-warning mini-btn" href="#" data-toggle="modal" data-target="#register_modal<?=$pld->id?>" >ویرایش ثبت نام</a></span>
+
+				<?php } else{ ?>
 				<span class="pull-right margin-left"><a class="btn btn-success mini-btn" href="#" data-toggle="modal" data-target="#register_modal<?=$pld->id?>" >ثبت نام</a></span>
-				<span class="pull-right margin-left"><a class="btn btn-warning mini-btn" href="">لغو ثبت نام</a></span>
-				<div class="clearfix"></div>	
+				<?php } ?>
+
+				<div class="clearfix"></div>
 			</div> <!-- /panel-footer -->
-		</div><!-- /panel -->		
+		</div><!-- /panel -->
 	</div><!-- /col -->
 
 
@@ -614,11 +1099,15 @@ if(!empty($_POST)) {
 	}
 	.modal-body input{
 		text-align: center;
-		margin-bottom: 30px;
+		margin-bottom: 0px;
 	}
-	.modal-body table input{
+	.modal-body th{
 		text-align: center;
-		height: auto;
+		padding: 0px;
+	}
+	.modal-body table input, .modal-body table select{
+		text-align: center;
+		height: 40px;
 		margin: 0px;
 		padding: 0px;
 	}
@@ -651,16 +1140,6 @@ if(!empty($_POST)) {
 			event.preventDefault();
 			$form = $(this);
 			var id = $(this).find('button.submit').attr('id');
-			/*
-			$.post(document.location.url, $(this).serialize(), function(data){
-				//console.log(this);
-				$feedback = $('<div>').html(data).find('.modal-feedback');
-				//$feedback = $('<div>').html(data).find('#edit_register_modal');
-    		  	$form.prepend($feedback);
-    		  	//$('#register_modal1').modal('hide');
-    		  	$('#edit_register_modal').modal('show');
-			});*/
-
 
 
 
@@ -669,6 +1148,9 @@ if(!empty($_POST)) {
 			  type: "POST",
 			  data: $(this).serialize(),
 			  success: function(data){
+
+			  	console.log(data)
+
 			    $feedback = $('<div>').html(data).find('.modal-error-feedback' + id);
 			    $feedback2 = $('<div>').html(data).find('.modal-success-feedback' + id);
 			    $('.modal-error-feedback' + id).remove();

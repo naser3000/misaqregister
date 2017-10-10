@@ -348,7 +348,6 @@ if(!empty($_POST)) {
         $errors[] = lang("SQL_ERROR");
       }
     }
-
     if(!empty($_POST['addPermission'])){
       $add = $_POST['addPermission'];
       if ($addition_count = addPermission($add, $userId,'user')){
@@ -358,8 +357,9 @@ if(!empty($_POST)) {
         $errors[] = lang("SQL_ERROR");
       }
     }
-  }
-    $userdetails = fetchUserDetails(NULL, NULL, $userId);
+
+    }// END OF ELSE ---> (!Token::check($token))
+      $userdetails = fetchUserDetails(NULL, NULL, $userId);
   }
 
 
