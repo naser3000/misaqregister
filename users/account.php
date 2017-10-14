@@ -42,16 +42,6 @@ if(!empty($_POST)) {
     //else
     {
 
-    	///echo "0000000000000000000000000000000000000000000";
-
-/*
-?><div style="height: 300px;"><?php   
-		echo "**************************************************";
-    	print_r('=================');
-?></div><?php  
-*/		//Update display name
-
-
 		$user_id = Input::get('user_id');
     	$plan_id = Input::get('plan_id');
     	$capacity_id = Input::get('capacity_id');
@@ -61,7 +51,77 @@ if(!empty($_POST)) {
 		// user registered in this plan
 			$RPD = $registered_plan_details[0];
 
-			if ($RPD->participant_name1 == "" & $RPD->participant_name1 != $_POST['participant_name1']) {
+			if( isset($_POST['prgs_id']) ) {
+				if( isset($_POST['participant_number']) ){
+					$prgs_id = Input::get('prgs_id');
+					$n = Input::get('participant_number');
+
+					// get paid_cost & capacity_id for plan
+					$query = $db->query("SELECT * FROM plan_register WHERE id = $prgs_id");
+					$prgs = $query->first();
+					$paid_cost = $prgs->paid_cost;
+					$capacity_id = $query->first()->capacity_id;
+
+					// get participant_cost
+					$participant_cost = fetchCapacityDetails($capacity_id)->participant_cost;
+
+					// return paid cost (for participant) to user
+					$charge_fields=array('account_charge'=> ($userdetails->account_charge + $participant_cost) );
+					$db->update('users', $userdetails->id, $charge_fields);
+
+					//update plan_register (remove participant and reduse paid cost)
+					if($n == 1){
+						$paid_fields=array(
+							'paid_cost'=> ($paid_cost - $participant_cost),
+							('participant_name1') => $prgs->participant_name2,
+							('participant_code1') => $prgs->participant_code2,
+							('participant_gender1') => $prgs->participant_gender2,
+							('reserved_number1') => $prgs->reserved_number2,
+							('participant_name2') => $prgs->participant_name3,
+							('participant_code2') => $prgs->participant_code3,
+							('participant_gender2') => $prgs->participant_gender3,
+							('reserved_number2') => $prgs->reserved_number3,
+							('participant_name3') => "",
+							('participant_code3') => "",
+							('participant_gender3') => "",
+							('reserved_number3') => 0,);
+					}
+					if($n == 2){
+						$paid_fields=array(
+							'paid_cost'=> ($paid_cost - $participant_cost),
+							('participant_name2') => $prgs->participant_name3,
+							('participant_code2') => $prgs->participant_code3,
+							('participant_gender2') => $prgs->participant_gender3,
+							('reserved_number2') => $prgs->reserved_number3,
+							('participant_name3') => "",
+							('participant_code3') => "",
+							('participant_gender3') => "",
+							('reserved_number3') => 0,);
+					}
+					if($n == 3){
+						$paid_fields=array(
+							'paid_cost'=> ($paid_cost - $participant_cost),
+							('participant_name3') => "",
+							('participant_code3') => "",
+							('participant_gender3') => "",
+							('reserved_number3') => 0,);
+					}
+					$db->update('plan_register', $prgs_id, $paid_fields);
+				}else {
+					$prgs_id = Input::get('prgs_id');
+					// get paid cost for plan
+					$query = $db->query("SELECT * FROM plan_register WHERE id = $prgs_id");
+					$paid_cost = $query->first()->paid_cost;
+					// return paid cost to user
+					$charge_fields=array('account_charge'=> ($userdetails->account_charge + $paid_cost) );
+					$db->update('users', $userdetails->id, $charge_fields);
+					//delete user register in plan
+					$db->query("DELETE FROM plan_register WHERE id = $prgs_id");
+				}
+			}
+
+			if ($RPD->participant_name1 == "" & 
+				( strlen($_POST['participant_name1']) > 0 || strlen($_POST['participant_code1']) > 0 || strlen($_POST['participant_gender1']) > 0 ) ) {
 			// participant1 DONT EXIST (add it)
 				$participant_cost1 = Input::get('participant_cost1');
 
@@ -82,6 +142,7 @@ if(!empty($_POST)) {
 	    	  		'participant_code1'=> Input::get("participant_code1"),
 	    	  		'participant_gender1'=> Input::get("participant_gender1"),
 	    	  		'status' => $register_status,
+	    	  		'paid_cost' => ($RPD->paid_cost + $participant_cost1),
 	    	  		'reserved_number1' => $reserved_number1,
 	    	  		);
 	    	  	$validation->check($_POST,array(
@@ -123,7 +184,7 @@ if(!empty($_POST)) {
 	    	        <?php
 	    	  	}
 			}
-			else{
+			else if($RPD->participant_name1 != $_POST['participant_name1'] ) {
 			// participant1 EXIST (uppdate it)
 
 				if ($RPD->participant_name1 != $_POST['participant_name1']){
@@ -184,7 +245,8 @@ if(!empty($_POST)) {
 		    	}
 			}// END OF ELSE ---> participant1 EXIST (uppdate it)
 
-			if ($RPD->participant_name2 == "" & $RPD->participant_name2 != $_POST['participant_name2']) {
+			if ($RPD->participant_name2 == "" & 
+				( strlen($_POST['participant_name2']) > 0 || strlen($_POST['participant_code2']) > 0 || strlen($_POST['participant_gender2']) > 0 ) ) {
 			// participant2 DONT EXIST (add it)
 				$participant_cost2 = Input::get('participant_cost2');
 
@@ -204,6 +266,7 @@ if(!empty($_POST)) {
 	    	  		'participant_code2'=> Input::get("participant_code2"),
 	    	  		'participant_gender2'=> Input::get("participant_gender2"),
 	    	  		'status' => ($register_status),
+	    	  		'paid_cost' => ($RPD->paid_cost + $participant_cost2),
 	    	  		'reserved_number2' => ($reserved_number2),
 	    	  		);
 	    	  	$validation->check($_POST,array(
@@ -245,7 +308,7 @@ if(!empty($_POST)) {
 	    	        <?php
 	    	  	}
 			}
-			else{
+			else if ($RPD->participant_name2 != $_POST['participant_name2'] ) {
 			// participant2 EXIST (uppdate it)
 
 				if ($RPD->participant_name2 != $_POST['participant_name2']){
@@ -306,7 +369,8 @@ if(!empty($_POST)) {
 		    	}
 			}// END OF ELSE ---> participant2 EXIST (uppdate it)
 
-			if ($RPD->participant_name3 == "" & $RPD->participant_name3 != $_POST['participant_name3']) {
+			if ($RPD->participant_name3 == "" & 
+				( strlen($_POST['participant_name3']) > 0 || strlen($_POST['participant_code3']) > 0 || strlen($_POST['participant_gender3']) > 0 ) ) {
 			// participant3 DONT EXIST (add it)
 				$participant_cost3 = Input::get('participant_cost3');
 
@@ -318,7 +382,7 @@ if(!empty($_POST)) {
         		$register_status = "ثبت نام";
         		if ( $blank_space < 1 ){
         			$register_status = "رزرو";
-        			$reserved_number3 = $plan_capacity->reserved+1;
+        			$reserved_number3 = $plan_capacity->reserved + 1;
         		}
 
 				$displayname = Input::get("participant_name3");
@@ -327,6 +391,7 @@ if(!empty($_POST)) {
 	    	  		'participant_code3'=> Input::get("participant_code3"),
 	    	  		'participant_gender3'=> Input::get("participant_gender3"),
 	    	  		'status' => $register_status,
+	    	  		'paid_cost' => ($RPD->paid_cost + $participant_cost3),
 	    	  		'reserved_number3' => $reserved_number3,
 	    	  		);
 	    	  	$validation->check($_POST,array(
@@ -351,7 +416,7 @@ if(!empty($_POST)) {
 	    			$successes[] = "همراه 3 به برنامه اضافه شد.";
 
 	    			// update user charge
-	    			$charge_fields=array('account_charge'=> ($userdetails->account_charge-$participant_cost3) );
+	    			$charge_fields=array('account_charge'=> ($userdetails->account_charge - $participant_cost3) );
 					$db->update('users',$user_id,$charge_fields);
 
 					// update capacity_number
@@ -368,7 +433,7 @@ if(!empty($_POST)) {
 	    	        <?php
 	    	  	}
 			}
-			else{
+			else if ( $RPD->participant_name3 != $_POST['participant_name3'] ) {
 			// participant3 EXIST (uppdate it)
 
 				if ($RPD->participant_name3 != $_POST['participant_name3']){
@@ -442,31 +507,35 @@ if(!empty($_POST)) {
     	$total_cost = explode(" تومان", $total_cost_str)[0];
 
 
-    	$participant_select1 = Input::get('participant_choise1');
     	$participant_name1 = Input::get('participant_name1');
     	$participant_code1 = Input::get('participant_code1');
     	$participant_gender1 = Input::get('participant_gender1');
 
-    	$participant_select2 = Input::get('participant_choise2');
     	$participant_name2 = Input::get('participant_name2');
     	$participant_code2 = Input::get('participant_code2');
     	$participant_gender2 = Input::get('participant_gender2');
 
-    	$participant_select3 = Input::get('participant_choise3');
     	$participant_name3 = Input::get('participant_name3');
     	$participant_code3 = Input::get('participant_code3');
     	$participant_gender3 = Input::get('participant_gender3');
 
 
-    	$participant_requirement1 = true;
+    	$participant_requirement1 = false;
     	$participant_requirement2 = false;
     	$participant_requirement3 = false;
-    	if ($participant_select1 == "1")
+
+    	if ($participant_name1 != "" || $participant_code1 != "" || $participant_gender1 != "" 
+    		|| $participant_name2 != "" || $participant_code2 != "" || $participant_gender2 != ""
+    		|| $participant_name3 != "" || $participant_code3 != "" || $participant_gender3 != "" ){
     		$participant_requirement1 = true;
-    	if ($participant_select2 == "1")
-    		$participant_requirement2 = true;
-    	if ($participant_select3 == "1")
-    		$participant_requirement3 = true;
+    		if ($participant_name2 != "" || $participant_code2 != "" || $participant_gender2 != "" 
+    			|| $participant_name3 != "" || $participant_code3 != "" || $participant_gender3 != "" ){
+    			$participant_requirement2 = true;
+    			if ($participant_name3 != "" || $participant_code3 != "" || $participant_gender3 != "" )
+    				$participant_requirement3 = true;
+    		}
+    	}
+    	
 
    		$form_valid=FALSE; // assume the worst
     	$validation->check($_POST,array(
@@ -574,6 +643,7 @@ if(!empty($_POST)) {
         			'plan_id' => Input::get('plan_id'),
         			'capacity_id' => Input::get('capacity_id'),
         			'status' => $register_status,
+        			'paid_cost' => $total_cost,
         			'reserved_number' => $reserved_number,
         			'reserved_number1' => $reserved_number1,
         			'reserved_number2' => $reserved_number2,
@@ -592,7 +662,7 @@ if(!empty($_POST)) {
 
        			// update user account_charge
 				//$userdetails = fetchUserDetails($user_id);
-				$charge_fields=array('account_charge'=> ($userdetails->account_charge-$total_cost) );
+				$charge_fields=array('account_charge'=> ($userdetails->account_charge - $total_cost) );
 				$db->update('users',$user_id,$charge_fields);
 
 				// update capacity_number
@@ -819,6 +889,9 @@ if(!empty($_POST)) {
 			$plan_register_details = fetchPlanRegisterDetails($userdetails->id, $pld->id, $related_capacity->id);
 			//print_r($plan_register_details[0]);
 			$rgs = isset($plan_register_details[0]);
+			$prgs_id = 0;
+			if ($rgs)
+				$prgs_id = $plan_register_details[0]->id;
 			/*
 			$i = 1;
 			while ($i <= $related_capacity->participant_number) { ?>
@@ -855,46 +928,84 @@ if(!empty($_POST)) {
 
 					<?php
 							$rgs_status = $rgs_status1 = $rgs_status2 = $rgs_status3 = '---';
+							$showing1 = $showing2 = $showing3 = false;
                     		if ($rgs) {
                     			$rgs_status = "ثبت نام ";
                     			if ($plan_register_details[0]->reserved_number > 0)
                     					$rgs_status = "رزرو (".$plan_register_details[0]->reserved_number.")";
                     			if ($plan_register_details[0]->participant_name1 != ""){
+                    				$showing1 = true;
                     				$rgs_status1 = "ثبت نام ";
                     				if ($plan_register_details[0]->reserved_number1 > 0)
                     					$rgs_status1 = "رزرو (".$plan_register_details[0]->reserved_number1.")";
                     			}
                     			if ($plan_register_details[0]->participant_name2 != ""){
+                    				$showing2 = true;
                     				$rgs_status2 = "ثبت نام ";
                     				if ($plan_register_details[0]->reserved_number2 > 0)
                     					$rgs_status2 = "رزرو (".$plan_register_details[0]->reserved_number2.")";
                     			}
                     			if ($plan_register_details[0]->participant_name3 != ""){
+                    				$showing3 = true;
                     				$rgs_status3 = "ثبت نام ";
                     				if ($plan_register_details[0]->reserved_number3 > 0)
                     					$rgs_status3 = "رزرو (".$plan_register_details[0]->reserved_number3.")";
                     			}
                     		}
                     ?> 
-                    <div class="allutable table-responsive">
-                    	<table class='table table-hover'>
+                    <div class="table-responsive">
+                    	<table class='table table-hover plan<?= $pld->id ?>'>
 							<thead>
 								<tr>
 									<th>نام و نام خانوادگی</th><th>کدملی</th><th>جنسیت</th><th>هزینه (تومان)</th><th>وضعیت</th><th>حذف</th>
 								</tr>
 							</thead>
+							
 							<tbody>
 								<tr>
-									<td><input class="form-control" type="text" name="" value="<?=$userdetails->gender.$space.$userdetails->fname.' '.$userdetails->lname?>"></td>
-									<td><input class="form-control" type="number" name="" value="<?=$userdetails->icode?>"></td>
-									<td><input class="form-control" type="text" name="" value="<?=$userdetails->gender?>"></td>
+									<td><input class="form-control" type="text" name="" value="<?=$userdetails->fname.' '.$userdetails->lname?>" readonly=""></td>
+									<td><input class="form-control" type="number" name="" value="<?=$userdetails->icode?>" readonly=""></td>
+									<td><input class="form-control" type="text" name="" value="<?=$userdetails->gender?>" readonly=""></td>
 									<td><input class="form-control" type="text" name="participant_cost" id="participant_cost" readOnly="" value="<?=$related_capacity->cost?>"></td>
 									<td><?=$rgs_status?></td>
-									<td><span class="pull-right margin-left"><a class="btn btn-danger mini-btn" data-toggle="modal" data-target="#delete_user_register<?=$pld->id?>">لغو ثبت نام</a></td>
+									<td><?php if ($rgs) { ?> 
+										<span class="pull-right margin-left"><a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete_user_register<?=$pld->id?>">لغو ثبت نام</a><?php } ?>
+
+									</td>
 								</tr>
-								<tr>
-									<td><input class="form-control" type="text" name="participant_name1" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_name1);}?>"></td>
-									<td><input class="form-control" type="number" name="participant_code1" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_code1);}?>"></td>
+								<?php
+									$i = 10;
+									while($i < $related_capacity->participant_number){ ?>
+
+
+		<tr class="<?php if (!$showing1){ echo "hidden"; $add_participant=true;} ?> dont-hidden">
+			<td><input class="form-control" type="text" name="participant_name1" id="participant_name1" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_name1);}?>"></td>
+			<td><input class="form-control" type="number" name="participant_code1" id="participant_code1" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_code1);}?>"></td>
+			<td><Select class="form-control" name="participant_gender1" id="participant_gender1" >
+					<option value=""></option>
+					<option value="آقا" <?php if ($rgs) { if($plan_register_details[0]->participant_gender1 == "آقا"){ echo "selected";} } ?> >آقا</option>
+					<option value="خانم" <?php if ($rgs) { if($plan_register_details[0]->participant_gender1 == "خانم"){ echo "selected";} } ?> >خانم</option>
+				</Select>
+			</td>
+			<td><input class="form-control" type="text" name="participant_cost1" id="participant_cost1" readOnly="" value="<?=$related_capacity->participant_cost?>"></td>
+			<td><?=$rgs_status1?></td>
+			<td><?php if ($showing1) { ?> 
+				<span class="pull-right margin-left"><a class="btn btn-warning btn-xs" data-toggle="modal" data-target="#delete_participant_register<?=$pld->id?>">حذف همراه</a><?php  } else { ?>
+				<a href="#" class="btn btn-warning btn-xs" id="add_participant" onclick="remove_participant(<?=$pld->id?>, 1, <?=$userdetails->account_charge?>)"><span class="glyphicon glyphicon-remove"></span></a>
+				<?php } ?>
+			</td>
+		</tr>
+
+								<?php } ?>
+
+
+
+
+
+
+								<tr class="<?php if (!$showing1){ echo "hidden"; $add_participant=true;} ?> dont-hidden">
+									<td><input class="form-control" type="text" name="participant_name1" id="participant_name1" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_name1);}?>"></td>
+									<td><input class="form-control" type="number" name="participant_code1" id="participant_code1" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_code1);}?>"></td>
 									<td><Select class="form-control" name="participant_gender1" id="participant_gender1" >
 											<option value=""></option>
 											<option value="آقا" <?php if ($rgs) { if($plan_register_details[0]->participant_gender1 == "آقا"){ echo "selected";} } ?> >آقا</option>
@@ -903,13 +1014,15 @@ if(!empty($_POST)) {
 									</td>
 									<td><input class="form-control" type="text" name="participant_cost1" id="participant_cost1" readOnly="" value="<?=$related_capacity->participant_cost?>"></td>
 									<td><?=$rgs_status1?></td>
-									<td><?php if ($rgs & $plan_register_details[0]->participant_name1 != "") { ?> 
-										<span class="pull-right margin-left"><a class="btn btn-warning mini-btn" data-toggle="modal" data-target="#delete_participant_register<?=$pld->id?>">حذف همراه</a><?php } ?>
+									<td><?php if ($showing1) { ?> 
+										<span class="pull-right margin-left"><a class="btn btn-warning btn-xs" data-toggle="modal" data-target="#delete_participant_register<?=$pld->id?>">حذف همراه</a><?php  } else { ?>
+										<a href="#" class="btn btn-warning btn-xs" id="add_participant" onclick="remove_participant(<?=$pld->id?>, 1, <?=$userdetails->account_charge?>)"><span class="glyphicon glyphicon-remove"></span></a>
+										<?php } ?>
 									</td>
 								</tr>
-								<tr>
-									<td><input class="form-control" type="text" name="participant_name2" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_name2);}?>" ></td>
-									<td><input class="form-control" type="number" name="participant_code2" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_code2);}?>" ></td>
+								<tr class="<?php if  (!$showing2){ echo "hidden"; $add_participant=true;} ?> dont-hidden">
+									<td><input class="form-control" type="text" name="participant_name2" id="participant_name2" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_name2);}?>" ></td>
+									<td><input class="form-control" type="number" name="participant_code2" id="participant_code2" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_code2);}?>" ></td>
 									<td><Select class="form-control" name="participant_gender2" id="participant_gender2" >
 											<option value=""></option>
 											<option value="آقا" <?php if ($rgs) { if($plan_register_details[0]->participant_gender2 == "آقا"){ echo "selected";} } ?> >آقا</option>
@@ -918,13 +1031,15 @@ if(!empty($_POST)) {
 									</td>
 									<td><input class="form-control" type="text" name="participant_cost2" id="participant_cost2" readOnly="" value="<?=$related_capacity->participant_cost?>"></td>
 									<td><?=$rgs_status2?></td>
-									<td><?php if ($rgs & $plan_register_details[0]->participant_name2 != "") { ?> 
-										<span class="pull-right margin-left"><a class="btn btn-warning mini-btn" data-toggle="modal" data-target="#delete_participant_register<?=$pld->id?>">حذف همراه</a><?php } ?>
+									<td><?php if ($showing2) { ?> 
+										<span class="pull-right margin-left"><a class="btn btn-warning btn-xs" data-toggle="modal" data-target="#delete_participant_register<?=$pld->id?>">حذف همراه</a><?php }  else { ?>
+										<a href="#" class="btn btn-warning btn-xs" id="add_participant" onclick="remove_participant(<?=$pld->id?>, 2, <?=$userdetails->account_charge?>)"><span class="glyphicon glyphicon-remove"></span></a>
+										<?php } ?>
 									</td>
 								</tr>
-								<tr>
-									<td><input class="form-control" type="text" name="participant_name3" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_name3);}?>" ></td>
-									<td><input class="form-control" type="number" name="participant_code3" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_code3);}?>" ></td>
+								<tr class="<?php if (!$showing3){ echo "hidden"; $add_participant=true;} ?> dont-hidden">
+									<td><input class="form-control" type="text" name="participant_name3" id="participant_name3" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_name3);}?>" ></td>
+									<td><input class="form-control" type="number" name="participant_code3" id="participant_code3" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_code3);}?>" ></td>
 									<td><Select class="form-control" name="participant_gender3" id="participant_gender3" >
 											<option value=""></option>
 											<option value="آقا" <?php if ($rgs) { if($plan_register_details[0]->participant_gender3 == "آقا"){ echo "selected";} } ?> >آقا</option>
@@ -933,15 +1048,26 @@ if(!empty($_POST)) {
 									</td>
 									<td><input class="form-control" type="text" name="participant_cost3" id="participant_cost3" readOnly="" value="<?=$related_capacity->participant_cost?>"></td>
 									<td><?=$rgs_status3?></td>
-									<td><?php if ($rgs & $plan_register_details[0]->participant_name3 != "") { ?> 
-										<span class="pull-right margin-left"><a class="btn btn-warning mini-btn" data-toggle="modal" data-target="#delete_participant_register<?=$pld->id?>">حذف همراه</a> <?php } ?>
+									<td><?php if ($showing3) { ?> 
+										<span class="pull-right margin-left"><a class="btn btn-warning btn-xs" data-toggle="modal" data-target="#delete_participant_register<?=$pld->id?>">حذف همراه</a> <?php } else { ?>
+										<a href="#" class="btn btn-warning btn-xs" id="add_participant" onclick="remove_participant(<?=$pld->id?>, 3, <?=$userdetails->account_charge?>)"><span class="glyphicon glyphicon-remove"></span></a>
+										<?php } ?>
+									</td>
+								</tr>
+								<tr id="add_participant" class="<?php if (!$add_participant) {echo "hidden";} ?>" >
+									<td>
+										<a href="#" class="btn btn-success btn-xs" id="add_participant" onclick="add_participant(<?=$pld->id?>, <?=$userdetails->account_charge?>)">
+											<span class="glyphicon glyphicon-plus">&nbsp;</span>اضافه کردن همراه
+										</a>
 									</td>
 								</tr>
 						 	</tbody>
 						</table>
                     </div>
+                    
 
-						<input class="form-control" type="text" name="total_cost" id="total_cost" readOnly="" value="مجموع هزینه ها: <?=$related_capacity->cost?> تومان" style="margin: 0px;">
+						<input class="form-control" type="text" name="total_cost" id="total_cost" readOnly="" value="مجموع هزینه ها: <?php if($rgs) {print_r($plan_register_details[0]->paid_cost); } else {print_r($related_capacity->cost);} ?> تومان" style="margin: 0px;">
+						<span class="col-xs-12 bg-danger text-danger hidden" id="charge_error">موجودی حساب شما کافی نمی باشد. لطفاً حساب خود را شارژ کنید.</span><br>
 						
 					</div><!-- end .modal-body -->
 					<div class="modal-footer">
@@ -950,9 +1076,9 @@ if(!empty($_POST)) {
 						<input type="hidden" value="<?=$related_capacity->id?>" name="capacity_id">
 						<input type="hidden" value="<?=Token::generate();?>" name="csrf">
 						<?php if($rgs) { ?>
-							<button class="submit btn btn-primary mini-btn" id="<?=$pld->id?>" type="submit">به روز رسانی</button>
+							<button class="submit btn btn-primary mini-btn register-update" id="<?=$pld->id?>" type="submit" <?php if($related_capacity->cost > $userdetails->account_charge){ echo "disabled=''";} ?> >به روز رسانی</button>
 						<?php } else{ ?>
-							<button class="submit btn btn-success mini-btn" id="<?=$pld->id?>" type="submit">ثبت نام و پرداخت</button>
+							<button class="submit btn btn-success mini-btn register-plan" id="<?=$pld->id?>" type="submit" <?php if($related_capacity->cost > $userdetails->account_charge){ echo "disabled=''";} ?> >ثبت نام و پرداخت</button>
 						<?php } ?>
 						<span class="close pull-left" data-dismiss="modal"><a href="#" class="btn btn-danger mini-btn">انصراف</a></span>
 					</div>
@@ -963,10 +1089,7 @@ if(!empty($_POST)) {
 	</div><!-- end .modal -->
 	<!-- END of MODAL -->
 
-					<?php	
-						}
-						// end of ELSE (can register)
-					?>
+					
 	<!--  MODAL POPUP -->
 	<div class="modal" id="delete_user_register<?=$pld->id?>">
 		<div class="modal-dialog">
@@ -977,7 +1100,7 @@ if(!empty($_POST)) {
 					با لغو کردن ثبت نام، شما و همه همراهان از برنامه حذف خواهید شد، آیا از این کار مطمئن هستید؟
 				</div>
 				<div class="modal-footer">
-					<span class="pull-left" data-dismiss="modal"><a class="btn btn-danger mini-btn" data-toggle="modal" >بله ثبت نام لغو شود</a></span>
+					<span class="pull-left" data-dismiss="modal" onclick="remove_user_register(<?=$prgs_id?>)"><a class="btn btn-danger mini-btn" data-toggle="modal" >بله، ثبت نام لغو شود</a></span>
 				</div>
 			</div><!-- end .modal-content -->
 		</div><!-- end .modal-dialog -->
@@ -993,7 +1116,7 @@ if(!empty($_POST)) {
 					آیا مطمئن هستید می خواهید همراه خود را از برنامه حذف کنید؟
 				</div>
 				<div class="modal-footer">
-					<span class="pull-left" data-dismiss="modal"><a class="btn btn-danger mini-btn" data-toggle="modal" >بله همراه حذف شود</a></span>
+					<span class="pull-left" data-dismiss="modal" onclick="remove_participant_register(<?=$prgs_id?>, 2)"><a class="btn btn-danger mini-btn" data-toggle="modal" >بله، همراه حذف شود</a></span>
 				</div>
 			</div><!-- end .modal-content -->
 		</div><!-- end .modal-dialog -->
@@ -1015,7 +1138,7 @@ if(!empty($_POST)) {
 						if($plan_id == $pld->id){
                         	if (!$form_valid && Input::exists() ){
  								
-                        	}else if(count($validation->errors()) == 0 & count($successes2) == 0){
+                        	}else if(count($successes) > 0){
                     ?>
                         		<ul class="bg-warning">
                         			<li class="text-success"><?=$successes[0]?></li>
@@ -1034,6 +1157,11 @@ if(!empty($_POST)) {
 		</div><!-- end .modal-dialog -->
 	</div><!-- end .modal -->
 	<!-- END MODAL -->
+
+					<?php
+						}
+						// end of ELSE (can register)
+					?>
 
 	<!-- Plan Panel -->
 	<div class="col-xs-12 col-sm-6 col-md-4 pull-right">
@@ -1122,6 +1250,9 @@ if(!empty($_POST)) {
 	.modal-body div.pull-right{
 		text-align: center;
 	}
+	span.glyphicon{
+		margin-top: 5px;
+	}
 	input#total_cost, input#plan_cost{
 		height: 60px;
 		font-size: 25px;
@@ -1135,19 +1266,19 @@ if(!empty($_POST)) {
 
 //$("#register_modal1").modal({"backdrop": "static"});
 
-		$(document).on('submit', '#register-plan-form', function(event){
-			
-			event.preventDefault();
-			$form = $(this);
-			var id = $(this).find('button.submit').attr('id');
+	$(document).on('submit', '#register-plan-form', function(event){
+		
+		event.preventDefault();
+		$form = $(this);
+		var id = $(this).find('button.submit').attr('id');
 
 
 
-			$.ajax({
-			  url: 'account.php',
-			  type: "POST",
-			  data: $(this).serialize(),
-			  success: function(data){
+		$.ajax({
+			url: 'account.php',
+			type: "POST",
+			data: $(this).serialize(),
+			success: function(data){
 
 			  	console.log(data)
 
@@ -1165,109 +1296,137 @@ if(!empty($_POST)) {
 			    	$('#register_modal'+id).modal('toggle');
 			    	$('#edit_register_modal'+id).modal('show');
 			    }
-			    //$feedback = $('<div>').html(data).find('#edit_register_modal');
-			    //$('#register_modal1').modal('hide');
-			    //$('#edit_register_modal .modal-body').innerHTML = $form.prepend($feedback);
-			    //$('#edit_register_modal .modal-body').innerHTML += "jjjjjjjjjjjjjjjjjjjjjjjj";
-			    
 
-			    //console.log(data);
-			    //var x = document.querySelector('#edit_register_modal .modal-body');
-			    //x.innerHTML = "";
-			    //x.appendChild($feedback[0]);
-			    //x.innerHTML += "";
-			    //console.log(x.innerHTML);
-			    console.log($feedback[0].childElementCount);
-			    console.log($feedback[0]);
-			    console.log($feedback2[0].childElementCount);
-			    console.log($feedback2[0]);
-			    //console.log($form.prepend($feedback));
-			    
-			  },
-			  error: function(){
-			    alert('failure');
-			  }
-			});
-
-			console.log("+++++++++++++++++++++");
-			
+				console.log($feedback[0].childElementCount);
+				console.log($feedback[0]);
+				console.log($feedback2[0].childElementCount);
+				console.log($feedback2[0]);
+				//console.log($form.prepend($feedback));
+				//location.reload();
+			},
+			error: function(){
+				alert('failure');
+			}
 		});
 
-
-
-	function participant_active(i) {
-
-		var selector = 'participant_choise'+i;
-		var participant_choise = document.getElementById(selector);
-
-		selector = 'participant_name'+i;
-		var participant_name = document.getElementById(selector);
-
-		selector = 'participant_code'+i;
-		var participant_code = document.getElementById(selector);
-
-		selector = 'participant_gender'+i;
-		var participant_gender = document.getElementById(selector);
-
-		i+=1;
-		var selector = 'participant_choise'+i;
-		var participant_choise2 = document.getElementById(selector);
-
+		console.log("+++++++++++++++++++++");
 		
+	});
 
-		if (participant_choise.checked) {
-			participant_name.readOnly = false;
-			participant_code.readOnly = false;
-			participant_gender.disabled = false;
-			addOneParticipantCostToTotalCost()
-			if (participant_choise2 != null)
-				participant_choise2.disabled = false;
+	function remove_user_register(prgs_id){
+		
+		$.ajax({
+		 	url: 'account.php',
+		 	type: "POST",
+		 	data: {'prgs_id' : prgs_id},
+		 	success: function(){
+		 		location.reload();
+		 	},
+		 	error: function(){
+		 		alert('failure');
+		 	}
+		});
+	}
+	function remove_participant_register(prgs_id, id){
+		
+		$.ajax({
+		 	url: 'account.php',
+		 	type: "POST",
+		 	data: {'prgs_id' : prgs_id, 'participant_number'  : id},
+		 	success: function(){
+		 		location.reload();
+		 	},
+		 	error: function(){
+		 		alert('failure');
+		 	}
+		});
+	}
+
+	function add_participant(plan_id, account_charge) {
+
+		if ($('table.plan'+plan_id+' tr.hidden').length == 0) {
+			$('table.plan'+plan_id+' tr#add_participant').addClass('hidden');
 		}else{
-			participant_name.readOnly = true;
-			participant_code.readOnly = true;
-			participant_gender.disabled = true;
-			removeOneParticipantCostToTotalCost();
-			if (participant_choise2 != null)
-				participant_choise2.disabled = true;
-
-			participant_name.value = null;
-			participant_code.value = null;
-			participant_gender.value = null;
-			if (participant_choise2 != null && participant_choise2.checked == true){
-				participant_choise2.checked = false;
-				participant_active(i);
-			}
-			
+			$('table.plan'+plan_id+' tr.hidden')[0].classList.remove('hidden');
+			changeOneParticipantCostToTotalCost(plan_id, +1, account_charge)
+			if ($('table.plan'+plan_id+' tr.hidden').length == 0)
+				$('table.plan'+plan_id+' tr#add_participant').addClass('hidden');
 		}
+	}
+
+	function remove_participant(plan_id, i, account_charge) {
+		var l1 = $('table.plan'+plan_id+' tr.hidden.dont-hidden').length;
+		var l2 = $('table.plan'+plan_id+' tr.dont-hidden').length
+		console.log(l1 + "jjj" + l2);
+		console.log($('table.plan'+plan_id+' tr.dont-hidden'));
+		$('table.plan'+plan_id+' tr.dont-hidden')[l2 - l1 - 1].classList.add('hidden');
+		if(i == 1){
+			console.log(i + "***");
+			if(l2 > 1){
+				$('table.plan'+plan_id+' #participant_name1')[0].value = $('table.plan'+plan_id+' #participant_name2')[0].value;
+				$('table.plan'+plan_id+' #participant_code1')[0].value = $('table.plan'+plan_id+' #participant_code2')[0].value;
+				$('table.plan'+plan_id+' #participant_gender1')[0].value = $('table.plan'+plan_id+' #participant_gender2')[0].value;
+			}
+			if (l2 > 2) {
+				$('table.plan'+plan_id+' #participant_name2')[0].value = $('table.plan'+plan_id+' #participant_name3')[0].value;
+				$('table.plan'+plan_id+' #participant_code2')[0].value = $('table.plan'+plan_id+' #participant_code3')[0].value;
+				$('table.plan'+plan_id+' #participant_gender2')[0].value = $('table.plan'+plan_id+' #participant_gender3')[0].value;
+			}
+		}
+		if(i == 2 & l2 > 2){
+			$('table.plan'+plan_id+' #participant_name2')[0].value = $('table.plan'+plan_id+' #participant_name3')[0].value;
+			$('table.plan'+plan_id+' #participant_code2')[0].value = $('table.plan'+plan_id+' #participant_code3')[0].value;
+			$('table.plan'+plan_id+' #participant_gender2')[0].value = $('table.plan'+plan_id+' #participant_gender3')[0].value;
+		}
+		changeOneParticipantCostToTotalCost(plan_id, -1, account_charge);
+		deleteText($('table.plan'+plan_id+' tr.dont-hidden')[l2 - 1]);
+		if ($('table.plan'+plan_id+' tr.hidden').length > 0)
+			$('table.plan'+plan_id+' tr#add_participant').removeClass('hidden');
+	}
+
+
+	function changeOneParticipantCostToTotalCost(plan_id, sign, account_charge) {
+
+		var total_cost = document.querySelector('#register_modal'+plan_id+' #total_cost');
+		var participant_cost = document.querySelector('#register_modal'+plan_id+' #participant_cost1');
+		var i = total_cost.value.indexOf(':');
+		var j = total_cost.value.indexOf('تومان');
+		var total = parseInt(total_cost.value.substring(i+2, j-1));
+
+		total += parseInt(participant_cost.value) * sign;
+
+		total_cost.value = "مجموع هزینه ها: " + total +" تومان";
+		if (total > account_charge) {
+			$('#register_modal'+plan_id+' #charge_error').removeClass('hidden');
+			if($('button.register-plan#'+plan_id)[0] != undefined)
+				$('button.register-plan#'+plan_id)[0].disabled = true;
+			if($('button.register-update#'+plan_id)[0] != undefined)
+				$('button.register-update#'+plan_id)[0].disabled = true;
+		}else{
+			$('#register_modal'+plan_id+' #charge_error').addClass('hidden');
+			if($('button.register-plan#'+plan_id)[0] != undefined)
+				$('button.register-plan#'+plan_id)[0].disabled = false;
+			if($('button.register-update#'+plan_id)[0] != undefined)
+				$('button.register-update#'+plan_id)[0].disabled = false;
+		}
+	}
+	/*function removeOneParticipantCostToTotalCost(plan_id) {
 		
-	}
-
-	function addOneParticipantCostToTotalCost() {
-
-		var total_cost = document.getElementById('total_cost');
-		var participant_cost = document.getElementById('participant_cost1');
+		var total_cost = document.querySelector('#register_modal'+plan_id+' #total_cost');
+		var participant_cost = document.querySelector('#register_modal'+plan_id+' #participant_cost1');
 		var i = total_cost.value.indexOf(':');
 		var j = total_cost.value.indexOf('تومان');
 		var total = parseInt(total_cost.value.substring(i+2, j-1));
 
-		j = participant_cost.value.indexOf('تومان');
-		total += parseInt(participant_cost.value.substring(0, j-1));
+		total -= parseInt(participant_cost.value);
 
 		total_cost.value = "مجموع هزینه ها: " + total +" تومان";
-	}
-	function removeOneParticipantCostToTotalCost() {
-
-		var total_cost = document.getElementById('total_cost');
-		var participant_cost = document.getElementById('participant_cost1');
-
-		var i = total_cost.value.indexOf(':');
-		var j = total_cost.value.indexOf('تومان');
-		var total = parseInt(total_cost.value.substring(i+2, j-1));
-
-		j = participant_cost.value.indexOf('تومان');
-console.log(parseInt(participant_cost.value.substring(0, j-1)));		
-		total -= parseInt(participant_cost.value.substring(0, j-1));
-
-		total_cost.value = "مجموع هزینه ها: " + total +" تومان";
+	}*/
+	function deleteText(el){
+		var x = el.querySelectorAll('input');
+		x[0].value = "";
+		x[1].value = "";
+		var y = el.querySelector('select');
+		y.selectedIndex  = 0;
 	}
 </script>
