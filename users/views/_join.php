@@ -149,84 +149,12 @@ if ($settings->req_num == 1){ ?>
 			<br>
 <?php } ?>
 			<span id="password_match_icon" class="glyphicon glyphicon-ok gray_out_icon" style="color: green"></span>&nbsp;&nbsp;<?php echo $password_match_statement;?>
-		</div><br>
-
-			<label for="interested">علاقه مند به همکاری</label><br>
-			<input type="radio" class="form-contro" id="interested" name="interested" value="بله" required>بله<br>
-			<input type="radio" class="form-contro" id="interested" name="interested" value="خیر" required>خیر<br>
+		</div>
 		</div>
 	</div><!--END OF panel-default  -->
 	</div><!--END OF col  -->
 
-	<div class="col-md-6 pull-right">
-	<div class=" panel panel-default ">
-		<div class="panel-heading">اطلاعات فردی </div>
-		<div class="panel-body">
 
-			<label for="fname">نام*</label>
-			<input type="text" class="form-control" id="fname" name="fname" placeholder="نام" value="<?php if (!$form_valid && !empty($_POST)){ echo $fname;} ?>" required>
-
-			<label for="lname">نام خانوادگی*</label>
-			<input type="text" class="form-control" id="lname" name="lname" placeholder="نام خانوادگی" value="<?php if (!$form_valid && !empty($_POST)){ echo $lname;} ?>" required>
-
-			<label for="icode">کد ملی*</label>
-			<input type="text" class="form-control" id="icode" name="icode" placeholder="کد ملی" value="<?php if (!$form_valid && !empty($_POST)){ echo $icode;} ?>" required>
-
-			<label for="phnumber">شماره تماس*</label>
-			<input type="text" class="form-control" id="phnumber" name="phnumber" placeholder="شماره تماس" value="<?php if (!$form_valid && !empty($_POST)){ echo $phnumber;} ?>" required><br>
-
-			<label for="gender">جنسیت*</label><br>
-			<input type="radio" class="form-contro" id="gender" name="gender" value="آقا" required>آقا<br>
-			<input type="radio" class="form-contro" id="gender" name="gender" value="خانم" required>خانم<br>
-		</div>
-	</div><!--END OF panel-default  -->
-	</div><!--END OF col  -->
-
-	<div class="col-md-6 pull-right">
-	<div class=" panel panel-default">
-		<div class="panel-heading">اطلاعات تحصیلی</div>
-		<div class="panel-body">
-
-			<label for="status">وضعیت*</label><br>
-			<select name="status" id = "status" class="form-control" onchange="disableInput()">
-				<option value="فارغ التحصیل">فارغ التحصیل</option>
-				<option value="دانشجو" >دانشجو</option>
-				<option value="کارمند">کارمند</option>
-				<option value="استاد">استاد</option>
-				<option value="آزاد">آزاد</option>
-			</select>
-
-			<label for="std_number">شماره دانشجویی*</label>
-			<input type="text" class="form-control" id="std_number" name="std_number" readonly="" placeholder="شماره دانشجویی" value =''>
-
-			<label for="major">رشته تحصیلی</label>
-			<input type="text" class="form-control" id="major" name="major" placeholder="رشته تحصیلی">
-
-			<label for="dorms">خوابگاه</label><br>
-			<select name="dorms" id = "dorms" class="form-control" disabled="disabled" >
-				<option></option>
-				<option value="تهرانی">تهرانی</option>
-				<option value="طرشت 3" >طرشت 3</option>
-				<option value="احمدی روشن">احمدی روشن</option>
-				<option value="طرشت 2">طرشت 2</option>
-				<option value="آزادی">آزادی</option>
-				<option value="وزوایی">وزوایی</option>
-				<option value="شادمان">شادمان</option>
-				<option value="صادقی">صادقی</option>
-				<option value="متأهلی">متأهلی</option>
-				<option value="شوریده">شوریده</option>
-				<option value="ولیعصر">ولیعصر</option>
-				<option value="12 واحدی">12 واحدی</option>
-				<option value="حیدرتاش">حیدرتاش</option>
-				<option value="مصلی نژاد">مصلی نژاد</option>
-				
-			</select>
-
-			<label for="emp_number">کد کارمندی*</label>
-			<input type="text" class="form-control" id="emp_number" name="emp_number" readonly="" placeholder="کد کارمندی" value =''>
-		</div>
-	</div><!--END OF panel-default  -->
-	</div><!--END OF col  -->
 
 	<div class="col-md-6 pull-right">
 	<div class=" panel panel-default ">

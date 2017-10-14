@@ -13,13 +13,15 @@ if($user->isLoggedIn() || !$user->isLoggedIn() && !checkMenu(2,$user->data()->id
 		Redirect::to($us_url_root.'users/maintenance.php');
 	}
 }
-///echo "55555555555555555555555555555555555555555555555555";
 $grav = get_gravatar(strtolower(trim($user->data()->email)));
 $get_info_id = $user->data()->id;
 // $groupname = ucfirst($loggedInUser->title);
 $raw = date_parse($user->data()->join_date);
 $signupdate = $raw['month']."/".$raw['day']."/".$raw['year'];
 $userdetails = fetchUserDetails(NULL, NULL, $get_info_id); //Fetch user details
+if ($userdetails->data_completion == 0){
+	Redirect::to($us_url_root.'users/data_completion.php');
+}
 $plansData = fetchAllPlans(); //Fetch information for all plans
 ///echo "44444444444444444444444444444444444444444444";
  ?>
@@ -28,6 +30,7 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
 // REGISTER IN PLAN
 $successes=[];
 $successes2=[];
+$data_completion_error = "";
 $form_valid = TRUE;
 $validation = new Validate();
  //Forms posted
@@ -496,191 +499,201 @@ if(!empty($_POST)) {
 
 
 	    	
-    	} else{
-
-    	$user_id = Input::get('user_id');
-    	$plan_id = Input::get('plan_id');
-    	$capacity_id = Input::get('capacity_id');
-
-    	$total_cost_str = Input::get('total_cost');
-    	$total_cost_str = explode(": ", $total_cost_str)[1];
-    	$total_cost = explode(" تومان", $total_cost_str)[0];
-
-
-    	$participant_name1 = Input::get('participant_name1');
-    	$participant_code1 = Input::get('participant_code1');
-    	$participant_gender1 = Input::get('participant_gender1');
-
-    	$participant_name2 = Input::get('participant_name2');
-    	$participant_code2 = Input::get('participant_code2');
-    	$participant_gender2 = Input::get('participant_gender2');
-
-    	$participant_name3 = Input::get('participant_name3');
-    	$participant_code3 = Input::get('participant_code3');
-    	$participant_gender3 = Input::get('participant_gender3');
-
-
-    	$participant_requirement1 = false;
-    	$participant_requirement2 = false;
-    	$participant_requirement3 = false;
-
-    	if ($participant_name1 != "" || $participant_code1 != "" || $participant_gender1 != "" 
-    		|| $participant_name2 != "" || $participant_code2 != "" || $participant_gender2 != ""
-    		|| $participant_name3 != "" || $participant_code3 != "" || $participant_gender3 != "" ){
-    		$participant_requirement1 = true;
-    		if ($participant_name2 != "" || $participant_code2 != "" || $participant_gender2 != "" 
-    			|| $participant_name3 != "" || $participant_code3 != "" || $participant_gender3 != "" ){
-    			$participant_requirement2 = true;
-    			if ($participant_name3 != "" || $participant_code3 != "" || $participant_gender3 != "" )
-    				$participant_requirement3 = true;
-    		}
     	}
+    	else
+    	{
+    		if($userdetails->fname == ""){
+    			$data_completion_error1 = 'اطلاعات شما تکمیل نشده است.';
+    			$data_completion_error2 = 'لطفاً از قسمت "ویرایش اطلاعات" پروفایل خود را تکمیل کنید.';
+    			$data_completion_error3 = 'سپس برای ثبت نام اقدام نمایید.';
+    			$data_completion_error4 = '*باتشکر*';
+    		}else{
+    			$user_id = Input::get('user_id');
+		    	$plan_id = Input::get('plan_id');
+		    	$capacity_id = Input::get('capacity_id');
+
+		    	$total_cost_str = Input::get('total_cost');
+		    	$total_cost_str = explode(": ", $total_cost_str)[1];
+		    	$total_cost = explode(" تومان", $total_cost_str)[0];
+
+
+		    	$participant_name1 = Input::get('participant_name1');
+		    	$participant_code1 = Input::get('participant_code1');
+		    	$participant_gender1 = Input::get('participant_gender1');
+
+		    	$participant_name2 = Input::get('participant_name2');
+		    	$participant_code2 = Input::get('participant_code2');
+		    	$participant_gender2 = Input::get('participant_gender2');
+
+		    	$participant_name3 = Input::get('participant_name3');
+		    	$participant_code3 = Input::get('participant_code3');
+		    	$participant_gender3 = Input::get('participant_gender3');
+
+
+		    	$participant_requirement1 = false;
+		    	$participant_requirement2 = false;
+		    	$participant_requirement3 = false;
+
+		    	if ($participant_name1 != "" || $participant_code1 != "" || $participant_gender1 != "" 
+		    		|| $participant_name2 != "" || $participant_code2 != "" || $participant_gender2 != ""
+		    		|| $participant_name3 != "" || $participant_code3 != "" || $participant_gender3 != "" ){
+		    		$participant_requirement1 = true;
+		    		if ($participant_name2 != "" || $participant_code2 != "" || $participant_gender2 != "" 
+		    			|| $participant_name3 != "" || $participant_code3 != "" || $participant_gender3 != "" ){
+		    			$participant_requirement2 = true;
+		    			if ($participant_name3 != "" || $participant_code3 != "" || $participant_gender3 != "" )
+		    				$participant_requirement3 = true;
+		    		}
+		    	}
+		    	
+
+		   		$form_valid=FALSE; // assume the worst
+		    	$validation->check($_POST,array(
+		    		'participant_name1' => array(
+		    		'display' => 'نام همراه 1',
+		    		'required' => $participant_requirement1,
+		    		'min'=> 2,
+		    		'max' => 35,
+		    		),
+		      		'participant_code1' => array(
+		      		'display' => 'کدملی همراه 1',
+		      		'required' => $participant_requirement1,
+		      		'exact' => 10,
+		      		),
+		      		'participant_gender1' => array(
+		      		'display' => 'جنسیت همراه 1',
+		      		'required' => $participant_requirement1,
+		      		),
+		      		'participant_name2' => array(
+		    		'display' => 'نام همراه 2',
+		    		'required' => $participant_requirement2,
+		    		'min'=> 2,
+		    		'max' => 35,
+		    		),
+		      		'participant_code2' => array(
+		      		'display' => 'کدملی همراه 2',
+		      		'required' => $participant_requirement2,
+		      		'exact' => 10,
+		      		),
+		      		'participant_gender2' => array(
+		      		'display' => 'جنسیت همراه 2',
+		      		'required' => $participant_requirement2,
+		      		),
+		      		'participant_name3' => array(
+		    		'display' => 'نام همراه 3',
+		    		'required' => $participant_requirement3,
+		    		'min'=> 2,
+		    		'max' => 35,
+		    		),
+		      		'participant_code3' => array(
+		      		'display' => 'کدملی همراه 3',
+		      		'required' => $participant_requirement3,
+		      		'exact' => 10,
+		      		),
+		      		'participant_gender3' => array(
+		      		'display' => 'جنسیت همراه 3',
+		      		'required' => $participant_requirement3,
+		      		),
+		    	));
+		    	if($validation->passed()) {
+		    		$form_valid=TRUE;
+		     		try {
+		        		// echo "Trying to create user";
+		        		$p0 = $p1 = $p2 = $p3 = 0;
+		        		$user_capacity = 1;
+		     			if ($participant_select1 == "1")
+		    				$p1 = 1;
+		    			if ($participant_select2 == "1")
+		    				$p2 = 1;
+		    			if ($participant_select3 == "1")
+		    				$p3 = 1;
+
+		        		$plan_capacity = fetchCapacityDetails($capacity_id);
+		        		$blank_space = $plan_capacity->capacity_number - $plan_capacity->registered;
+		        		$reserved_number = 0;
+		        		$reserved_number1 = 0;
+		        		$reserved_number2 = 0;
+		        		$reserved_number3 = 0;
+
+		        		if ( $blank_space >= $user_capacity ){
+		        			$register_status = "ثبت نام";
+		        		}
+		        		else{
+		        			$register_status = "رزرو";
+		        			if ($blank_space == 0){
+		        				$p0 = 1;
+		    					$reserved_number = $plan_capacity->reserved+1;
+		    					$reserved_number1 = ($reserved_number+1)*$p1;
+		        				$reserved_number2 = ($reserved_number+2)*$p2;
+		        				$reserved_number3 = ($reserved_number+3)*$p3;
+		        			}
+		        			if ($blank_space == 1){
+		    					$reserved_number = 0;
+		    					$reserved_number1 = 1*$p1;
+		        				$reserved_number2 = 2*$p2;
+		        				$reserved_number3 = 3*$p3;
+		        			}
+		    				if ($blank_space == 2){
+		    					$reserved_number = 0;
+		    					$reserved_number1 = 0;
+		        				$reserved_number2 = 1*$p2;
+		        				$reserved_number3 = 2*$p3;
+		    				}
+		    				if ($blank_space == 3){
+		    					$reserved_number = 0;
+		    					$reserved_number1 = 0;
+		        				$reserved_number2 = 0;
+		        				$reserved_number3 = 1*$p3;
+		    				}
+		        			
+		        		}
+
+		        		$plan_register_fields=array(
+		        			'user_id' => Input::get('user_id'),
+		        			'plan_id' => Input::get('plan_id'),
+		        			'capacity_id' => Input::get('capacity_id'),
+		        			'status' => $register_status,
+		        			'paid_cost' => $total_cost,
+		        			'reserved_number' => $reserved_number,
+		        			'reserved_number1' => $reserved_number1,
+		        			'reserved_number2' => $reserved_number2,
+		        			'reserved_number3' => $reserved_number3,
+		        			'participant_name1' => Input::get('participant_name1'),
+		        			'participant_code1' => Input::get('participant_code1'),
+		        			'participant_gender1' => Input::get('participant_gender1'),
+		        			'participant_name2' => Input::get('participant_name2'),
+		        			'participant_code2' => Input::get('participant_code2'),
+		        			'participant_gender2' => Input::get('participant_gender2'),
+		        			'participant_name3' => Input::get('participant_name3'),
+		        			'participant_code3' => Input::get('participant_code3'),
+		        			'participant_gender3' => Input::get('participant_gender3'),
+		        		);
+		       			$db->insert('plan_register',$plan_register_fields);
+
+		       			// update user account_charge
+						//$userdetails = fetchUserDetails($user_id);
+						$charge_fields=array('account_charge'=> ($userdetails->account_charge - $total_cost) );
+						$db->update('users',$user_id,$charge_fields);
+
+						// update capacity_number
+						if ($register_status == "ثبت نام") {
+							$fields=array('registered'=> ($plan_capacity->registered+$user_capacity) );
+							$db->update('capacity',$capacity_id,$fields);
+							$successes[] = lang("PLAN_REGISTER");
+						}elseif ($register_status == "رزرو") {
+							$fields=array('reserved'=> ($plan_capacity->reserved + $p0 + $p1 + $p2 + $p3) );
+							$db->update('capacity',$capacity_id,$fields);
+							$successes[] = lang("PLAN_RESERVE");
+						}
+						
+		        		
+			
+		      			} catch (Exception $e) {
+		        		die($e->getMessage());
+    		}
+
     	
-
-   		$form_valid=FALSE; // assume the worst
-    	$validation->check($_POST,array(
-    		'participant_name1' => array(
-    		'display' => 'نام همراه 1',
-    		'required' => $participant_requirement1,
-    		'min'=> 2,
-    		'max' => 35,
-    		),
-      		'participant_code1' => array(
-      		'display' => 'کدملی همراه 1',
-      		'required' => $participant_requirement1,
-      		'exact' => 10,
-      		),
-      		'participant_gender1' => array(
-      		'display' => 'جنسیت همراه 1',
-      		'required' => $participant_requirement1,
-      		),
-      		'participant_name2' => array(
-    		'display' => 'نام همراه 2',
-    		'required' => $participant_requirement2,
-    		'min'=> 2,
-    		'max' => 35,
-    		),
-      		'participant_code2' => array(
-      		'display' => 'کدملی همراه 2',
-      		'required' => $participant_requirement2,
-      		'exact' => 10,
-      		),
-      		'participant_gender2' => array(
-      		'display' => 'جنسیت همراه 2',
-      		'required' => $participant_requirement2,
-      		),
-      		'participant_name3' => array(
-    		'display' => 'نام همراه 3',
-    		'required' => $participant_requirement3,
-    		'min'=> 2,
-    		'max' => 35,
-    		),
-      		'participant_code3' => array(
-      		'display' => 'کدملی همراه 3',
-      		'required' => $participant_requirement3,
-      		'exact' => 10,
-      		),
-      		'participant_gender3' => array(
-      		'display' => 'جنسیت همراه 3',
-      		'required' => $participant_requirement3,
-      		),
-    	));
-    	if($validation->passed()) {
-    		$form_valid=TRUE;
-     		try {
-        		// echo "Trying to create user";
-        		$p0 = $p1 = $p2 = $p3 = 0;
-        		$user_capacity = 1;
-     			if ($participant_select1 == "1")
-    				$p1 = 1;
-    			if ($participant_select2 == "1")
-    				$p2 = 1;
-    			if ($participant_select3 == "1")
-    				$p3 = 1;
-
-        		$plan_capacity = fetchCapacityDetails($capacity_id);
-        		$blank_space = $plan_capacity->capacity_number - $plan_capacity->registered;
-        		$reserved_number = 0;
-        		$reserved_number1 = 0;
-        		$reserved_number2 = 0;
-        		$reserved_number3 = 0;
-
-        		if ( $blank_space >= $user_capacity ){
-        			$register_status = "ثبت نام";
-        		}
-        		else{
-        			$register_status = "رزرو";
-        			if ($blank_space == 0){
-        				$p0 = 1;
-    					$reserved_number = $plan_capacity->reserved+1;
-    					$reserved_number1 = ($reserved_number+1)*$p1;
-        				$reserved_number2 = ($reserved_number+2)*$p2;
-        				$reserved_number3 = ($reserved_number+3)*$p3;
-        			}
-        			if ($blank_space == 1){
-    					$reserved_number = 0;
-    					$reserved_number1 = 1*$p1;
-        				$reserved_number2 = 2*$p2;
-        				$reserved_number3 = 3*$p3;
-        			}
-    				if ($blank_space == 2){
-    					$reserved_number = 0;
-    					$reserved_number1 = 0;
-        				$reserved_number2 = 1*$p2;
-        				$reserved_number3 = 2*$p3;
-    				}
-    				if ($blank_space == 3){
-    					$reserved_number = 0;
-    					$reserved_number1 = 0;
-        				$reserved_number2 = 0;
-        				$reserved_number3 = 1*$p3;
-    				}
-        			
-        		}
-
-        		$plan_register_fields=array(
-        			'user_id' => Input::get('user_id'),
-        			'plan_id' => Input::get('plan_id'),
-        			'capacity_id' => Input::get('capacity_id'),
-        			'status' => $register_status,
-        			'paid_cost' => $total_cost,
-        			'reserved_number' => $reserved_number,
-        			'reserved_number1' => $reserved_number1,
-        			'reserved_number2' => $reserved_number2,
-        			'reserved_number3' => $reserved_number3,
-        			'participant_name1' => Input::get('participant_name1'),
-        			'participant_code1' => Input::get('participant_code1'),
-        			'participant_gender1' => Input::get('participant_gender1'),
-        			'participant_name2' => Input::get('participant_name2'),
-        			'participant_code2' => Input::get('participant_code2'),
-        			'participant_gender2' => Input::get('participant_gender2'),
-        			'participant_name3' => Input::get('participant_name3'),
-        			'participant_code3' => Input::get('participant_code3'),
-        			'participant_gender3' => Input::get('participant_gender3'),
-        		);
-       			$db->insert('plan_register',$plan_register_fields);
-
-       			// update user account_charge
-				//$userdetails = fetchUserDetails($user_id);
-				$charge_fields=array('account_charge'=> ($userdetails->account_charge - $total_cost) );
-				$db->update('users',$user_id,$charge_fields);
-
-				// update capacity_number
-				if ($register_status == "ثبت نام") {
-					$fields=array('registered'=> ($plan_capacity->registered+$user_capacity) );
-					$db->update('capacity',$capacity_id,$fields);
-					$successes[] = lang("PLAN_REGISTER");
-				}elseif ($register_status == "رزرو") {
-					$fields=array('reserved'=> ($plan_capacity->reserved + $p0 + $p1 + $p2 + $p3) );
-					$db->update('capacity',$capacity_id,$fields);
-					$successes[] = lang("PLAN_RESERVE");
-				}
-				
-        		
-	
-      			} catch (Exception $e) {
-        		die($e->getMessage());
-      		}
+      	}
     	}// passed validate
     	}// END OF ELSE ---> (isset($registered_plan_details[0]))
     }//// END OF ELSE ---> (!Token::check($token))
@@ -860,6 +873,16 @@ if(!empty($_POST)) {
 						         		</ul>
 						    <?php
 						        	}
+						        	if($data_completion_error1 != ""){
+						    ?>
+						    			<ul class="bg-danger">
+						    				<li class="text-warnning"><?=$data_completion_error1?></li>
+						    				<li class="text-warnning"><?=$data_completion_error2?></li>
+						    				<li class="text-warnning"><?=$data_completion_error3?></li>
+						    				<li class="text-warnning"><?=$data_completion_error4?></li>
+						    			</ul>
+						    <?php
+									}
 						        }
 						    }
 						    ?>

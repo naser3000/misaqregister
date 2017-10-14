@@ -47,15 +47,7 @@ $reCaptchaValid=FALSE;
 if(Input::exists()){
 
 	$username = Input::get('username');
-	$fname = Input::get('fname');
-	$lname = Input::get('lname');
-	$phnumber = Input::get('phnumber');
-	$icode = Input::get('icode');
 	$email = Input::get('email');
-	$status = Input::get('status');
-	$std_number = Input::get('std_number');
-	$emp_number = Input::get('emp_number');
-	$gender = Input::get('gender');
 	$agreement_checkbox = Input::get('agreement_checkbox');
 
 	if ($agreement_checkbox=='on'){
@@ -63,13 +55,6 @@ if(Input::exists()){
 	}else{
 		$agreement_checkbox=FALSE;
 	}
-
-	$std_number_requirment = false;
-	if ($status == 'دانشجو')
-		$std_number_requirment = true;
-	$emp_number_requirment = false;
-	if ($status == 'کارمند')
-		$emp_number_requirment = true;
 
 
 	$db = DB::getInstance();
@@ -84,46 +69,11 @@ if(Input::exists()){
 		'max' => $settings->max_un,
 		'unique' => 'users',
 	  ),
-	  'fname' => array(
-		'display' => 'نام',
-		'required' => true,
-		'min' => 2,
-		'max' => 35,
-	  ),
-	  'lname' => array(
-		'display' => 'نام خانوادگی',
-		'required' => true,
-		'min' => 2,
-		'max' => 35,
-	  ),
-	  'icode' => array(
-		'display' => 'کد ملی',
-		'required' => true,
-		'exact' => 10,
-	  ),
-	  'phnumber' => array(
-		'display' => 'شماره تماس',
-		'required' => true,
-		'exact' => 11,
-	  ),
 	  'email' => array(
 		'display' => 'ایمیل',
 		'required' => true,
 		'valid_email' => true,
 		'unique' => 'users',
-	  ),
-	  'status' => array(
-		'display' => 'وضعیت',
-		'required' => true,
-	  ),
-	  'std_number' => array(
-		'display' => 'شماره دانشجویی',
-		'required' => $std_number_requirment,
-		'exact' => 8,
-	  ),
-	  'emp_number' => array(
-		'display' => 'کد پرسنلی',
-		'required' => $emp_number_requirment,
 	  ),
 	  'password' => array(
 		'display' => 'رمز عبور',
@@ -177,7 +127,7 @@ if(Input::exists()){
 			$user = new User();
 			$join_date = date("Y-m-d H:i:s");
 			$params = array(
-				'fname' => Input::get('fname'),
+				'username' => Input::get('username'),
 				'email' => $email,
 				'vericode' => $vericode,
 			);
@@ -201,20 +151,7 @@ if(Input::exists()){
 					$grade = "دکترا";
 				$user->create(array(
 					'username' => Input::get('username'),
-					'fname' => Input::get('fname'),
-					'lname' => Input::get('lname'),
-					'icode' => Input::get('icode'),
-					'phnumber' => Input::get('phnumber'),
 					'email' => Input::get('email'),
-					'status' => Input::get('status'),
-					'std_number' => Input::get('std_number'),
-					'major' => Input::get('major'),
-					'dorms' => Input::get('dorms'),
-					'emp_number' => Input::get('emp_number'),
-					'yinter' => Input::get('std_number')/1000000,
-					'grade' => $grade,
-					'gender' => Input::get('gender'),
-					'interested' => Input::get('interested'),
 					'password' =>
 					password_hash(Input::get('password'), PASSWORD_BCRYPT, array('cost' => 12)),
 					'permissions' => 1,

@@ -475,7 +475,7 @@ if(!empty($_POST)) {
                 </div>
                 <div class="col-xs-12 col-md-10">
                     <h1>حساب کاربری خود را به روز رسانی کنید</h1>
-                    <strong>آیا میخواهید تصویر پروفایل خود را تغییر دهید؟ </strong><br> Visit <a href="https://en.gravatar.com/">https://en.gravatar.com/</a> and setup an account with the email address <?=$email?>.  It works across millions of sites. It's fast and easy!<br>
+                    <br>
                     <span class="bg-danger" style="color: red"><?=display_errors($errors);?></span>
                     <span style=" color: green;"><?=display_successes($successes);?></span>
 
@@ -516,8 +516,8 @@ if(!empty($_POST)) {
                         </div>
 
                         <label for="interested">علاقه مند به همکاری</label><br>
-                        <input type="radio" class="form-contro" id="interested" name="interested" value="بله" <?php if($interested == "بله") echo "checked"; ?>>بله<br>
-                        <input type="radio" class="form-contro" id="interested" name="interested" value="خیر"  <?php if($interested == "خیر") echo "checked"; ?>>خیر<br>
+                        <input type="radio" class="form-contro" id="interested" name="interested" value="بله" <?php if($interested == "بله") echo "checked"; ?>>&nbsp;بله<br>
+                        <input type="radio" class="form-contro" id="interested" name="interested" value="خیر"  <?php if($interested == "خیر") echo "checked"; ?>>&nbsp;خیر<br>
         </div>
     </div><!--END OF panel-default  -->
 </div><!--END OF col  -->
@@ -547,13 +547,13 @@ if(!empty($_POST)) {
                         </div>
                         <div class="form-group">
                             <label for="gender">جنسیت</label><br>
-                            <input type="radio" class="form-contro" id="gender" name="gender" value="آقا" <?php if($gender == "آقا") echo "checked"; ?>>آقا<br>
-                            <input type="radio" class="form-contro" id="gender" name="gender" value="خانم"  <?php if($gender == "خانم") echo "checked"; ?>>خانم<br>
+                            <input type="radio" class="form-contro" id="gender" name="gender" value="آقا" <?php if($gender == "آقا") echo "checked"; ?>>&nbsp;آقا<br>
+                            <input type="radio" class="form-contro" id="gender" name="gender" value="خانم"  <?php if($gender == "خانم") echo "checked"; ?>>&nbsp;خانم<br>
                         </div>
         </div>
     </div><!--END OF panel-default  -->
 </div><!--END OF col  -->
-                       
+
 
 <div class="col-md-6">
     <div class=" panel panel-default">
