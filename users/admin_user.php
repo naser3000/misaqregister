@@ -89,6 +89,25 @@ if(!empty($_POST)) {
       }
     }
 
+    //Update account charge
+    if ($userdetails->account_charge != $_POST['account_charge']){
+      $account_charge = Input::get("account_charge");
+
+      $fields=array('account_charge'=>$account_charge);
+      $validation->check($_POST,array(
+        'account_charge' => array(
+          'display' => 'موجودی حساب کاربری',
+        )
+      ));
+    if($validation->passed()){
+      $db->update('users',$userId,$fields);
+      $successes[] = "موجودی حساب کاربری به روز رسانی شد.";
+    }else{
+          ?>
+            <?php
+      }
+    }
+
     //Update national code
     if ($userdetails->icode != $_POST['icode']){
       $icode = Input::get("icode");
@@ -409,6 +428,11 @@ $useravatar = '<img src="'.$grav.'" class="img-responsive img-thumbnail" alt="">
       <div class="form-group">
         <label>تکرار رمز عبور</label>
         <input class='form-control' type='password' name='confirm' />
+      </div>
+
+      <div class="form-group">
+        <label>موجودی حساب کاربری (تومان)</label>
+        <input class='form-control' type='number' name='account_charge' value='<?=$userdetails->account_charge?>'  />
       </div>
 
     </div>
