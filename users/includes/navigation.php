@@ -154,6 +154,9 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 	.capacity {
 		margin-bottom: 10px;
 	}
+	table th, table td{
+		text-align: center;
+	}
 }
 </style>
 

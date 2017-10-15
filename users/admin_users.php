@@ -229,37 +229,43 @@ $userData = fetchAllUsers(); //Fetch information for all users
         <div class="col-xs-12">
 				 <div class="alluinfo">&nbsp;</div>
 				<form name="adminUsers" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
-				 <div class="allutable table-responsive" style="align-content: right;">
-					<table class='table table-hover table-list-search'>
-					<thead>
-					<tr>
-						<th>حذف</th><th>نام کاربری</th><th>ایمیل</th><th>نام</th><th>نام خانوادگی</th><th>تاریخ عضویت</th><th>آخرین ورود</th><th>تعداد ورود</th>
-					 </tr>
-					</thead>
-				 <tbody>
-					<?php
-					//Cycle through users
-					foreach ($userData as $v1) {
-							?>
-					<tr>
-					<td><div class="form-group"><input type="checkbox" name="delete[<?=$v1->id?>]" value="<?=$v1->id?>" /></div></td>
-					<td><a href='admin_user.php?id=<?=$v1->id?>'><?=$v1->username?></a></td>
-					<td><?=$v1->email?></td>
-					<td><?=$v1->fname?></td>
-					<td><?=$v1->lname?></td>
-					<td><?=$v1->join_date?></td>
-					<td><?=$v1->last_login?></td>
-					<td><?=$v1->logins?></td>
-					</tr>
-							<?php } ?>
+              <div class="allutable table-responsive" id="user_data">
+                <table class='table table-striped table-bordered table-list-search' id="user_data_table">
+                  <thead>
+                    <tr>
+                    	<th>حذف</th><th>نام کاربری</th><th>نام</th><th>نام خانوادگی</th><th>جنسیت</th><th>کدملی</th><th>وضعیت</th><th>شماره دانشجویی</th><th>شماره تماس</th><th>ایمیل</th><th>علاقمندی</th><th>آخرین فعالیت</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    //Cycle through users
+                    foreach ($userData as $v1) {
+                    ?>
+                    <tr>
+                      <td><div class="form-group"><input type="checkbox" name="delete[<?=$v1->id?>]" value="<?=$v1->id?>" /></div></td>
+                      <td><a href='admin_user.php?id=<?=$v1->id?>'><?=$v1->username?></a></td>
+                      <td><?=$v1->fname?></td>
+                      <td><?=$v1->lname?></td>
+                      <td><?=$v1->gender?></td>
+                      <td><?=$v1->icode?></td>
+                      <td><?=$v1->status?></td>
+                      <td><?php if($v1->status == "دانشجو") { print_r($v1->std_number);}
+                              elseif($v1->status == "کارمند") { print_r($v1->emp_number);}
+                                else{print_r("-");}?></td>
+                      <td><?=$v1->phnumber?></td>
+                      <td><?=$v1->email?></td>
+                      <td><?=$v1->interested?></td>
+                      <td><?=$v1->last_login?></td>
+                    </tr>
+                  		<?php } ?>
 
-				  </tbody>
-				</table>
-				</div>
+                  </tbody>
+                </table>
+              </div>
 
-
-				<input class='btn btn-danger' type='submit' name='Submit' value='حذف' /><br><br>
+				<input class='btn btn-danger pull-left' type='submit' name='Submit' value='حذف' />
 				</form>
+        <button class='btn btn-info' id="btnExport" onclick="">خروجی اکسل</button><br><br>
 
 		  </div>
 		</div>
@@ -277,3 +283,57 @@ $userData = fetchAllUsers(); //Fetch information for all users
 <script src="js/search.js" charset="utf-8"></script>
 
 <?php require_once $abs_us_root.$us_url_root.'users/includes/html_footer.php'; // currently just the closing /body and /html ?>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#btnExport").click(function(e) {
+      e.preventDefault();
+
+      //getting data from our table
+      var data_type = 'data:application/vnd.ms-excel';
+      var table_div = document.getElementById('user_data');
+      var table_html = table_div.outerHTML.replace(/ /g, '%20');
+
+      var a = document.createElement('a');
+      a.href = data_type + ', ' + table_html;
+      a.download = 'exported_table_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+      a.click();
+    });
+  });
+
+  /*function fnExcelReport()
+  {
+      var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+      var textRange; var j=0;
+      tab = document.getElementById('user_data_table'); // id of table
+
+      for(j = 0 ; j < tab.rows.length ; j++) 
+      {     
+          tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+          //tab_text=tab_text+"</tr>";
+      }
+
+      tab_text=tab_text+"</table>";
+      tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+      tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+      tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+      var ua = window.navigator.userAgent;
+      var msie = ua.indexOf("MSIE "); 
+
+      if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+      {
+          txtArea1.document.open("txt/html","replace");
+          txtArea1.document.write(tab_text);
+          txtArea1.document.close();
+          txtArea1.focus(); 
+          sa=txtArea1.document.execCommand("SaveAs",true,"Say Thanks to Sumit.xls");
+      }  
+      else                 //other browser not tested on IE 11
+          sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
+
+      return (sa);
+  }*/
+</script>
