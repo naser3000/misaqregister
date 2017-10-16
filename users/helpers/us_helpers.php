@@ -155,6 +155,14 @@ function fetchPlanRegisterDetails($user_id, $plan_id, $capacity_id){
 	return ($results);
 }
 
+//Retrieve user registered in plan by plan_id
+function fetchPlanRegisteredUsers($plan_id){
+	$db = DB::getInstance();
+	$query = $db->query("SELECT * FROM plan_register WHERE plan_id = $plan_id");
+	$results = $query->results();
+	return ($results);
+}
+
 /*
 //Retrieve complete capacity information by UserID & PlanID
 function fetchCapacityDetails($user_id, $plan_id) {

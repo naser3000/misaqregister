@@ -30,7 +30,7 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
 // REGISTER IN PLAN
 $successes=[];
 $successes2=[];
-$data_completion_error = "";
+$data_completion_error1 = "";
 $form_valid = TRUE;
 $validation = new Validate();
  //Forms posted

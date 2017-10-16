@@ -149,28 +149,25 @@ $userData = fetchAllUsers(); //Fetch information for all users
 
     <!-- Page Heading -->
     <div class="row">
-
 	    <div class="col-xs-12 col-md-6">
-		<h1>مدیریت کاربران</h1>
-	  </div>
-
-	  <div class="col-xs-12 col-md-6">
-			<form class="">
-				<label for="system-search">جستجو:</label>
-				<div class="input-group">
+		    <h1>مدیریت کاربران</h1>
+	    </div>
+        <div class="col-xs-12 col-md-6">
+            <form class="">
+                <label for="system-search">جستجو:</label>
+                <div class="input-group">
                     <input class="form-control" id="system-search" name="q" placeholder="جستجوی کاربران..." type="text">
                     <span class="input-group-btn">
-						<button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+					      <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
                     </span>
                 </div>
-			</form>
-		  </div>
+            </form>
+        </div> 
+    </div>
 
-        </div>
 
-
-				 <div class="row">
-		     <div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
           <?php echo resultBlock($errors,$successes);
 				?>
 

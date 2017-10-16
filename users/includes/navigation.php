@@ -171,7 +171,6 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 
 
 
-
 <script type="text/javascript">
     $(function () {
         $('#datepicker, #datepicker, #datepicker #datepicker, #datepicker').datetimepicker({
