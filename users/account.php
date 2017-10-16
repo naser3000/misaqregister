@@ -950,29 +950,32 @@ if(!empty($_POST)) {
 						<div class="clearfix"></div>
 
 					<?php
-							$rgs_status = $rgs_status1 = $rgs_status2 = $rgs_status3 = '---';
-							$showing1 = $showing2 = $showing3 = false;
+							$rgs_status[] = [];
+							$rgs_status[0] = $rgs_status[1] = $rgs_status[2] = $rgs_status[3] = '---';
+							$showing[] = [];
+							$showing[0] = $showing[1] = $showing[2] = $showing[3] = false;
+							//$showing[] = $showing[1] = $showing[2] = false;
                     		if ($rgs) {
-                    			$rgs_status = "ثبت نام ";
+                    			$rgs_status[0] = "ثبت نام ";
                     			if ($plan_register_details[0]->reserved_number > 0)
-                    					$rgs_status = "رزرو (".$plan_register_details[0]->reserved_number.")";
+                    					$rgs_status[0] = "رزرو (".$plan_register_details[0]->reserved_number.")";
                     			if ($plan_register_details[0]->participant_name1 != ""){
-                    				$showing1 = true;
-                    				$rgs_status1 = "ثبت نام ";
+                    				$showing[1] = true;
+                    				$rgs_status[1] = "ثبت نام ";
                     				if ($plan_register_details[0]->reserved_number1 > 0)
-                    					$rgs_status1 = "رزرو (".$plan_register_details[0]->reserved_number1.")";
+                    					$rgs_status[1] = "رزرو (".$plan_register_details[0]->reserved_number1.")";
                     			}
                     			if ($plan_register_details[0]->participant_name2 != ""){
-                    				$showing2 = true;
-                    				$rgs_status2 = "ثبت نام ";
+                    				$showing[2] = true;
+                    				$rgs_status[2] = "ثبت نام ";
                     				if ($plan_register_details[0]->reserved_number2 > 0)
-                    					$rgs_status2 = "رزرو (".$plan_register_details[0]->reserved_number2.")";
+                    					$rgs_status[2] = "رزرو (".$plan_register_details[0]->reserved_number2.")";
                     			}
                     			if ($plan_register_details[0]->participant_name3 != ""){
-                    				$showing3 = true;
-                    				$rgs_status3 = "ثبت نام ";
+                    				$showing[3] = true;
+                    				$rgs_status[3] = "ثبت نام ";
                     				if ($plan_register_details[0]->reserved_number3 > 0)
-                    					$rgs_status3 = "رزرو (".$plan_register_details[0]->reserved_number3.")";
+                    					$rgs_status[3] = "رزرو (".$plan_register_details[0]->reserved_number3.")";
                     			}
                     		}
                     ?> 
@@ -990,93 +993,42 @@ if(!empty($_POST)) {
 									<td><input class="form-control" type="number" name="" value="<?=$userdetails->icode?>" readonly=""></td>
 									<td><input class="form-control" type="text" name="" value="<?=$userdetails->gender?>" readonly=""></td>
 									<td><input class="form-control" type="text" name="participant_cost" id="participant_cost" readOnly="" value="<?=$related_capacity->cost?>"></td>
-									<td><?=$rgs_status?></td>
+									<td><?=$rgs_status[0]?></td>
 									<td><?php if ($rgs) { ?> 
 										<span class="pull-right margin-left"><a class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete_user_register<?=$pld->id?>">لغو ثبت نام</a><?php } ?>
 
 									</td>
 								</tr>
 								<?php
-									$i = 10;
-									while($i < $related_capacity->participant_number){ ?>
+									$i = 1;
+									while($i <= $related_capacity->participant_number){ ?>
 
 
-		<tr class="<?php if (!$showing1){ echo "hidden"; $add_participant=true;} ?> dont-hidden">
-			<td><input class="form-control" type="text" name="participant_name1" id="participant_name1" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_name1);}?>"></td>
-			<td><input class="form-control" type="number" name="participant_code1" id="participant_code1" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_code1);}?>"></td>
-			<td><Select class="form-control" name="participant_gender1" id="participant_gender1" >
-					<option value=""></option>
-					<option value="آقا" <?php if ($rgs) { if($plan_register_details[0]->participant_gender1 == "آقا"){ echo "selected";} } ?> >آقا</option>
-					<option value="خانم" <?php if ($rgs) { if($plan_register_details[0]->participant_gender1 == "خانم"){ echo "selected";} } ?> >خانم</option>
-				</Select>
-			</td>
-			<td><input class="form-control" type="text" name="participant_cost1" id="participant_cost1" readOnly="" value="<?=$related_capacity->participant_cost?>"></td>
-			<td><?=$rgs_status1?></td>
-			<td><?php if ($showing1) { ?> 
-				<span class="pull-right margin-left"><a class="btn btn-warning btn-xs" data-toggle="modal" data-target="#delete_participant_register<?=$pld->id?>">حذف همراه</a><?php  } else { ?>
-				<a href="#" class="btn btn-warning btn-xs" id="add_participant" onclick="remove_participant(<?=$pld->id?>, 1, <?=$userdetails->account_charge?>)"><span class="glyphicon glyphicon-remove"></span></a>
-				<?php } ?>
-			</td>
-		</tr>
-
-								<?php } ?>
-
-
-
-
-
-
-								<tr class="<?php if (!$showing1){ echo "hidden"; $add_participant=true;} ?> dont-hidden">
-									<td><input class="form-control" type="text" name="participant_name1" id="participant_name1" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_name1);}?>"></td>
-									<td><input class="form-control" type="number" name="participant_code1" id="participant_code1" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_code1);}?>"></td>
-									<td><Select class="form-control" name="participant_gender1" id="participant_gender1" >
+								<tr class="<?php if (!$showing[$i]){ echo "hidden"; $add_participant=true;} ?> dont-hidden">
+									<td><input class="form-control" type="text" name="participant_name<?=$i?>" id="participant_name<?=$i?>" value="<?php if($rgs) {print_r($plan_register_details[0]->{"participant_name"."$i"});}?>"></td>
+									<td><input class="form-control" type="number" name="participant_code<?=$i?>" id="participant_code<?=$i?>" value="<?php if($rgs) {print_r($plan_register_details[0]->{"participant_code"."$i"});}?>"></td>
+									<td><Select class="form-control" name="participant_gender<?=$i?>" id="participant_gender<?=$i?>" >
 											<option value=""></option>
-											<option value="آقا" <?php if ($rgs) { if($plan_register_details[0]->participant_gender1 == "آقا"){ echo "selected";} } ?> >آقا</option>
-											<option value="خانم" <?php if ($rgs) { if($plan_register_details[0]->participant_gender1 == "خانم"){ echo "selected";} } ?> >خانم</option>
+											<option value="آقا" <?php if ($rgs) { if($plan_register_details[0]->{"participant_gender"."$i"} == "آقا"){ echo "selected";} } ?> >آقا</option>
+											<option value="خانم" <?php if ($rgs) { if($plan_register_details[0]->{"participant_gender"."$i"} == "خانم"){ echo "selected";} } ?> >خانم</option>
 										</Select>
 									</td>
-									<td><input class="form-control" type="text" name="participant_cost1" id="participant_cost1" readOnly="" value="<?=$related_capacity->participant_cost?>"></td>
-									<td><?=$rgs_status1?></td>
-									<td><?php if ($showing1) { ?> 
-										<span class="pull-right margin-left"><a class="btn btn-warning btn-xs" data-toggle="modal" data-target="#delete_participant_register<?=$pld->id?>">حذف همراه</a><?php  } else { ?>
-										<a href="#" class="btn btn-warning btn-xs" id="add_participant" onclick="remove_participant(<?=$pld->id?>, 1, <?=$userdetails->account_charge?>)"><span class="glyphicon glyphicon-remove"></span></a>
+									<td><input class="form-control" type="text" name="participant_cost<?=$i?>" id="participant_cost<?=$i?>" readOnly="" value="<?=$related_capacity->participant_cost?>"></td>
+									<td><?=$rgs_status[$i]?></td>
+									<td><?php if ($showing[$i]) { ?> 
+										<span class="pull-right margin-left" onclick="passId(<?=$pld->id?>, <?=$prgs_id?>, <?=$i?>)"><a class="btn btn-warning btn-xs" data-toggle="modal" data-target="#delete_participant_register<?=$pld->id?>">حذف همراه</a><?php  } else { ?>
+										<a href="#" class="btn btn-warning btn-xs" id="add_participant" onclick="remove_participant(<?=$pld->id?>, <?=$i?>, <?=$userdetails->account_charge?>)"><span class="glyphicon glyphicon-remove"></span></a>
 										<?php } ?>
 									</td>
 								</tr>
-								<tr class="<?php if  (!$showing2){ echo "hidden"; $add_participant=true;} ?> dont-hidden">
-									<td><input class="form-control" type="text" name="participant_name2" id="participant_name2" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_name2);}?>" ></td>
-									<td><input class="form-control" type="number" name="participant_code2" id="participant_code2" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_code2);}?>" ></td>
-									<td><Select class="form-control" name="participant_gender2" id="participant_gender2" >
-											<option value=""></option>
-											<option value="آقا" <?php if ($rgs) { if($plan_register_details[0]->participant_gender2 == "آقا"){ echo "selected";} } ?> >آقا</option>
-											<option value="خانم" <?php if ($rgs) { if($plan_register_details[0]->participant_gender2 == "خانم"){ echo "selected";} } ?> >خانم</option>
-										</Select>
-									</td>
-									<td><input class="form-control" type="text" name="participant_cost2" id="participant_cost2" readOnly="" value="<?=$related_capacity->participant_cost?>"></td>
-									<td><?=$rgs_status2?></td>
-									<td><?php if ($showing2) { ?> 
-										<span class="pull-right margin-left"><a class="btn btn-warning btn-xs" data-toggle="modal" data-target="#delete_participant_register<?=$pld->id?>">حذف همراه</a><?php }  else { ?>
-										<a href="#" class="btn btn-warning btn-xs" id="add_participant" onclick="remove_participant(<?=$pld->id?>, 2, <?=$userdetails->account_charge?>)"><span class="glyphicon glyphicon-remove"></span></a>
-										<?php } ?>
-									</td>
-								</tr>
-								<tr class="<?php if (!$showing3){ echo "hidden"; $add_participant=true;} ?> dont-hidden">
-									<td><input class="form-control" type="text" name="participant_name3" id="participant_name3" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_name3);}?>" ></td>
-									<td><input class="form-control" type="number" name="participant_code3" id="participant_code3" value="<?php if($rgs) {print_r($plan_register_details[0]->participant_code3);}?>" ></td>
-									<td><Select class="form-control" name="participant_gender3" id="participant_gender3" >
-											<option value=""></option>
-											<option value="آقا" <?php if ($rgs) { if($plan_register_details[0]->participant_gender3 == "آقا"){ echo "selected";} } ?> >آقا</option>
-											<option value="خانم" <?php if ($rgs) { if($plan_register_details[0]->participant_gender3 == "خانم"){ echo "selected";} } ?> >خانم</option>
-										</Select>
-									</td>
-									<td><input class="form-control" type="text" name="participant_cost3" id="participant_cost3" readOnly="" value="<?=$related_capacity->participant_cost?>"></td>
-									<td><?=$rgs_status3?></td>
-									<td><?php if ($showing3) { ?> 
-										<span class="pull-right margin-left"><a class="btn btn-warning btn-xs" data-toggle="modal" data-target="#delete_participant_register<?=$pld->id?>">حذف همراه</a> <?php } else { ?>
-										<a href="#" class="btn btn-warning btn-xs" id="add_participant" onclick="remove_participant(<?=$pld->id?>, 3, <?=$userdetails->account_charge?>)"><span class="glyphicon glyphicon-remove"></span></a>
-										<?php } ?>
-									</td>
-								</tr>
+
+								<?php 
+										$i++;
+									} 
+								?>
+
+
+
 								<tr id="add_participant" class="<?php if (!$add_participant) {echo "hidden";} ?>" >
 									<td>
 										<a href="#" class="btn btn-success btn-xs" id="add_participant" onclick="add_participant(<?=$pld->id?>, <?=$userdetails->account_charge?>)">
@@ -1139,13 +1091,12 @@ if(!empty($_POST)) {
 					آیا مطمئن هستید می خواهید همراه خود را از برنامه حذف کنید؟
 				</div>
 				<div class="modal-footer">
-					<span class="pull-left" data-dismiss="modal" onclick="remove_participant_register(<?=$prgs_id?>, 2)"><a class="btn btn-danger mini-btn" data-toggle="modal" >بله، همراه حذف شود</a></span>
+					<span class="pull-left" data-dismiss="modal" onclick="remove_participant_register(<?=$prgs_id?>, iii)"><a class="btn btn-danger mini-btn" data-toggle="modal" >بله، همراه حذف شود</a></span>
 				</div>
 			</div><!-- end .modal-content -->
 		</div><!-- end .modal-dialog -->
 	</div><!-- end .modal -->
 	<!-- END MODAL -->
-
 
 	<!--  MODAL POPUP -->
 	<div class="modal" id="edit_register_modal<?=$pld->id?>">
@@ -1451,5 +1402,14 @@ if(!empty($_POST)) {
 		x[1].value = "";
 		var y = el.querySelector('select');
 		y.selectedIndex  = 0;
+	}
+
+	function passId(plan_id, prgs_id, id){
+		var modal = document.querySelector('#delete_participant_register'+plan_id+' span');
+		//modal.attr('onclick','').unbind('click');
+		console.log(modal);
+		console.log(modal.onclick);
+		modal.onclick = function(event) {remove_participant_register(prgs_id, id)};
+		console.log(modal);
 	}
 </script>
