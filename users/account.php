@@ -1146,7 +1146,7 @@ if(!empty($_POST)) {
 			</div>
 			<div class="panel-body text-center"><div class="huge" style="font-size: 16px; text-align: justify;"><span><?=$pld->description?>	</span></div></div>	
 			<div class="panel-footer">	
-				<span class="pull-left" ><a class="btn btn-info btn-xs" href="user_plan.php?id=<?=$pld->id?>">بیشتر</a></span>
+				<span class="pull-left" ><a class="btn btn-info btn-xs" href="user_plan.php?id=<?=$pld->id?>" target="blank" >بیشتر</a></span>
 				<?php if($rgs) { ?>
 				<span class="pull-right margin-left"><a class="btn btn-warning btn-xs" href="#" data-toggle="modal" data-target="#register_modal<?=$pld->id?>" >ویرایش ثبت نام</a></span>
 
