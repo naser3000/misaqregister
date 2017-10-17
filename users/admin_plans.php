@@ -80,7 +80,7 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
 			</div>
 			<div class="panel-body text-center"><div class="huge" style="font-size: 16px; text-align: justify;"><span><?=$v1->description?>	</span></div></div>	
 			<div class="panel-footer">	
-				<a class="btn btn-info btn-xs" href="admin_plan.php?id=<?=$v1->id?>"><span class="pull-right">مشاهده</span></a>
+				<a class="btn btn-info btn-xs" href="admin_plan.php?id=<?=$v1->id?>" target="blank"><span class="pull-right">مشاهده جزئیات</span></a>
 				<a class="btn btn-primary btn-xs" id="showRegistered<?=$v1->id?>" onclick='showRegistered(<?=$users?>, <?=$regiters?>, "<?=$v1->title?>", "<?=$v1->id?>")' ><span class="pull-right">مشاهده شرکت کنندگان</span></a>
 				<a class="btn btn-warning btn-xs hidden" id="dontShowRegistered<?=$v1->id?>" onclick='dontShowRegistered(<?=$users?>, "<?=$v1->id?>")' ><span class="pull-right">عدم مشاهده شرکت کنندگان</span></a>
 				<span class="pull-left"><i class='fa fa-arrow-circle-left'></i></span>
@@ -96,8 +96,8 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
 		<div class="panel panel-default">
 			<div class="panel-heading"><strong>اضافه کردن برنامه جدید</strong></div>
 			<div class="panel-body text-center"><div class="huge"><i class='fa fa-plus fa-x1'></i></div></div>	
-			<div class="panel-footer">	
-				<span class="pull-right"><a href="admin_add_plan.php">اضافه کردن</a></span>	
+			<div class="panel-footer">
+				<a class="btn btn-success btn-xs" id="" href="admin_add_plan.php" target="blank"><span class="pull-right">اضافه کردن</span></a>
 				<span class="pull-left"><i class='fa fa-arrow-circle-left'></i></span>	
 				<div class="clearfix"></div>	
 			</div> <!-- /panel-footer -->

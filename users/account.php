@@ -777,8 +777,8 @@ if(!empty($_POST)) {
 			<div class="modal-content">
 				<div class="modal-header">
 
-			<!--		<span class="pull-left mini-btn" id="plan_id"></span> -->
-					<span class="pull-left mini-btn" >کد برنامه: <?=$pld->id?></span>
+			<!--		<span class="pull-left btn-xs" id="plan_id"></span> -->
+					<span class="pull-left btn-xs" >کد برنامه: <?=$pld->id?></span>
 					<?php
 
 					$related_capacity_n= 0;
@@ -1051,11 +1051,11 @@ if(!empty($_POST)) {
 						<input type="hidden" value="<?=$related_capacity->id?>" name="capacity_id">
 						<input type="hidden" value="<?=Token::generate();?>" name="csrf">
 						<?php if($rgs) { ?>
-							<button class="submit btn btn-primary mini-btn register-update" id="<?=$pld->id?>" type="submit" <?php if($related_capacity->cost > $userdetails->account_charge){ echo "disabled=''";} ?> >به روز رسانی</button>
+							<button class="submit btn btn-primary btn-xs register-update" id="<?=$pld->id?>" type="submit" <?php if($related_capacity->cost > $userdetails->account_charge){ echo "disabled=''";} ?> >به روز رسانی</button>
 						<?php } else{ ?>
-							<button class="submit btn btn-success mini-btn register-plan" id="<?=$pld->id?>" type="submit" <?php if($related_capacity->cost > $userdetails->account_charge){ echo "disabled=''";} ?> >ثبت نام و پرداخت</button>
+							<button class="submit btn btn-success btn-xs register-plan" id="<?=$pld->id?>" type="submit" <?php if($related_capacity->cost > $userdetails->account_charge){ echo "disabled=''";} ?> >ثبت نام و پرداخت</button>
 						<?php } ?>
-						<span class="close pull-left" data-dismiss="modal"><a href="#" class="btn btn-danger mini-btn">انصراف</a></span>
+						<span class="close pull-left" data-dismiss="modal"><a href="#" class="btn btn-danger btn-xs">انصراف</a></span>
 					</div>
 				</form>
 				
@@ -1075,7 +1075,7 @@ if(!empty($_POST)) {
 					با لغو کردن ثبت نام، شما و همه همراهان از برنامه حذف خواهید شد، آیا از این کار مطمئن هستید؟
 				</div>
 				<div class="modal-footer">
-					<span class="pull-left" data-dismiss="modal" onclick="remove_user_register(<?=$prgs_id?>)"><a class="btn btn-danger mini-btn" data-toggle="modal" >بله، ثبت نام لغو شود</a></span>
+					<span class="pull-left" data-dismiss="modal" onclick="remove_user_register(<?=$prgs_id?>)"><a class="btn btn-danger btn-xs" data-toggle="modal" >بله، ثبت نام لغو شود</a></span>
 				</div>
 			</div><!-- end .modal-content -->
 		</div><!-- end .modal-dialog -->
@@ -1091,7 +1091,7 @@ if(!empty($_POST)) {
 					آیا مطمئن هستید می خواهید همراه خود را از برنامه حذف کنید؟
 				</div>
 				<div class="modal-footer">
-					<span class="pull-left" data-dismiss="modal" onclick="remove_participant_register(<?=$prgs_id?>, iii)"><a class="btn btn-danger mini-btn" data-toggle="modal" >بله، همراه حذف شود</a></span>
+					<span class="pull-left" data-dismiss="modal" onclick="remove_participant_register(<?=$prgs_id?>, iii)"><a class="btn btn-danger btn-xs" data-toggle="modal" >بله، همراه حذف شود</a></span>
 				</div>
 			</div><!-- end .modal-content -->
 		</div><!-- end .modal-dialog -->
@@ -1125,7 +1125,7 @@ if(!empty($_POST)) {
                     </div>
 				</div>
 				<div class="modal-footer">
-					<span class="pull-left margin-left" data-dismiss="modal"><a class="btn btn-success mini-btn" data-toggle="modal" >تأیید</a></span>
+					<span class="pull-left margin-left" data-dismiss="modal"><a class="btn btn-success btn-xs" data-toggle="modal" >تأیید</a></span>
 				</div>
 			</div><!-- end .modal-content -->
 		</div><!-- end .modal-dialog -->
@@ -1146,12 +1146,12 @@ if(!empty($_POST)) {
 			</div>
 			<div class="panel-body text-center"><div class="huge" style="font-size: 16px; text-align: justify;"><span><?=$pld->description?>	</span></div></div>	
 			<div class="panel-footer">	
-				<span class="pull-left" ><a class="btn btn-info mini-btn" href="user_plan.php?id=<?=$pld->id?>">بیشتر</a></span>
+				<span class="pull-left" ><a class="btn btn-info btn-xs" href="user_plan.php?id=<?=$pld->id?>">بیشتر</a></span>
 				<?php if($rgs) { ?>
-				<span class="pull-right margin-left"><a class="btn btn-warning mini-btn" href="#" data-toggle="modal" data-target="#register_modal<?=$pld->id?>" >ویرایش ثبت نام</a></span>
+				<span class="pull-right margin-left"><a class="btn btn-warning btn-xs" href="#" data-toggle="modal" data-target="#register_modal<?=$pld->id?>" >ویرایش ثبت نام</a></span>
 
 				<?php } else{ ?>
-				<span class="pull-right margin-left"><a class="btn btn-success mini-btn" href="#" data-toggle="modal" data-target="#register_modal<?=$pld->id?>" >ثبت نام</a></span>
+				<span class="pull-right margin-left"><a class="btn btn-success btn-xs" href="#" data-toggle="modal" data-target="#register_modal<?=$pld->id?>" >ثبت نام</a></span>
 				<?php } ?>
 
 				<div class="clearfix"></div>
@@ -1186,9 +1186,6 @@ if(!empty($_POST)) {
 	hr{
 		width: 100%;
 		border: 0.1px solid gray;
-	}
-	.mini-btn{
-		padding: 3px;
 	}
 	.margin-left{
 		margin-left: 3px;

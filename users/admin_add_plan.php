@@ -277,7 +277,7 @@ if (!empty($_POST)) {
 
                         <div class="col-xs-2">
                             <div class='input-group date' id='datepicker' >
-                                <span class="input-group-addon" >
+                                <span class="input-group-addon" id="register_start_date_btn">
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
                                 <input type='text' class="form-control" name="register_start_date" id="register_start_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_start_date;} ?>" required autofocus/>
@@ -286,7 +286,7 @@ if (!empty($_POST)) {
 
                         <div class="col-xs-2 ">                    
                             <div class='input-group date' id='datepicker' >
-                                <span class="input-group-addon" >
+                                <span class="input-group-addon" id="register_end_date_btn">
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
                                 <input type='text' class="form-control" name="register_end_date" id="register_end_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_end_date;} ?>" required autofocus/>
@@ -295,7 +295,7 @@ if (!empty($_POST)) {
 
                         <div class="col-xs-2 ">                    
                             <div class='input-group date' id='datepicker' >
-                                <span class="input-group-addon" >
+                                <span class="input-group-addon" id="confirm_end_date_btn">
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
                                 <input type='text' class="form-control" name="confirm_end_date" id="confirm_end_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $confirm_end_date;} ?>" required autofocus/>
@@ -304,7 +304,7 @@ if (!empty($_POST)) {
 
                         <div class="col-xs-2 ">                    
                             <div class='input-group date' id='datepicker' >
-                                <span class="input-group-addon" >
+                                <span class="input-group-addon" id="plan_start_date_btn">
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
                                 <input type='text' class="form-control" name="plan_start_date" id="plan_start_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_start_date;} ?>" required autofocus/>
@@ -313,7 +313,7 @@ if (!empty($_POST)) {
 
                         <div class="col-xs-2 ">                    
                             <div class='input-group date' id='datepicker' >
-                                <span class="input-group-addon" >
+                                <span class="input-group-addon" id="plan_end_date_btn">
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
                                 <input type='text' class="form-control" name="plan_end_date" id="plan_end_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_end_date;} ?>" required autofocus/>
@@ -557,3 +557,19 @@ if (!empty($_POST)) {
 
 <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
 <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
+
+<link rel="stylesheet" href="css/bootstrap-datepicker.min.css" />
+<script src="js/bootstrap-datepicker.min.js"></script>
+<script src="js/bootstrap-datepicker.fa.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $("#datepicker0").datepicker();
+    
+        $("#register_start_date, #register_end_date, #confirm_end_date, #plan_start_date, #plan_end_date").datepicker();
+        $("#register_start_date_btn, #register_end_date_btn, #confirm_end_date_btn, #plan_start_date_btn, #plan_end_date_btn").click(function(event) {
+            event.preventDefault();
+            $("#"+this.id.replace("_btn","")).focus();
+        })
+    });
+</script>

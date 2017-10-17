@@ -161,10 +161,7 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>        
-<script src="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 
 
@@ -172,15 +169,6 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 
 
 <script type="text/javascript">
-    $(function () {
-        $('#datepicker, #datepicker, #datepicker #datepicker, #datepicker').datetimepicker({
-            format: 'YYYY/MM/DD',
-            locale: 'fa',
-        });
-        $('#timepicker, #timepicker, #timepicker, #timepicker, #timepicker').datetimepicker({
-            format : 'HH:mm',
-        });
-    });
     
 		// disable or enable 'std_number' input according to status selections
 		function disableInput(){

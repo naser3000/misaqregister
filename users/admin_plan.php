@@ -48,8 +48,8 @@ if(!empty($_POST)) {
     }
 
 //Update plan description
-
-    if ($plandetails->description != $_POST['description']){
+print_r($plandetails->description);
+    if ($plandetails->description+" " != $_POST['description']){
        $displayname = Input::get("description");
 
       $fields=array('description'=>$displayname);
@@ -73,7 +73,7 @@ if(!empty($_POST)) {
 
 //Update register_start_date
 
-    if ($plandetails->register_start_date != $_POST['register_start_date']){
+    if ($plandetails->register_start_date != str_replace("/", "-", $_POST['register_start_date'])){
       $displayname = Input::get("register_start_date");
 
       $fields=array('register_start_date'=>$displayname);
@@ -95,7 +95,7 @@ if(!empty($_POST)) {
 
 //Update register_end_date
 
-    if ($plandetails->register_end_date != $_POST['register_end_date']){
+    if ($plandetails->register_end_date != str_replace("/", "-", $_POST['register_end_date'])){
       $displayname = Input::get("register_end_date");
 
       $fields=array('register_end_date'=>$displayname);
@@ -117,7 +117,7 @@ if(!empty($_POST)) {
 
 
 //Update confirm_end_date
-    if ($plandetails->confirm_end_date != $_POST['confirm_end_date']){
+    if ($plandetails->confirm_end_date != str_replace("/", "-", $_POST['confirm_end_date'])){
       $displayname = Input::get("confirm_end_date");
 
       $fields=array('confirm_end_date'=>$displayname);
@@ -138,7 +138,7 @@ if(!empty($_POST)) {
     }
 
 //Update plan_start_date
-    if ($plandetails->plan_start_date != $_POST['plan_start_date']){
+    if ($plandetails->plan_start_date != str_replace("/", "-", $_POST['plan_start_date'])){
       $displayname = Input::get("plan_start_date");
 
       $fields=array('plan_start_date'=>$displayname);
@@ -159,7 +159,7 @@ if(!empty($_POST)) {
     }
 
 //Update plan_end_date
-    if ($plandetails->plan_end_date != $_POST['plan_end_date']){
+    if ($plandetails->plan_end_date != str_replace("/", "-", $_POST['plan_end_date'])){
       $displayname = Input::get("plan_end_date");
 
       $fields=array('plan_end_date'=>$displayname);
@@ -180,7 +180,7 @@ if(!empty($_POST)) {
     }
 
 //Update register_start_time
-    if ($plandetails->register_start_time != $_POST['register_start_time']){
+    if ($plandetails->register_start_time != ($_POST['register_start_time']+":00")){
       $displayname = Input::get("register_start_time");
 
       $fields=array('register_start_time'=>$displayname);
@@ -201,7 +201,7 @@ if(!empty($_POST)) {
     }
 
 //Update register_end_time
-    if ($plandetails->register_end_time != $_POST['register_end_time']){
+    if ($plandetails->register_end_time != ($_POST['register_end_time']+":00")){
       $displayname = Input::get("register_end_time");
 
       $fields=array('register_end_time'=>$displayname);
@@ -222,7 +222,7 @@ if(!empty($_POST)) {
     }
 
 //Update confirm_end_time
-    if ($plandetails->confirm_end_time != $_POST['confirm_end_time']){
+    if ($plandetails->confirm_end_time != ($_POST['confirm_end_time']+":00")){
       $displayname = Input::get("confirm_end_time");
 
       $fields=array('confirm_end_time'=>$displayname);
@@ -243,7 +243,7 @@ if(!empty($_POST)) {
     }
 
 //Update plan_start_time
-    if ($plandetails->plan_start_time != $_POST['plan_start_time']){
+    if ($plandetails->plan_start_time != ($_POST['plan_start_time']+":00")){
       $displayname = Input::get("plan_start_time");
 
       $fields=array('plan_start_time'=>$displayname);
@@ -265,7 +265,7 @@ if(!empty($_POST)) {
 
 
 //Update plan_end_time
-    if ($plandetails->plan_end_time != $_POST['plan_end_time']){
+    if ($plandetails->plan_end_time != ($_POST['plan_end_time']+":00")){
       $displayname = Input::get("plan_end_time");
 
       $fields=array('plan_end_time'=>$displayname);
@@ -328,7 +328,7 @@ if(!empty($_POST)) {
 
 <div class="row">
 
-	<div class="col-xs-12 col-sm-10">
+	<div class="col-xs-12 col-sm-12">
 	<form class="form" name='adminUser' action='admin_plan.php?id=<?=$planId?>' method='post'>
 
 	<h3>مشخصات برنامه</h3>
@@ -349,6 +349,7 @@ if(!empty($_POST)) {
         </div>
 
 	</div>
+
 	</div>
 
 	<h3></h3>
@@ -377,53 +378,54 @@ if(!empty($_POST)) {
             </div>
         </div>
 
+
         <div class="row">
             <div class="col-xs-2" style="text-align: center;">
                 <p>تاریخ</p>
             </div>
 
-            <div class="col-xs-2">
+             <div class="col-xs-2 ">                    
                 <div class='input-group date' id='datepicker' >
-                    <span class="input-group-addon" >
+                    <span class="input-group-addon" id="register_start_date_btn" >
                         <span class="glyphicon glyphicon-calendar" ></span>
                     </span>
-                    <input type='text' class="form-control" name="register_start_date" id="register_start_date" value="<?=$plandetails->register_start_date?>" />
+                    <input type='text' class="form-control" name="register_start_date" id="register_start_date" value="<?=str_replace("-", "/", $plandetails->register_start_date)?>"/>
                 </div>
             </div>
 
             <div class="col-xs-2 ">                    
                 <div class='input-group date' id='datepicker' >
-                    <span class="input-group-addon" >
+                    <span class="input-group-addon" id="register_end_date_btn" >
                         <span class="glyphicon glyphicon-calendar" ></span>
                     </span>
-                    <input type='text' class="form-control" name="register_end_date" id="register_end_date" value="<?=$plandetails->register_end_date?>"/>
+                    <input type='text' class="form-control" name="register_end_date" id="register_end_date" value="<?=str_replace("-", "/", $plandetails->register_end_date)?>"/>
                 </div>
             </div>
 
             <div class="col-xs-2 ">                    
                 <div class='input-group date' id='datepicker' >
-                    <span class="input-group-addon" >
-                        <span class="glyphicon glyphicon-calendar" ></span>
+                    <span class="input-group-addon" id="confirm_end_date_btn">
+                        <span class="glyphicon glyphicon-calendar" id="confirm_end_date_btn"></span>
                     </span>
-                    <input type='text' class="form-control" name="confirm_end_date" id="confirm_end_date" value="<?=$plandetails->confirm_end_date?>"/>
+                    <input type='text' class="form-control" name="confirm_end_date" id="confirm_end_date" value="<?=str_replace("-", "/", $plandetails->confirm_end_date)?>"/>
                 </div>
             </div>
 
             <div class="col-xs-2 ">                    
                 <div class='input-group date' id='datepicker' >
-                    <span class="input-group-addon" >
+                    <span class="input-group-addon" id="plan_start_date_btn">
                         <span class="glyphicon glyphicon-calendar" ></span>
                     </span>
-                    <input type='text' class="form-control" name="plan_start_date" id="plan_start_date" value="<?=$plandetails->plan_start_date?>"/>
+                    <input type='text' class="form-control" name="plan_start_date" id="plan_start_date" value="<?=str_replace("-", "/", $plandetails->plan_start_date)?>"/>
                 </div>
             </div>
 
             <div class="col-xs-2 ">                    
                 <div class='input-group date' id='datepicker' >
-                    <span class="input-group-addon" >
+                    <span class="input-group-addon" id="plan_end_date_btn">
                         <span class="glyphicon glyphicon-calendar" ></span>
                     </span>
-                    <input type='text' class="form-control" name="plan_end_date" id="plan_end_date" value="<?=$plandetails->plan_end_date?>"/>
+                    <input type='text' class="form-control" name="plan_end_date" id="plan_end_date" value="<?=str_replace("-", "/", $plandetails->plan_end_date)?>"/>
                 </div>
             </div>
 
@@ -438,7 +440,7 @@ if(!empty($_POST)) {
 
             <div class="col-xs-2">                    
                 <div class='input-group date' id='timepicker' >
-                    <span class="input-group-addon" >
+                    <span class="input-group-addon" id="register_start_time_btn">
                         <span class="glyphicon glyphicon-time" ></span>
                     </span>     
                     <input type='text' class="form-control" name="register_start_time" id="register_start_time" value="<?=$plandetails->register_start_time?>"/>
@@ -447,7 +449,7 @@ if(!empty($_POST)) {
 
             <div class="col-xs-2">                    
                 <div class='input-group date' id='timepicker' >
-                    <span class="input-group-addon" >
+                    <span class="input-group-addon" id="register_end_time_btn">
                         <span class="glyphicon glyphicon-time" ></span>
                     </span>
                     <input type='text' class="form-control" name="register_end_time" id="register_end_time" value="<?=$plandetails->register_end_time?>"/>
@@ -456,7 +458,7 @@ if(!empty($_POST)) {
 
             <div class="col-xs-2">                    
                 <div class='input-group date' id='timepicker' >
-                    <span class="input-group-addon" >
+                    <span class="input-group-addon" id="confirm_end_time_btn">
                         <span class="glyphicon glyphicon-time" ></span>
                     </span>
                     <input type='text' class="form-control" name="confirm_end_time" id="confirm_end_time" value="<?=$plandetails->confirm_end_time?>"/>
@@ -465,7 +467,7 @@ if(!empty($_POST)) {
 
             <div class="col-xs-2">                    
                 <div class='input-group date' id='timepicker' >
-                    <span class="input-group-addon" >
+                    <span class="input-group-addon" id="plan_start_time_btn">
                         <span class="glyphicon glyphicon-time" ></span>
                     </span>
                     <input type='text' class="form-control" name="plan_start_time" id="plan_start_time" value="<?=$plandetails->plan_start_time?>"/>
@@ -474,7 +476,7 @@ if(!empty($_POST)) {
 
             <div class="col-xs-2">                    
                 <div class='input-group date' id='timepicker' >
-                    <span class="input-group-addon" >
+                    <span class="input-group-addon" id="plan_end_time_btn">
                         <span class="glyphicon glyphicon-time" ></span>
                     </span>
                     <input type='text' class="form-control" name="plan_end_time" id="plan_end_time" value="<?=$plandetails->plan_end_time?>"/>
@@ -646,13 +648,14 @@ if(!empty($_POST)) {
 
 	<br><br>
 	<input type="hidden" name="csrf" value="<?=Token::generate();?>" />
-	<input class='btn btn-primary' type='submit' value='به رزرو رسانی' class='submit' />
+	<input class='btn btn-primary' type='submit' value='به روز رسانی' class='submit' />
 	<a class='btn btn-warning' href="admin_plans.php">انصراف</a><br><br>
 
 	</form>
 
 	</div><!--/col-9-->
 </div><!--/row-->
+
 
 </div>
 </div>
@@ -663,3 +666,49 @@ if(!empty($_POST)) {
     <!-- Place any per-page javascript here -->
 
 <?php require_once $abs_us_root.$us_url_root.'users/includes/html_footer.php'; // currently just the closing /body and /html ?>
+
+
+<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
+
+<link rel="stylesheet" href="css/bootstrap-datepicker.min.css" />
+<script src="js/bootstrap-datepicker.min.js"></script>
+<script src="js/bootstrap-datepicker.fa.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>        
+<script src="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $("#datepicker0").datepicker();
+    
+        $("#register_start_date, #register_end_date, #confirm_end_date, #plan_start_date, #plan_end_date").datepicker();
+        $("#register_start_date_btn, #register_end_date_btn, #confirm_end_date_btn, #plan_start_date_btn, #plan_end_date_btn").click(function(event) {
+            event.preventDefault();
+            $("#"+this.id.replace("_btn","")).focus();
+        })
+    });
+
+    $(function () {
+        /*
+        $('#datepicker, #datepicker, #datepicker #datepicker, #datepicker').datetimepicker({
+            format: 'YYYY/MM/DD',
+            locale: 'fa',
+        });
+        */
+        $('#register_start_time, #register_end_time, #confirm_end_time, #plan_start_time, #plan_end_time').datetimepicker({
+            format : 'HH:mm',
+        });
+        $("#register_start_time_btn, #register_end_time_btn, #confirm_end_time_btn, #plan_start_time_btn, #plan_end_time_btn").click(function(event) {
+            event.preventDefault();
+            $("#"+this.id.replace("_btn","")).focus();
+        })
+    });
+</script>
