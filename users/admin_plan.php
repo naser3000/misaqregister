@@ -48,7 +48,6 @@ if(!empty($_POST)) {
     }
 
 //Update plan description
-print_r($plandetails->description);
     if ($plandetails->description+" " != $_POST['description']){
        $displayname = Input::get("description");
 
@@ -389,7 +388,7 @@ print_r($plandetails->description);
                     <span class="input-group-addon" id="register_start_date_btn" >
                         <span class="glyphicon glyphicon-calendar" ></span>
                     </span>
-                    <input type='text' class="form-control" name="register_start_date" id="register_start_date" value="<?=str_replace("-", "/", $plandetails->register_start_date)?>"/>
+                    <input type='text' class="form-control" name="register_start_date" id="register_start_date" value="<?=str_replace("-", "/", $plandetails->register_start_date)?>" readonly />
                 </div>
             </div>
 
@@ -398,7 +397,7 @@ print_r($plandetails->description);
                     <span class="input-group-addon" id="register_end_date_btn" >
                         <span class="glyphicon glyphicon-calendar" ></span>
                     </span>
-                    <input type='text' class="form-control" name="register_end_date" id="register_end_date" value="<?=str_replace("-", "/", $plandetails->register_end_date)?>"/>
+                    <input type='text' class="form-control" name="register_end_date" id="register_end_date" value="<?=str_replace("-", "/", $plandetails->register_end_date)?>" readonly />
                 </div>
             </div>
 
@@ -407,7 +406,7 @@ print_r($plandetails->description);
                     <span class="input-group-addon" id="confirm_end_date_btn">
                         <span class="glyphicon glyphicon-calendar" id="confirm_end_date_btn"></span>
                     </span>
-                    <input type='text' class="form-control" name="confirm_end_date" id="confirm_end_date" value="<?=str_replace("-", "/", $plandetails->confirm_end_date)?>"/>
+                    <input type='text' class="form-control" name="confirm_end_date" id="confirm_end_date" value="<?=str_replace("-", "/", $plandetails->confirm_end_date)?>" readonly />
                 </div>
             </div>
 
@@ -416,7 +415,7 @@ print_r($plandetails->description);
                     <span class="input-group-addon" id="plan_start_date_btn">
                         <span class="glyphicon glyphicon-calendar" ></span>
                     </span>
-                    <input type='text' class="form-control" name="plan_start_date" id="plan_start_date" value="<?=str_replace("-", "/", $plandetails->plan_start_date)?>"/>
+                    <input type='text' class="form-control" name="plan_start_date" id="plan_start_date" value="<?=str_replace("-", "/", $plandetails->plan_start_date)?>" readonly />
                 </div>
             </div>
 
@@ -425,7 +424,7 @@ print_r($plandetails->description);
                     <span class="input-group-addon" id="plan_end_date_btn">
                         <span class="glyphicon glyphicon-calendar" ></span>
                     </span>
-                    <input type='text' class="form-control" name="plan_end_date" id="plan_end_date" value="<?=str_replace("-", "/", $plandetails->plan_end_date)?>"/>
+                    <input type='text' class="form-control" name="plan_end_date" id="plan_end_date" value="<?=str_replace("-", "/", $plandetails->plan_end_date)?>" readonly />
                 </div>
             </div>
 
@@ -461,7 +460,7 @@ print_r($plandetails->description);
                     <span class="input-group-addon" id="confirm_end_time_btn">
                         <span class="glyphicon glyphicon-time" ></span>
                     </span>
-                    <input type='text' class="form-control" name="confirm_end_time" id="confirm_end_time" value="<?=$plandetails->confirm_end_time?>"/>
+                    <input type='text' class="form-control" name="confirm_end_time" id="confirm_end_time" value="<?=$plandetails->confirm_end_time?>" />
                 </div>
             </div>
 
@@ -470,7 +469,7 @@ print_r($plandetails->description);
                     <span class="input-group-addon" id="plan_start_time_btn">
                         <span class="glyphicon glyphicon-time" ></span>
                     </span>
-                    <input type='text' class="form-control" name="plan_start_time" id="plan_start_time" value="<?=$plandetails->plan_start_time?>"/>
+                    <input type='text' class="form-control" name="plan_start_time" id="plan_start_time" value="<?=$plandetails->plan_start_time?>" />
                 </div>
             </div>
 
@@ -479,7 +478,7 @@ print_r($plandetails->description);
                     <span class="input-group-addon" id="plan_end_time_btn">
                         <span class="glyphicon glyphicon-time" ></span>
                     </span>
-                    <input type='text' class="form-control" name="plan_end_time" id="plan_end_time" value="<?=$plandetails->plan_end_time?>"/>
+                    <input type='text' class="form-control" name="plan_end_time" id="plan_end_time" value="<?=$plandetails->plan_end_time?>" />
                 </div>
             </div>                      
 
@@ -677,38 +676,7 @@ print_r($plandetails->description);
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>        
 <script src="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
+<script src="js/admin_add_plan.js"></script>
 
 
 
-
-
-
-
-<script type="text/javascript">
-
-    $(document).ready(function() {
-        $("#datepicker0").datepicker();
-    
-        $("#register_start_date, #register_end_date, #confirm_end_date, #plan_start_date, #plan_end_date").datepicker();
-        $("#register_start_date_btn, #register_end_date_btn, #confirm_end_date_btn, #plan_start_date_btn, #plan_end_date_btn").click(function(event) {
-            event.preventDefault();
-            $("#"+this.id.replace("_btn","")).focus();
-        })
-    });
-
-    $(function () {
-        /*
-        $('#datepicker, #datepicker, #datepicker #datepicker, #datepicker').datetimepicker({
-            format: 'YYYY/MM/DD',
-            locale: 'fa',
-        });
-        */
-        $('#register_start_time, #register_end_time, #confirm_end_time, #plan_start_time, #plan_end_time').datetimepicker({
-            format : 'HH:mm',
-        });
-        $("#register_start_time_btn, #register_end_time_btn, #confirm_end_time_btn, #plan_start_time_btn, #plan_end_time_btn").click(function(event) {
-            event.preventDefault();
-            $("#"+this.id.replace("_btn","")).focus();
-        })
-    });
-</script>

@@ -242,7 +242,7 @@ if (!empty($_POST)) {
 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
 <!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->                
-                <div class="well well-sm scrollmenu">
+                <div class="well well-sm ">
                 <div class="form-group datetime-group" style="width: 1100px;">
                 <div class="alluinfo">&nbsp;</div>
                     <div class="row-fluid">
@@ -280,7 +280,7 @@ if (!empty($_POST)) {
                                 <span class="input-group-addon" id="register_start_date_btn">
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="register_start_date" id="register_start_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_start_date;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="register_start_date" id="register_start_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_start_date;} ?>" required autofocus readonly/>
                             </div>
                         </div>
 
@@ -289,7 +289,7 @@ if (!empty($_POST)) {
                                 <span class="input-group-addon" id="register_end_date_btn">
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="register_end_date" id="register_end_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_end_date;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="register_end_date" id="register_end_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_end_date;} ?>" required autofocus readonly/>
                             </div>
                         </div>
 
@@ -298,7 +298,7 @@ if (!empty($_POST)) {
                                 <span class="input-group-addon" id="confirm_end_date_btn">
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="confirm_end_date" id="confirm_end_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $confirm_end_date;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="confirm_end_date" id="confirm_end_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $confirm_end_date;} ?>" required autofocus readonly/>
                             </div>
                         </div>
 
@@ -307,7 +307,7 @@ if (!empty($_POST)) {
                                 <span class="input-group-addon" id="plan_start_date_btn">
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="plan_start_date" id="plan_start_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_start_date;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="plan_start_date" id="plan_start_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_start_date;} ?>" required autofocus readonly/>
                             </div>
                         </div>
 
@@ -316,7 +316,7 @@ if (!empty($_POST)) {
                                 <span class="input-group-addon" id="plan_end_date_btn">
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="plan_end_date" id="plan_end_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_end_date;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="plan_end_date" id="plan_end_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_end_date;} ?>" required autofocus readonly/>
                             </div>
                         </div>
 
@@ -331,46 +331,46 @@ if (!empty($_POST)) {
 
                         <div class="col-xs-2">                    
                             <div class='input-group date' id='timepicker' >
-                                <span class="input-group-addon" >
+                                <span class="input-group-addon" id="register_start_time_btn">
                                     <span class="glyphicon glyphicon-time" ></span>
                                 </span>     
-                                <input type='text' class="form-control" name="register_start_time" id="register_start_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_start_time;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="register_start_time" id="register_start_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_start_time;} ?>" required autofocus />
                             </div>
                         </div>
 
                         <div class="col-xs-2">                    
                             <div class='input-group date' id='timepicker' >
-                                <span class="input-group-addon" >
+                                <span class="input-group-addon" id="register_end_time_btn">
                                     <span class="glyphicon glyphicon-time" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="register_end_time" id="register_end_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_end_time;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="register_end_time" id="register_end_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_end_time;} ?>" required autofocus />
                             </div>
                         </div>
 
                         <div class="col-xs-2">                    
                             <div class='input-group date' id='timepicker' >
-                                <span class="input-group-addon" >
+                                <span class="input-group-addon" id="confirm_end_time_btn">
                                     <span class="glyphicon glyphicon-time" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="confirm_end_time" id="confirm_end_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $confirm_end_time;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="confirm_end_time" id="confirm_end_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $confirm_end_time;} ?>" required autofocus />
                             </div>
                         </div>
 
                         <div class="col-xs-2">                    
                             <div class='input-group date' id='timepicker' >
-                                <span class="input-group-addon" >
+                                <span class="input-group-addon" id="plan_start_time_btn">
                                     <span class="glyphicon glyphicon-time" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="plan_start_time" id="plan_start_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_start_time;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="plan_start_time" id="plan_start_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_start_time;} ?>" required autofocus />
                             </div>
                         </div>
 
                         <div class="col-xs-2">                    
                             <div class='input-group date' id='timepicker' >
-                                <span class="input-group-addon" >
+                                <span class="input-group-addon" id="plan_end_time_btn">
                                     <span class="glyphicon glyphicon-time" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="plan_end_time" id="plan_end_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_end_time;} ?>" required autofocus/>
+                                <input type='text' class="form-control" name="plan_end_time" id="plan_end_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $plan_end_time;} ?>" required autofocus />
                             </div>
                         </div>                      
 
@@ -562,14 +562,7 @@ if (!empty($_POST)) {
 <script src="js/bootstrap-datepicker.min.js"></script>
 <script src="js/bootstrap-datepicker.fa.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        $("#datepicker0").datepicker();
-    
-        $("#register_start_date, #register_end_date, #confirm_end_date, #plan_start_date, #plan_end_date").datepicker();
-        $("#register_start_date_btn, #register_end_date_btn, #confirm_end_date_btn, #plan_start_date_btn, #plan_end_date_btn").click(function(event) {
-            event.preventDefault();
-            $("#"+this.id.replace("_btn","")).focus();
-        })
-    });
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>        
+<script src="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
+
+<script src="js/admin_add_plan.js"></script>
