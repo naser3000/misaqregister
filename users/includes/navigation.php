@@ -113,9 +113,6 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 		font-family: 'IRANSans';
 		direction: rtl;
 	}
-	.container i{
-		margin-left: 10px;
-	}
 	.navbar-left li{
 		float: right !important;
 	}

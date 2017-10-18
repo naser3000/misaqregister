@@ -1038,46 +1038,48 @@ if(!empty($_POST)) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////						
 					?>
 
-		<h2>برنامه ها</h2>
+		<h2>...</h2>
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h1><?=$planData->title?></h1>
 			</div>
 			<div class="panel-body">
-				<div class="col-xs-12 col-sm-6 col-md-6 pull-right">	
-						<div class="huge" style="font-size: 16px; text-align: justify;">
-							<span><?=$planData->description?></span>
+				<div class="row">	
+						<div class="" style="font-size: 16px; text-align: justify;">
+							<p><?=$planData->description?></p>
 						</div>
 				</div><!-- /col -->
 
-				<div class="col-xs-12 col-sm-6 col-md-6 pull-right">	
+				<div class=row">	
 
 					<div class="">
-				        <h1 id="timeline">Timeline</h1>
+				        <h1 id="timeline">زمان بندی برنامه</h1>
 				    </div>
 				    <hr>
 				    <ul class="timeline">
 				        <li>
-				          <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
-				          <div class="timeline-panel">
-				            <div class="timeline-heading">
-				              <h4 class="timeline-title">Creation</h4>
-				              <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
-				            </div>
-				            <div class="timeline-body">
-				              <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-				            </div>
-				          </div>
+							<div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
+							<div class="timeline-panel">
+								<div class="timeline-heading">
+									<h4 class="timeline-titl">...</h4>
+								</div>
+								<div class="timeline-body">
+									<h3>شروع ثبت نام</h3>
+									<h5><?=str_replace("-", "/", $planData->register_start_date)?></h5>
+									<p><small class="text-muted"><i class="glyphicon glyphicon-time"></i><?=$planData->register_start_time?></small></p>
+								</div>
+							</div>
 				        </li>
 				        <li class="timeline-inverted">
 				          <div class="timeline-badge warning"><i class="glyphicon glyphicon-credit-card"></i></div>
 				          <div class="timeline-panel">
 				            <div class="timeline-heading">
-				              <h4 class="timeline-title">First big client</h4>
+				              <h4 class="timeline-title">...</h4>
 				            </div>
 				            <div class="timeline-body">
-				              <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-				              <p></p>
+				              <h3>پایان ثبت نام</h3>
+				              <h5><?=str_replace("-", "/", $planData->register_end_date)?></h5>
+				              <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i><?=$planData->register_start_time?></small></p>
 				            </div>
 				          </div>
 				        </li>
@@ -1085,65 +1087,38 @@ if(!empty($_POST)) {
 				          <div class="timeline-badge danger"><i class="glyphicon glyphicon-credit-card"></i></div>
 				          <div class="timeline-panel">
 				            <div class="timeline-heading">
-				              <h4 class="timeline-title">Reached 100 employees</h4>
+				              <h4 class="timeline-title">...</h4>
 				            </div>
 				            <div class="timeline-body">
-				              <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+				              <h3>مهلت لغو ثبت نام</h3>
+				              <h5><?=str_replace("-", "/", $planData->confirm_end_date)?></h5>
+				              <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i><?=$planData->confirm_end_time?></small></p>
 				            </div>
 				          </div>
 				        </li>
 				        <li class="timeline-inverted">
+				        	<div class="timeline-badge success"><i class="glyphicon glyphicon-thumbs-up"></i></div>
 				          <div class="timeline-panel">
 				            <div class="timeline-heading">
-				              <h4 class="timeline-title">New offices</h4>
+				              <h4 class="timeline-title">...</h4>
 				            </div>
 				            <div class="timeline-body">
-				              <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+				              <h3>شروع برنامه</h3>
+				              <h5><?=str_replace("-", "/", $planData->plan_start_date)?></h5>
+				              <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i><?=$planData->plan_start_time?></small></p>
 				            </div>
 				          </div>
 				        </li>
 				        <li>
-				          <div class="timeline-badge info"><i class="glyphicon glyphicon-floppy-disk"></i></div>
+				          <div class="timeline-badge info"><i class="glyphicon glyphicon-thumbs-down"></i></div>
 				          <div class="timeline-panel">
 				            <div class="timeline-heading">
-				              <h4 class="timeline-title">Expansion in 7 states</h4>
+				              <h4 class="timeline-title">...</h4>
 				            </div>
 				            <div class="timeline-body">
-				              <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-				              <hr>
-				              <div class="btn-group">
-				                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-				                  <i class="glyphicon glyphicon-cog"></i> <span class="caret"></span>
-				                </button>
-				                <ul class="dropdown-menu" role="menu">
-				                  <li><a href="javascript:;">Action</a></li>
-				                  <li><a href="javascript:;">Another action</a></li>
-				                  <li><a href="javascript:;">Something else here</a></li>
-				                  <li class="divider"></li>
-				                  <li><a href="javascript:;">Separated link</a></li>
-				                </ul>
-				              </div>
-				            </div>
-				          </div>
-				        </li>
-				        <li>
-				          <div class="timeline-panel">
-				            <div class="timeline-heading">
-				              <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-				            </div>
-				            <div class="timeline-body">
-				              <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-				            </div>
-				          </div>
-				        </li>
-				        <li class="timeline-inverted">
-				          <div class="timeline-badge success"><i class="glyphicon glyphicon-thumbs-up"></i></div>
-				          <div class="timeline-panel">
-				            <div class="timeline-heading">
-				              <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-				            </div>
-				            <div class="timeline-body">
-				              <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
+				              <h3>پایان برنامه</h3>
+				              <h5><?=str_replace("-", "/", $planData->plan_end_date)?></h5>
+				              <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i><?=$planData->plan_end_time?></small></p>
 				            </div>
 				          </div>
 				        </li>
