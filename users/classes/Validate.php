@@ -69,6 +69,15 @@ class Validate{
 							if ($check->count()) {
 								$this->addError(["{$display} وجود دارد. لطفاً یک {$display} دیگر انتخاب کنید.",$item]);
 							}
+						case 'after_equal':
+							if ($value < $rule_value) {
+								$this->addError(["{$display} ($value) باید بعد از ($rule_value) تنظیم شود.",$item]);
+							}
+							break;
+						case 'before_equal':
+							if ($value > $rule_value) {
+								$this->addError(["{$display} ($value) باید قبل از ($rule_value) تنظیم شود.",$item]);
+							}
 							break;
 
 						case 'unique_update':
@@ -125,6 +134,19 @@ class Validate{
 			}
 		}
 		$html .= '</ul>';
+		return $html;
+	}
+
+	public function show_errors(){
+		$html = '';
+		foreach($this->_errors as $error){
+			if(is_array($error)){
+				$html .= '<span class="text-danger">'.$error[0].'</span>';
+				$html .= '<script>jQuery("document").ready(function(){jQuery("#'.$error[1].'").parent().closest("div").addClass("has-error");});</script>';
+			}else{
+				$html .= '<span class="text-danger">'.$error.'</span>';
+			}
+		}
 		return $html;
 	}
 

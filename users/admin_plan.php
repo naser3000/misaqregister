@@ -43,12 +43,12 @@ if(!empty($_POST)) {
       $db->update('plans',$planId,$fields);
      $successes[] = "عنوان برنامه به روز رسانی شد.";
     }else{
-
+          $errors[] = $validation->show_errors();
       }
     }
 
 //Update plan description
-    if ($plandetails->description+" " != $_POST['description']){
+    if ($plandetails->description." " != $_POST['description']){
        $displayname = Input::get("description");
 
       $fields=array('description'=>$displayname);
@@ -64,9 +64,7 @@ if(!empty($_POST)) {
       $db->update('plans',$planId,$fields);
       $successes[] = "توضیحات به روز رسانی شد.";
     }else{
-          ?><div id="form-errors">
-            <?=$validation->display_errors();?></div>
-            <?php
+          $errors[] = $validation->show_errors();
       }
     }
 
@@ -79,6 +77,8 @@ if(!empty($_POST)) {
       $validation->check($_POST,array(
         'register_start_date' => array(
           'display' => 'تاریخ شروع ثبت نام',
+          'after_equal' => gregorian_to_jalali(explode('/', date("Y/m/d"))),
+          'before_equal' => $_POST['register_end_date'],
           'required' => true,
         )
       ));
@@ -86,9 +86,7 @@ if(!empty($_POST)) {
       $db->update('plans',$planId,$fields);
       $successes[] = "تاریخ شروع ثبت نام به روز رسانی شد.";
     }else{
-          ?><div id="form-errors">
-            <?=$validation->display_errors();?></div>
-            <?php
+          $errors[] = $validation->show_errors();
       }
     }
 
@@ -101,6 +99,8 @@ if(!empty($_POST)) {
       $validation->check($_POST,array(
         'register_end_date' => array(
           'display' => 'تاریخ پایان ثبت نام',
+          'after_equal' => $_POST['register_start_date'],
+          'before_equal' => $_POST['confirm_end_date'],
           'required' => true,
         )
       ));
@@ -108,9 +108,7 @@ if(!empty($_POST)) {
       $db->update('plans',$planId,$fields);
       $successes[] = "تاریخ پایان ثبت نام به روز رسانی شد.";
     }else{
-          ?><div id="form-errors">
-            <?=$validation->display_errors();?></div>
-            <?php
+          $errors[] = $validation->show_errors();
       }
     }
 
@@ -123,6 +121,8 @@ if(!empty($_POST)) {
       $validation->check($_POST,array(
         'confirm_end_date' => array(
           'display' => 'تاریخ مهلت لغو ثبت نام',
+          'after_equal' => $_POST['register_end_date'],
+          'before_equal' => $_POST['plan_start_date'],
           'required' => true,
         )
       ));
@@ -130,9 +130,7 @@ if(!empty($_POST)) {
       $db->update('plans',$planId,$fields);
       $successes[] = "تاریخ مهلت لغو ثبت نام به روز رسانی شد.";
     }else{
-          ?><div id="form-errors">
-            <?=$validation->display_errors();?></div>
-            <?php
+          $errors[] = $validation->show_errors();
       }
     }
 
@@ -144,6 +142,8 @@ if(!empty($_POST)) {
       $validation->check($_POST,array(
         'plan_start_date' => array(
           'display' => 'تاریخ شروع برنامه',
+          'after_equal' => $_POST['confirm_end_date'],
+          'before_equal' => $_POST['plan_end_date'],
           'required' => true,
         )
       ));
@@ -151,9 +151,7 @@ if(!empty($_POST)) {
       $db->update('plans',$planId,$fields);
       $successes[] = "تاریخ شروع برنامه به روز رسانی شد.";
     }else{
-          ?><div id="form-errors">
-            <?=$validation->display_errors();?></div>
-            <?php
+          $errors[] = $validation->show_errors();
       }
     }
 
@@ -166,15 +164,14 @@ if(!empty($_POST)) {
         'plan_end_date' => array(
           'display' => 'تاریخ پایان برنامه',
           'required' => true,
+          'after_equal' => $_POST['plan_start_date'],
         )
       ));
     if($validation->passed()){
       $db->update('plans',$planId,$fields);
       $successes[] = "تاریخ پایان برنامه به روز رسانی شد.";
     }else{
-          ?><div id="form-errors">
-            <?=$validation->display_errors();?></div>
-            <?php
+          $errors[] = $validation->show_errors();
       }
     }
 
@@ -193,9 +190,7 @@ if(!empty($_POST)) {
       $db->update('plans',$planId,$fields);
       $successes[] = "زمان شروع ثبت نام به روز رسانی شد.";
     }else{
-          ?><div id="form-errors">
-            <?=$validation->display_errors();?></div>
-            <?php
+          $errors[] = $validation->show_errors();
       }
     }
 
@@ -214,9 +209,7 @@ if(!empty($_POST)) {
       $db->update('plans',$planId,$fields);
       $successes[] = "زمان پایان ثبت نام به روز رسانی شد.";
     }else{
-          ?><div id="form-errors">
-            <?=$validation->display_errors();?></div>
-            <?php
+          $errors[] = $validation->show_errors();
       }
     }
 
@@ -235,9 +228,7 @@ if(!empty($_POST)) {
       $db->update('plans',$planId,$fields);
       $successes[] = "زمان مهلت لغو ثبت نام به روز رسانی شد.";
     }else{
-          ?><div id="form-errors">
-            <?=$validation->display_errors();?></div>
-            <?php
+          $errors[] = $validation->show_errors();
       }
     }
 
@@ -256,9 +247,7 @@ if(!empty($_POST)) {
       $db->update('plans',$planId,$fields);
       $successes[] = "زمان شروع برنامه به روز رسانی شد.";
     }else{
-          ?><div id="form-errors">
-            <?=$validation->display_errors();?></div>
-            <?php
+          $errors[] = $validation->show_errors();
       }
     }
 
@@ -278,9 +267,7 @@ if(!empty($_POST)) {
       $db->update('plans',$planId,$fields);
       $successes[] = "زمان پایان برنامه به روز رسانی شد.";
     }else{
-          ?><div id="form-errors">
-            <?=$validation->display_errors();?></div>
-            <?php
+          $errors[] = $validation->show_errors();
       }
     }
 
@@ -322,7 +309,6 @@ if(!empty($_POST)) {
 <div class="container">
 
 <?=resultBlock($errors,$successes);?>
-<?=$validation->display_errors();?>
 
 
 <div class="row">
@@ -667,6 +653,7 @@ if(!empty($_POST)) {
 <?php require_once $abs_us_root.$us_url_root.'users/includes/html_footer.php'; // currently just the closing /body and /html ?>
 
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
 <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
 
@@ -678,5 +665,9 @@ if(!empty($_POST)) {
 <script src="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
 <script src="js/admin_add_plan.js"></script>
 
+<script type="text/javascript">
+  
 
-
+    console.log("***");
+    //console.log(gregorian_to_jalali([2017, 10, 18]));
+</script>

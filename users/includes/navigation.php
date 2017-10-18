@@ -192,12 +192,5 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 				emp_number.readOnly = true;
 			}
 		}
-
-
-
-	$(document).ready(function() {
-		
-
-    });
     
 </script>

@@ -1,23 +1,5 @@
 <?php
-/*
-UserSpice 4
-An Open Source PHP User Management System
-by the UserSpice Team at http://UserSpice.com
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
- // UserSpice Specific Functions
 require_once $abs_us_root.$us_url_root.'usersc/includes/custom_functions.php';
 require_once $abs_us_root.$us_url_root.'usersc/includes/analytics.php';
 
@@ -889,3 +871,129 @@ function generateForm($table,$id, $skip=[]){
 			echo "Unknown";
 		}
 	}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	function mod($a, $b) {return $a - ($b * floor($a / $b));}
+
+function leap_gregorian($year)
+{
+    return (($year % 4) == 0) &&
+            (!((($year % 100) == 0) && (($year % 400) != 0)));
+}
+
+function gregorian_to_jd($year, $month, $day)
+{
+	$GREGORIAN_EPOCH = 1721425.5;
+    return ($GREGORIAN_EPOCH - 1) +
+           (365 * ($year - 1)) +
+           floor(($year - 1) / 4) +
+           (-floor(($year - 1) / 100)) +
+           floor(($year - 1) / 400) +
+           floor((((367 * $month) - 362) / 12) +
+           (($month <= 2) ? 0 :
+                               (leap_gregorian($year) ? -1 : -2)
+           ) +
+           $day);
+}
+function jd_to_gregorian($jd) {
+    //$wjd, $depoch, $quadricent, $dqc, $cent, $dcent, $quad, $dquad,
+        //$yindex, $dyindex, $year, $yearday, $leapadj;
+	$GREGORIAN_EPOCH = 1721425.5;
+    $wjd = floor($jd - 0.5) + 0.5;
+    $depoch = $wjd - $GREGORIAN_EPOCH;
+    $quadricent = floor($depoch / 146097);
+    $dqc = mod($depoch, 146097);
+    $cent = floor($dqc / 36524);
+    $dcent = mod($dqc, 36524);
+    $quad = floor($dcent / 1461);
+    $dquad = mod($dcent, 1461);
+    $yindex = floor($dquad / 365);
+    $year = ($quadricent * 400) + ($cent * 100) + ($quad * 4) + $yindex;
+    if (!(($cent == 4) || ($yindex == 4))) {
+        $year++;
+    }
+    $yearday = $wjd - gregorian_to_jd($year, 1, 1);
+    $leapadj = (($wjd < gregorian_to_jd($year, 3, 1)) ? 0
+                                                  :
+                  (leap_gregorian($year) ? 1 : 2)
+              );
+    $month = floor(((($yearday + $leapadj) * 12) + 373) / 367);
+    $day = ($wjd - gregorian_to_jd($year, $month, 1)) + 1;
+
+    return array($year, $month, $day);
+}
+
+function leap_persian($year)
+{
+    return (((((($year - (($year > 0) ? 474 : 473)) % 2820) + 474) + 38) * 682) % 2816) < 682;
+}
+
+function persian_to_jd($year, $month, $day)
+{
+    //$epbase, $epyear;
+	$PERSIAN_EPOCH = 1948320.5;
+    $epbase = $year - (($year >= 0) ? 474 : 473);
+    $epyear = 474 + mod($epbase, 2820);
+
+    return $day +
+            (($month <= 7) ?
+                (($month - 1) * 31) :
+                ((($month - 1) * 30) + 6)
+            ) +
+            floor((($epyear * 682) - 110) / 2816) +
+            ($epyear - 1) * 365 +
+            floor($epbase / 2820) * 1029983 +
+            ($PERSIAN_EPOCH - 1);
+}
+function jd_to_persian($jd)
+{
+    //$year, $month, $day, $depoch, $cycle, $cyear, $ycycle,
+   //     $aux1, $aux2, $yday;
+
+
+    $jd = floor($jd) + 0.5;
+
+    $depoch = $jd - persian_to_jd(475, 1, 1);
+    $cycle = floor($depoch / 1029983);
+    $cyear = mod($depoch, 1029983);
+    if ($cyear == 1029982) {
+        $ycycle = 2820;
+    } else {
+        $aux1 = floor($cyear / 366);
+        $aux2 = mod($cyear, 366);
+        $ycycle = floor(((2134 * $aux1) + (2816 * $aux2) + 2815) / 1028522) +
+                    $aux1 + 1;
+    }
+    $year = $ycycle + (2820 * $cycle) + 474;
+    if ($year <= 0) {
+        $year--;
+    }
+    $yday = ($jd - persian_to_jd($year, 1, 1)) + 1;
+    $month = ($yday <= 186) ? ceil($yday / 31) : ceil(($yday - 6) / 30);
+    $day = ($jd - persian_to_jd($year, $month, 1)) + 1;
+    return array($year, $month, $day);
+}
+
+    function jalali_to_gregorian($d) {
+        $adjustDay = 0;
+        if($d[1]<0){
+            $adjustDay = leap_persian($d[0]-1)? 30: 29;
+            $d[1]++;
+        }
+        $gregorian = jd_to_gregorian(persian_to_jd($d[0], $d[1] + 1, $d[2])-$adjustDay);
+        $gregorian[1]--;
+        return implode('/', $gregorian);
+    }
+
+    function gregorian_to_jalali($d) {
+        $jalali = jd_to_persian(gregorian_to_jd($d[0], $d[1] + 1, $d[2]));
+        $jalali[1]--;
+        $zero = $zero1 = "";
+        if ($jalali[1] < 10)
+        	$zero = "0";
+        if ($jalali[2] < 10)
+        	$zero1 = "0";
+        return ($jalali[0]."/".$zero.$jalali[1]."/".$zero1.$jalali[2]);
+    }
