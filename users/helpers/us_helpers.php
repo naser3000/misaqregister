@@ -145,6 +145,39 @@ function fetchPlanRegisteredUsers($plan_id){
 	return ($results);
 }
 
+function shiftQue($reserved_number, $plan_id, $capacity_id){
+	$db = DB::getInstance();
+	$query = $db->query("SELECT * FROM  plan_register WHERE plan_id = $plan_id AND capacity_id = $capacity_id");
+	$results = $query->results();
+
+	$string = "";
+	foreach ($results as $register_data) {
+		$shift = $shift1 = $shift2 = $shift3 = 0;
+		$register_status = "رزرو";
+		if ($register_data->reserved_number > $reserved_number)
+			$shift++;
+		if ($register_data->reserved_number1 > $reserved_number)
+			$shift1++;
+		if ($register_data->reserved_number2 > $reserved_number)
+			$shift2++;
+		if ($register_data->reserved_number3 > $reserved_number)
+			$shift3++;
+
+		if ( $register_data->reserved_number3 == 1 )
+			$register_status = "ثبت نام";
+
+		$shfit_data = array('reserved_number'=> ($register_data->reserved_number - $shift),
+				'reserved_number1'=> ($register_data->reserved_number1 - $shift1),
+				'reserved_number2'=> ($register_data->reserved_number2 - $shift2),
+				'reserved_number3'=> ($register_data->reserved_number3 - $shift3),
+				'status'=> $register_status);
+		$db->update('plan_register', $register_data->id, $shfit_data);
+		$string .= $register_data->id."*********";
+	}
+	return ($string);
+}
+
+
 /*
 //Retrieve complete capacity information by UserID & PlanID
 function fetchCapacityDetails($user_id, $plan_id) {
@@ -860,9 +893,9 @@ function generateForm($table,$id, $skip=[]){
   }
 
 	function echopage($id){
-	  $db = DB::getInstance();
+		$db = DB::getInstance();
 		$query = $db->query("SELECT page FROM pages WHERE id = ? LIMIT 1",array($id));
-	  $count=$query->count();
+		$count=$query->count();
 
 		if ($count > 0) {
 	    $results=$query->first();
@@ -871,6 +904,9 @@ function generateForm($table,$id, $skip=[]){
 			echo "Unknown";
 		}
 	}
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -984,7 +1020,8 @@ function jd_to_persian($jd)
         }
         $gregorian = jd_to_gregorian(persian_to_jd($d[0], $d[1] + 1, $d[2])-$adjustDay);
         $gregorian[1]--;
-        return implode('/', $gregorian);
+        return $gregorian;
+        //return implode('/', $gregorian);
     }
 
     function gregorian_to_jalali($d) {
@@ -997,3 +1034,6 @@ function jd_to_persian($jd)
         	$zero1 = "0";
         return ($jalali[0]."/".$zero.$jalali[1]."/".$zero1.$jalali[2]);
     }
+
+
+

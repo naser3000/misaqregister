@@ -169,14 +169,14 @@ if(Input::exists()){
 								</div>
 								<div class="col-md-6">
 									<label for="gender">جنسیت*</label><br>
-									<input type="radio" class="form-contro" id="gender" name="gender" value="آقا" required>آقا<br>
-									<input type="radio" class="form-contro" id="gender" name="gender" value="خانم" required>خانم<br>
+									<input type="radio" class="form-contro" id="gender" name="gender" value="آقا" required>&nbsp;آقا<br>
+									<input type="radio" class="form-contro" id="gender" name="gender" value="خانم" required>&nbsp;خانم<br>
 								</div>
 								
 								<div class="col-md-6">
 									<label for="interested">علاقه مند به همکاری</label><br>
-									<input type="radio" class="form-contro" id="interested" name="interested" value="بله" required>بله<br>
-									<input type="radio" class="form-contro" id="interested" name="interested" value="خیر" required>خیر<br>
+									<input type="radio" class="form-contro" id="interested" name="interested" value="بله" required>&nbsp;بله<br>
+									<input type="radio" class="form-contro" id="interested" name="interested" value="خیر" required>&nbsp;خیر<br>
 								</div>
 								
 							</div>
@@ -234,7 +234,7 @@ if(Input::exists()){
 					</div><!--END OF col  -->
 
 					<input type="hidden" value="<?=Token::generate();?>" name="csrf">
-					<button class="submit btn btn-primary " type="submit" id="next_button"><i class="fa fa-plus-square"></i>تکمیل ثبت نام</button>
+					<button class="submit btn btn-primary " type="submit" id="next_button"><i class="fa fa-plus-square"></i>&nbsp;تکمیل ثبت نام</button>
 					<br><br>
 				</form>
 			</div>

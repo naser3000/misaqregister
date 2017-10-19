@@ -55,18 +55,20 @@ if(!empty($_POST)) {
 			$RPD = $registered_plan_details[0];
 
 			if( isset($_POST['prgs_id']) ) {
-				if( isset($_POST['participant_number']) ){
+				if( isset($_POST['participant_number']) ){// delete a participant register from plan
 					$prgs_id = Input::get('prgs_id');
 					$n = Input::get('participant_number');
 
 					// get paid_cost & capacity_id for plan
 					$query = $db->query("SELECT * FROM plan_register WHERE id = $prgs_id");
-					$prgs = $query->first();
-					$paid_cost = $prgs->paid_cost;
-					$capacity_id = $query->first()->capacity_id;
+					$register_data = $query->first();
+					$paid_cost = $register_data->paid_cost;
+					$plan_id = $register_data->plan_id;
+					$capacity_id = $register_data->capacity_id;
 
-					// get participant_cost
-					$participant_cost = fetchCapacityDetails($capacity_id)->participant_cost;
+					// get capacity data
+					$capacity_data = fetchCapacityDetails($capacity_id);
+					$participant_cost = $capacity_data->participant_cost;
 
 					// return paid cost (for participant) to user
 					$charge_fields=array('account_charge'=> ($userdetails->account_charge + $participant_cost) );
@@ -76,30 +78,34 @@ if(!empty($_POST)) {
 					if($n == 1){
 						$paid_fields=array(
 							'paid_cost'=> ($paid_cost - $participant_cost),
-							('participant_name1') => $prgs->participant_name2,
-							('participant_code1') => $prgs->participant_code2,
-							('participant_gender1') => $prgs->participant_gender2,
-							('reserved_number1') => $prgs->reserved_number2,
-							('participant_name2') => $prgs->participant_name3,
-							('participant_code2') => $prgs->participant_code3,
-							('participant_gender2') => $prgs->participant_gender3,
-							('reserved_number2') => $prgs->reserved_number3,
+							('participant_name1') => $register_data->participant_name2,
+							('participant_code1') => $register_data->participant_code2,
+							('participant_gender1') => $register_data->participant_gender2,
+							('reserved_number1') => $register_data->reserved_number2,
+							('participant_name2') => $register_data->participant_name3,
+							('participant_code2') => $register_data->participant_code3,
+							('participant_gender2') => $register_data->participant_gender3,
+							('reserved_number2') => $register_data->reserved_number3,
 							('participant_name3') => "",
 							('participant_code3') => "",
 							('participant_gender3') => "",
 							('reserved_number3') => 0,);
+						
+						$res_number = $register_data->reserved_number1;
 					}
 					if($n == 2){
 						$paid_fields=array(
 							'paid_cost'=> ($paid_cost - $participant_cost),
-							('participant_name2') => $prgs->participant_name3,
-							('participant_code2') => $prgs->participant_code3,
-							('participant_gender2') => $prgs->participant_gender3,
-							('reserved_number2') => $prgs->reserved_number3,
+							('participant_name2') => $register_data->participant_name3,
+							('participant_code2') => $register_data->participant_code3,
+							('participant_gender2') => $register_data->participant_gender3,
+							('reserved_number2') => $register_data->reserved_number3,
 							('participant_name3') => "",
 							('participant_code3') => "",
 							('participant_gender3') => "",
 							('reserved_number3') => 0,);
+						
+						$res_number = $register_data->reserved_number2;
 					}
 					if($n == 3){
 						$paid_fields=array(
@@ -108,18 +114,82 @@ if(!empty($_POST)) {
 							('participant_code3') => "",
 							('participant_gender3') => "",
 							('reserved_number3') => 0,);
+						
+						$res_number = $register_data->reserved_number3;
 					}
 					$db->update('plan_register', $prgs_id, $paid_fields);
-				}else {
+
+					// shift reserved que
+					shiftQue($res_number, $plan_id, $capacity_id);
+
+					// update reserved & registered number in capacity table
+					if ($capacity_data->reserved >= 1) {
+						$res_data = array('reserved'=> ($capacity_data->reserved - 1) );
+						$db->update('capacity', $capacity_data->id, $res_data);
+					}else{
+						//$res_data = array('reserved'=> 0 );
+						//$db->update('capacity', $capacity_data->id, $res_data);
+						$reg_data = array('registered'=> ($capacity_data->registered - 1) );
+						$db->update('capacity', $capacity_data->id, $reg_data);
+					}
+					
+				}else {// delete user register from plan
 					$prgs_id = Input::get('prgs_id');
-					// get paid cost for plan
-					$query = $db->query("SELECT * FROM plan_register WHERE id = $prgs_id");
-					$paid_cost = $query->first()->paid_cost;
+					// get paid cost for plan and its id
+					$register_data = $db->query("SELECT * FROM plan_register WHERE id = $prgs_id")->first();
+					$paid_cost = $register_data->paid_cost;
+					$plan_id = $register_data->plan_id;
 					// return paid cost to user
 					$charge_fields=array('account_charge'=> ($userdetails->account_charge + $paid_cost) );
 					$db->update('users', $userdetails->id, $charge_fields);
+					// shift reserved que
+					$reg_n = $res_n = 0;
+					$capacity_data = fetchCapacityDetails($register_data->capacity_id);
+					if ($register_data->reserved_number == 0)
+						$reg_n++;
+					else
+						$res_n++;
+					shiftQue($register_data->reserved_number, $plan_id, $capacity_data->id);
+					if ($register_data->participant_name1 != ""){
+						if ($register_data->reserved_number1 == 0 )
+							$reg_n++;
+						else
+							$res_n++;
+						shiftQue($register_data->reserved_number1, $plan_id, $capacity_data->id);
+					}
+					if ($register_data->participant_name2 != ""){
+						if ($register_data->reserved_number2 == 0 )
+							$reg_n++;
+						else
+							$res_n++;
+						shiftQue($register_data->reserved_number2, $plan_id, $capacity_data->id);
+					}
+					if ($register_data->participant_name3 != ""){
+						if ($register_data->reserved_number3 == 0 )
+							$reg_n++;
+						else
+							$res_n++;
+						shiftQue($register_data->reserved_number3, $plan_id, $capacity_data->id);
+					}
+
+					// update reserved & registered number in capacity table
+					if ($capacity_data->reserved >= $reg_n) {
+						$res_data = array('reserved'=> ($capacity_data->reserved - $reg_n) );
+						$db->update('capacity', $capacity_data->id, $res_data);
+					}else{
+						$res_data = array('reserved'=> 0 );
+						$db->update('capacity', $capacity_data->id, $res_data);
+						$reg_data = array('registered'=> ($capacity_data->registered - $reg_n + $capacity_data->reserved) );
+						$db->update('capacity', $capacity_data->id, $reg_data);
+					}
+					
+					
+
 					//delete user register in plan
 					$db->query("DELETE FROM plan_register WHERE id = $prgs_id");
+					
+					
+
 				}
 			}
 
@@ -496,12 +566,11 @@ if(!empty($_POST)) {
 		    	  	}
 		    	}
 			}// END OF ELSE ---> participant3 EXIST (uppdate it)
-
-
 	    	
     	}
-    	else
+    	else // user dont registered
     	{
+    		echo "**************************************";
     		if($userdetails->fname == ""){
     			$data_completion_error1 = 'اطلاعات شما تکمیل نشده است.';
     			$data_completion_error2 = 'لطفاً از قسمت "ویرایش اطلاعات" پروفایل خود را تکمیل کنید.';
@@ -601,6 +670,7 @@ if(!empty($_POST)) {
 		    				$p2 = 1;
 		    			if ($participant_select3 == "1")
 		    				$p3 = 1;
+		    			$user_capacity += ($p1 + $p2 + $p3);
 
 		        		$plan_capacity = fetchCapacityDetails($capacity_id);
 		        		$blank_space = $plan_capacity->capacity_number - $plan_capacity->registered;
@@ -671,7 +741,7 @@ if(!empty($_POST)) {
 
 						// update capacity_number
 						if ($register_status == "ثبت نام") {
-							$fields=array('registered'=> ($plan_capacity->registered+$user_capacity) );
+							$fields=array('registered'=> ($plan_capacity->registered + $user_capacity) );
 							$db->update('capacity',$capacity_id,$fields);
 							$successes[] = lang("PLAN_REGISTER");
 						}elseif ($register_status == "رزرو") {
@@ -774,6 +844,21 @@ if(!empty($_POST)) {
 			<!--		<span class="pull-left btn-xs" id="plan_id"></span> -->
 					<span class="pull-left btn-xs" >کد برنامه: <?=$pld->id?></span>
 					<?php
+
+            		// check date validation
+            		$date_valide[0] = $date_valide[1] = $date_valide[2] = false;
+            		if (str_replace("-", "/", $pld->register_start_date) < gregorian_to_jalali(explode('/', date("Y/m/d"))) ||
+									(str_replace("-", "/", $pld->register_start_date) == gregorian_to_jalali(explode('/', date("Y/m/d"))) 
+									& $pld->register_start_time < date("H:i"))) 
+						{$date_valide[0] = true;}
+					if (str_replace("-", "/", $pld->register_end_date) < gregorian_to_jalali(explode('/', date("Y/m/d"))) ||
+									(str_replace("-", "/", $pld->register_end_date) == gregorian_to_jalali(explode('/', date("Y/m/d"))) 
+									& $pld->register_end_time < date("H:i")))
+						{$date_valide[1] = true;}
+					if (str_replace("-", "/", $pld->confirm_end_date) < gregorian_to_jalali(explode('/', date("Y/m/d"))) ||
+									(str_replace("-", "/", $pld->confirm_end_date) == gregorian_to_jalali(explode('/', date("Y/m/d"))) 
+									& $pld->confirm_end_time < date("H:i")))
+						{$date_valide[2] = true;}
 
 					$related_capacity_n= 0;
 					$capacities = fetchAllPlanCapacities($pld->id);
@@ -940,20 +1025,7 @@ if(!empty($_POST)) {
                     			}
                     		}
 
-                    		// check date validation
-                    		$date_valide[0] = $date_valide[1] = $date_valide[2] = false;
-                    		if (str_replace("-", "/", $pld->register_start_date) < gregorian_to_jalali(explode('/', date("Y/m/d"))) ||
-											(str_replace("-", "/", $pld->register_start_date) == gregorian_to_jalali(explode('/', date("Y/m/d"))) 
-											& $pld->register_start_time < date("H:i"))) 
-								{$date_valide[0] = true;}
-							if (str_replace("-", "/", $pld->register_end_date) < gregorian_to_jalali(explode('/', date("Y/m/d"))) ||
-											(str_replace("-", "/", $pld->register_end_date) == gregorian_to_jalali(explode('/', date("Y/m/d"))) 
-											& $pld->register_end_time < date("H:i")))
-								{$date_valide[1] = true;}
-							if (str_replace("-", "/", $pld->confirm_end_date) < gregorian_to_jalali(explode('/', date("Y/m/d"))) ||
-											(str_replace("-", "/", $pld->confirm_end_date) == gregorian_to_jalali(explode('/', date("Y/m/d"))) 
-											& $pld->confirm_end_time < date("H:i")))
-								{$date_valide[2] = true;}
+
                     	?> 
                     <div class="table-responsive">
                     	<table class='table table-hover plan<?= $pld->id ?>'>
@@ -993,7 +1065,7 @@ if(!empty($_POST)) {
 									<td><input class="form-control" type="text" name="participant_cost<?=$i?>" id="participant_cost<?=$i?>" readOnly="" value="<?=$related_capacity->participant_cost?>"></td>
 									<td><?=$rgs_status[$i]?></td>
 									<td><input type="hidden" name="participant_choise<?=$i?>" id="participant_choise" value="0">
-										<?php if ($date_valide[0]) {} 
+										<?php if ($date_valide[2]) {} 
 										elseif ($showing[$i]) { ?> 
 										<span class="pull-right margin-left" onclick="passId(<?=$pld->id?>, <?=$prgs_id?>, <?=$i?>)"><a class="btn btn-warning btn-xs" data-toggle="modal" data-target="#delete_participant_register<?=$pld->id?>">حذف همراه</a><?php  } else { ?>
 										<a  class="btn btn-warning btn-xs" id="add_participant" onclick="remove_participant(<?=$pld->id?>, <?=$i?>, <?=$userdetails->account_charge?>)"><span class="glyphicon glyphicon-remove"></span></a>
@@ -1006,7 +1078,7 @@ if(!empty($_POST)) {
 									}
 								?>
 
-								<tr id="add_participant" class="<?php if ($date_valide[0]) || $add_participant_hidden) {echo "hidden";} ?>" >
+								<tr id="add_participant" class="<?php if ($date_valide[1] || $add_participant_hidden) {echo "hidden";} ?>" >
 									<td>
 										<a class="btn btn-success btn-xs" id="add_participant" onclick="add_participant(<?=$pld->id?>, <?=$userdetails->account_charge?>)">
 											<span class="glyphicon glyphicon-plus">&nbsp;</span>اضافه کردن همراه
@@ -1136,12 +1208,14 @@ if(!empty($_POST)) {
 				
 
 				<div class="clearfix"></div>
+
 			</div> <!-- /panel-footer -->
 		</div><!-- /panel -->
 	</div><!-- /col -->
 
 
-	<?php 
+	<?php
+	//print_r(shiftQue(120, 1, 21));
 				}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////  End of Cycle through plans  ///////////////////////////////////////////////
@@ -1272,7 +1346,7 @@ if(!empty($_POST)) {
 		 	type: "POST",
 		 	data: {'prgs_id' : prgs_id},
 		 	success: function(){
-		 		location.reload();
+		 		//location.reload();
 		 	},
 		 	error: function(){
 		 		alert('failure');
@@ -1286,7 +1360,7 @@ if(!empty($_POST)) {
 		 	type: "POST",
 		 	data: {'prgs_id' : prgs_id, 'participant_number'  : id},
 		 	success: function(){
-		 		location.reload();
+		 		//location.reload();
 		 	},
 		 	error: function(){
 		 		alert('failure');

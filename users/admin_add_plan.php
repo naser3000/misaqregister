@@ -71,22 +71,31 @@ if (!empty($_POST)) {
       ),
       'register_start_date' => array(
       'display' => 'تاریخ شروع ثبت نام',
+      'after_equal' => gregorian_to_jalali(explode('/', date("Y/m/d"))),
+      'before_equal' => $register_end_date,
       'required' => true,
       ),
       'register_end_date' => array(
       'display' => 'تاریخ پایان ثبت نام',
+      'after_equal' => $register_start_date,
+      'before_equal' => $confirm_end_date,
       'required' => true,
       ),
       'confirm_end_date' => array(
       'display' => 'تاریخ مهلت لغو ثبت نام',
+      'after_equal' => $register_end_date,
+      'before_equal' => $plan_start_date,
       'required' => true,
       ),
       'plan_start_date' => array(
       'display' => 'تاریخ شروع برنامه',
+      'after_equal' => $confirm_end_date,
+      'before_equal' => $plan_end_date,
       'required' => true,
       ),
       'plan_end_date' => array(
       'display' => 'تاریخ پایان برنامه',
+      'after_equal' => $plan_start_date,
       'required' => true,
       ),
       'register_start_time' => array(
@@ -164,7 +173,7 @@ if (!empty($_POST)) {
         
         
 
-        $successes[] = lang("ACCOUNT_PLAN_ADDED");
+        $successes[] = lang("PLAN_ADDED");
 
       } catch (Exception $e) {
         die($e->getMessage());
@@ -233,7 +242,7 @@ if (!empty($_POST)) {
                         </div>
                         
                         <div class="col-xs-12">
-                            <textarea class="form-control" id="description" name="description" placeholder="توضیحات" rows="5"></textarea>
+                            <textarea class="form-control" id="description" name="description" placeholder="توضیحات" rows="5"><?php if (!$form_valid && !empty($_POST)){ echo $description;} ?></textarea>
                         </div>
                     </div>
                 </div>
@@ -510,7 +519,22 @@ if (!empty($_POST)) {
                                             </tr>
                                     </thead>
                                     <tbody>
+                                      <?php
+                                        if (!$form_valid && !empty($_POST)){
 
+                                          $i = 0;
+                                          $next_data = "send_to_db".$i;
+                                          $capacity_row = Input::get($next_data);
+                                          while (strlen($capacity_row) > 0) {
+                                            $pieces_of_row = explode("|", $capacity_row);
+                                            echo ' <tr><td><input type="checkbox" id="delete"></td><td>'.$pieces_of_row[0].'</td><td>'.$pieces_of_row[1].'</td><td>'.$pieces_of_row[2].'</td><td>'.$pieces_of_row[3].'</td><td>'.$pieces_of_row[6].'</td><td>'.$pieces_of_row[5].'</td><td>'.$pieces_of_row[4].'</td><td><input name="'.$next_data.'" id="'.$next_data.'" type="radio" checked="checked" value="'.$capacity_row.'"></td></tr>';
+                                            $i++;
+                                            $next_data = "send_to_db".$i;
+                                            $capacity_row = Input::get($next_data);
+                                          }
+                                        }
+                                      ?>
+                                  
                                     </tbody>
                                 </table>
                             </div>

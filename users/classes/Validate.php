@@ -64,21 +64,23 @@ class Validate{
 							}
 							break;
 
-						case 'unique':
-							$check = $this->_db->get($rule_value, array($item, '=', $value));
-							if ($check->count()) {
-								$this->addError(["{$display} وجود دارد. لطفاً یک {$display} دیگر انتخاب کنید.",$item]);
-							}
 						case 'after_equal':
 							if ($value < $rule_value) {
 								$this->addError(["{$display} ($value) باید بعد از ($rule_value) تنظیم شود.",$item]);
 							}
 							break;
+							
 						case 'before_equal':
 							if ($value > $rule_value) {
 								$this->addError(["{$display} ($value) باید قبل از ($rule_value) تنظیم شود.",$item]);
 							}
 							break;
+
+						case 'unique':
+							$check = $this->_db->get($rule_value, array($item, '=', $value));
+							if ($check->count()) {
+								$this->addError(["{$display} وجود دارد. لطفاً یک {$display} دیگر انتخاب کنید.",$item]);
+							}
 
 						case 'unique_update':
 							$t = explode(',', $rule_value);
