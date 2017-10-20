@@ -1,0 +1,45 @@
+	hr{
+		width: 100%;
+		border: 0.1px solid gray;
+	}
+	.margin-left{
+		margin-left: 3px;
+	}
+	.equal-btn{
+		width: 120px;
+	}
+	.modal-footer{
+		padding: 10px;
+	}
+	.modal-body input{
+		text-align: center;
+		margin-bottom: 0px;
+	}
+	.modal-body th{
+		text-align: center;
+		padding: 0px;
+	}
+	.modal-body table input, .modal-body table select{
+		text-align: center;
+		height: 40px;
+		margin: 0px;
+		padding: 0px;
+	}
+	.modal-header input{
+		text-align: center;
+		margin-top: 30px;
+	}
+	.modal-body input[type="checkbox"]{
+		margin-top: 20x;
+		margin-bottom: 0px;
+	}
+	.modal-body div.pull-right{
+		text-align: center;
+	}
+	span.glyphicon{
+		margin-top: 5px;
+	}
+	input#total_cost, input#plan_cost{
+		height: 60px;
+		font-size: 25px;
+	}

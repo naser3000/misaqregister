@@ -653,19 +653,22 @@ if(!empty($_POST)) {
 <?php require_once $abs_us_root.$us_url_root.'users/includes/html_footer.php'; // currently just the closing /body and /html ?>
 
 
-<link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
-<link rel="stylesheet" href="css/bootstrap-datepicker.min.css" />
 
+<script src="js/jquery.min.js"></script>
+<script src="js/search.js" charset="utf-8"></script>
+
+<link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
+<link rel="stylesheet" href="css/bootstrap-datepicker.min.css" type="text/css"/>
 
 <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
-<script src="js/bootstrap-datepicker.fa.min.js"></script>
-<script src="js/bootstrap-datetimepicker.js"></script>
-<script src="js/bootstrap-datepicker.min.js"></script>
-<script src="js/search.js" charset="utf-8"></script>
-<script src="js/moment-with-locales.js"></script> 
-<script src="js/admin_add_plan.js"></script>
-<script src="js/jquery.min.js"></script>
 
+<script src="js/moment-with-locales.js"></script> 
+<script src="js/bootstrap-datetimepicker.js"></script>
+
+<script src="js/bootstrap-datepicker.min.js"></script>
+<script src="js/bootstrap-datepicker.fa.min.js"></script>
+
+<script src="js/admin_add_plan.js"></script>
 
 <script type="text/javascript">
 

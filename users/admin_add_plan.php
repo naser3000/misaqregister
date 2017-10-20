@@ -580,14 +580,18 @@ if (!empty($_POST)) {
 
 
 
+<script src="js/jquery.min.js"></script>
+<script src="js/search.js" charset="utf-8"></script>
+
 <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
-<link rel="stylesheet" href="css/bootstrap-datepicker.min.css"/>
+<link rel="stylesheet" href="css/bootstrap-datepicker.min.css" type="text/css"/>
 
 <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
-<script src="js/bootstrap-datepicker.fa.min.js"></script>
-<script src="js/bootstrap-datepicker.min.js"></script>
+
+<script src="js/moment-with-locales.js"></script> 
 <script src="js/bootstrap-datetimepicker.js"></script>
-<script src="js/search.js" charset="utf-8"></script>
-<script src="js/moment-with-locales.js"></script>
+
+<script src="js/bootstrap-datepicker.min.js"></script>
+<script src="js/bootstrap-datepicker.fa.min.js"></script>
+
 <script src="js/admin_add_plan.js"></script>
-<script src="js/jquery.min.js"></script>
