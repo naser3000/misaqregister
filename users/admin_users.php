@@ -282,7 +282,7 @@ $userData = fetchAllUsers(); //Fetch information for all users
 <?php require_once $abs_us_root.$us_url_root.'users/includes/html_footer.php'; // currently just the closing /body and /html ?>
 
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
     $("#btnExport").click(function(e) {

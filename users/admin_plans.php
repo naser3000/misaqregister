@@ -125,7 +125,7 @@ if(file_exists($abs_us_root.$us_url_root.'usersc/includes/admin_panels.php')){
 <!-- footers -->
 <?php require_once $abs_us_root.$us_url_root.'users/includes/page_footer.php'; // the final html footer copyright row + the external js calls ?>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <!-- Place any per-page javascript here -->
 <script type="text/javascript">
 	$(document).ready(function(){

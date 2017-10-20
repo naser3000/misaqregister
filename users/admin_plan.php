@@ -653,20 +653,23 @@ if(!empty($_POST)) {
 <?php require_once $abs_us_root.$us_url_root.'users/includes/html_footer.php'; // currently just the closing /body and /html ?>
 
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
 <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css"/>
-
 <link rel="stylesheet" href="css/bootstrap-datepicker.min.css" />
-<script src="js/bootstrap-datepicker.min.js"></script>
-<script src="js/bootstrap-datepicker.fa.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>        
-<script src="http://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
+
+<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+<script src="js/bootstrap-datepicker.fa.min.js"></script>
+<script src="js/bootstrap-datetimepicker.js"></script>
+<script src="js/bootstrap-datepicker.min.js"></script>
+<script src="js/search.js" charset="utf-8"></script>
+<script src="js/moment-with-locales.js"></script> 
 <script src="js/admin_add_plan.js"></script>
+<script src="js/jquery.min.js"></script>
+
 
 <script type="text/javascript">
-  
+
+
 
     console.log("***");
     //console.log(gregorian_to_jalali([2017, 10, 18]));
