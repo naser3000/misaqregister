@@ -99,16 +99,16 @@ $count = 0;
 			echo resultBlock($errors,$successes);
 			?>
 			<form name='adminPermissions' action='<?=$_SERVER['PHP_SELF']?>' method='post'>
-			  <h2>Create a new permission group</h2>
+			  <h2>ایجاد سطح دسترسی جدید</h2>
 			  <p>
-				<label>Permission Name:</label>
-				<input type='text' name='name' />
+				<label>نام شطح دسترسی:</label>
+				<input type='text' name='name' class="form-control" />
 			  </p>
 
 			  <br>
-			  <table class='table table-hover table-list-search'>
+			  <table class='table table-bordered table-list-search'>
 				<tr>
-				  <th>Delete</th><th>Permission Name</th>
+				  <th>ID</th><th>نام سطح دسترسی</th><th>حذف</th>
 				</tr>
 
 				<?php
@@ -116,8 +116,9 @@ $count = 0;
 				foreach ($permissionData as $v1) {
 				  ?>
 				  <tr>
-					<td><input type='checkbox' name='delete[<?=$permissionData[$count]->id?>]' id='delete[<?=$permissionData[$count]->id?>]' value='<?=$permissionData[$count]->id?>'></td>
-					<td><a href='admin_permission.php?id=<?=$permissionData[$count]->id?>'><?=$permissionData[$count]->name?></a></td>
+            <td><?=$permissionData[$count]->id?></td>
+            <td><a href='admin_permission.php?id=<?=$permissionData[$count]->id?>'><?=$permissionData[$count]->name?></a></td>
+            <td><input type='checkbox' name='delete[<?=$permissionData[$count]->id?>]' id='delete[<?=$permissionData[$count]->id?>]' value='<?=$permissionData[$count]->id?>'></td>
 				  </tr>
 				  <?php
 				  $count++;
@@ -129,7 +130,7 @@ $count = 0;
 
 			  <input type="hidden" name="csrf" value="<?=Token::generate();?>" >
 
-			  <input class='btn btn-primary' type='submit' name='Submit' value='Add/Update/Delete' /><br><br>
+			  <input class='btn btn-primary' type='submit' name='Submit' value='حذف&nbsp;//&nbsp;اضافه&nbsp;//&nbsp;به روز رسانی' /><br><br>
 
 			</form>
 

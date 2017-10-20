@@ -53,8 +53,14 @@ $email_act=$results->email_act;
 					<li><a href="<?=$us_url_root?>users/messages.php"><i class="fa fa-fw fa-envelope"></i><?=$msgC?> <?=$grammar?></a></li>
 					<?php } ?>
 					<li class="hidden-sm hidden-md hidden-lg"><a href="<?=$us_url_root?>"><i class="fa fa-fw fa-home"></i> خانه</a></li> <!-- Hamburger menu link -->
-					<?php if (checkMenu(2,$user->data()->id)){  //Links for permission level 2 (default admin) ?>
+					<?php if (checkMenu(2,$user->data()->id) || checkMenu(4,$user->data()->id)){  //Links for permission level 2 or 4 (default admin) ?>
+						<li class="hidden-sm hidden-md hidden-lg"><a href="<?=$us_url_root?>users/admin.php"><i class="fa fa-fw fa-cogs"></i> داشبورد مدیر برنامه</a></li> <!-- Hamburger menu link -->
+					<?php } // is user an admin ?>
+					<?php if (checkMenu(3,$user->data()->id) || checkMenu(4,$user->data()->id)){  //Links for permission level 3 or 4 (default admin) ?>
 						<li class="hidden-sm hidden-md hidden-lg"><a href="<?=$us_url_root?>users/admin.php"><i class="fa fa-fw fa-cogs"></i> داشبورد مدیر سایت</a></li> <!-- Hamburger menu link -->
+					<?php } // is user an admin ?>
+					<?php if (checkMenu(4,$user->data()->id)){  //Links for permission level 4 (default admin) ?>
+						<li class="hidden-sm hidden-md hidden-lg"><a href="<?=$us_url_root?>users/developer.php"><i class="fa fa-fw fa-cogs"></i> داشبورد توسعه دهنده</a></li> <!-- Hamburger menu link -->
 					<?php } // is user an admin ?>
 					<li class="dropdown hidden-xs"><a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-fw fa-cog"></i>راهنما<b class="caret"></b></a> <!-- regular user menu -->
 						<ul class="dropdown-menu"> <!-- open tag for User dropdown menu -->
@@ -66,10 +72,18 @@ $email_act=$results->email_act;
 
 									 <!-- regular user menu link -->
 
-							<?php if (checkMenu(2,$user->data()->id)){  //Links for permission level 2 (default admin) ?>
+							<?php if (checkMenu(2,$user->data()->id)  || checkMenu(4,$user->data()->id)){  //Links for permission level 2 (default admin) ?>
+								<li class="divider"></li>
+								<li><a href="<?=$us_url_root?>users/admin_plans.php"><i class="fa fa-fw fa-cogs"></i> مدیریت برنامه ها</a></li> <!-- regular Admin menu link -->
+							<?php } // is user an plan admin ?>
+							<?php if (checkMenu(3,$user->data()->id)  || checkMenu(4,$user->data()->id)){  //Links for permission level 2 (default admin) ?>
 								<li class="divider"></li>
 								<li><a href="<?=$us_url_root?>users/admin.php"><i class="fa fa-fw fa-cogs"></i> داشبورد مدیر سایت</a></li> <!-- regular Admin menu link -->
 							<?php } // is user an admin ?>
+							<?php if (checkMenu(4,$user->data()->id)){  //Links for permission level 2 (default admin) ?>
+								<li class="divider"></li>
+								<li><a href="<?=$us_url_root?>users/developer.php"><i class="fa fa-fw fa-cogs"></i> داشبورد توسعه دهنده</a></li> <!-- regular Admin menu link -->
+							<?php } // is user an developer ?>
 							<li class="divider"></li>
 							<li><a href="<?=$us_url_root?>users/logout.php"><i class="fa fa-fw fa-sign-out"></i> خروج</a></li> <!-- regular Logout menu link -->
 						</ul> <!-- close tag for User dropdown menu -->
@@ -109,9 +123,12 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 	.navbar-header{
 		float: right;
 	}
-	.container{
+	.container, .container-fluid{
 		font-family: 'IRANSans';
 		direction: rtl;
+	}
+	hr{
+		border: 0.5px solid black;
 	}
 	.navbar-left li{
 		float: right !important;
