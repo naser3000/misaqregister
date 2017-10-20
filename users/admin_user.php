@@ -472,6 +472,10 @@ $useravatar = '<img src="'.$grav.'" class="img-responsive img-thumbnail" alt="">
             <div class="form-group">
                 <label for="status">وضعیت*</label><br>
                 <select name="status" id = "status" class="form-control" onchange="disableInput()" >
+                    <option></option>
+                    <option value="مدیر برنامه ها" <?php if($userdetails->status == "مدیر برنامه ها") echo "selected"; ?> >مدیر برنامه ها</option>
+                    <option value="توسعه دهنده" <?php if($userdetails->status == "توسعه دهنده") echo "selected"; ?> >توسعه دهنده</option>
+                    <option value="مدیر سایت" <?php if($userdetails->status == "مدیر سایت") echo "selected"; ?> >مدیر سایت</option>
                     <option value="فارغ التحصیل"  <?php if($userdetails->status == "فارغ التحصیل") echo "selected"; ?> >فارغ التحصیل</option>
                     <option value="دانشجو"  <?php if($userdetails->status == "دانشجو") echo "selected"; ?> >دانشجو</option>
                     <option value="کارمند"  <?php if($userdetails->status == "کارمند") echo "selected"; ?> >کارمند</option>
@@ -546,7 +550,7 @@ $useravatar = '<img src="'.$grav.'" class="img-responsive img-thumbnail" alt="">
 		}
 
 		foreach ($permissionData as $v1){
-		if(in_array($v1->id,$perm_ids)){ ?>
+		if(in_array($v1->id,$perm_ids)  & ($v1->id!=4 || checkMenu(4,$user->data()->id) ) ){ ?>
 		  <input type='checkbox' name='removePermission[]' id='removePermission[]' value='<?=$v1->id;?>' /> <?=$v1->name;?>
 		<?php
 		}
@@ -561,7 +565,7 @@ $useravatar = '<img src="'.$grav.'" class="img-responsive img-thumbnail" alt="">
 		<div class="panel-body">
 		<?php
 		foreach ($permissionData as $v1){
-		if(!in_array($v1->id,$perm_ids)){ ?>
+		if(!in_array($v1->id, $perm_ids) & ( $v1->id!=4 || checkMenu(4,$user->data()->id) ) ){ ?>
 		  <input type='checkbox' name='addPermission[]' id='addPermission[]' value='<?=$v1->id;?>' /> <?=$v1->name;?>
 			<?php
 		}

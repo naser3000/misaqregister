@@ -563,6 +563,12 @@ if(!empty($_POST)) {
             <div class="form-group">
                 <label for="status">وضعیت*</label><br>
                 <select name="status" id = "status" class="form-control" onchange="disableInput()" >
+                    <option></option>
+                    <?php if (!checkMenu(1,$user->data()->id)) { ?>
+                    <option value="مدیر برنامه ها" <?php if($userdetails->status == "مدیر برنامه ها") echo "selected"; ?> >مدیر برنامه ها</option>
+                    <option value="توسعه دهنده" <?php if($userdetails->status == "توسعه دهنده") echo "selected"; ?> >توسعه دهنده</option>
+                    <option value="مدیر سایت" <?php if($userdetails->status == "مدیر سایت") echo "selected"; ?> >مدیر سایت</option>
+                    <?php } ?>
                     <option value="فارغ التحصیل"  <?php if($status == "فارغ التحصیل") echo "selected"; ?> >فارغ التحصیل</option>
                     <option value="دانشجو"  <?php if($status == "دانشجو") echo "selected"; ?> >دانشجو</option>
                     <option value="کارمند"  <?php if($status == "کارمند") echo "selected"; ?> >کارمند</option>
