@@ -24,17 +24,6 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
 		    <div class="col-xs-12 col-md-6 pull-right">
 			    <h1>مدیریت برنامه ها</h1>
 		    </div>
-		    <div class="col-xs-12 col-md-6">
-	            <form class="">
-	                <label for="system-search">جستجو:</label>
-	                <div class="input-group">
-	                    <input class="form-control" id="system-search" name="q" placeholder="جستجوی کاربران..." type="text">
-	                    <span class="input-group-btn">
-						      <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
-	                    </span>
-	                </div>
-	            </form>
-        	</div> 
 	    </div>
 <div class="row"> <!-- row for Users, Permissions, Pages, Email settings panels -->
 	<hr>
@@ -88,10 +77,21 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
 
 	<br><hr><hr>
 	<div class="row hidden" id="plan_registered_data">
+		<div class="col-xs-12 pull-right">
+            <form class="">
+                <label for="system-search">جستجو:</label>
+                <div class="input-group">
+                    <input class="form-control" id="system-search" name="q" placeholder="جستجوی کاربران..." type="text">
+                    <span class="input-group-btn">
+					      <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+                    </span>
+                </div>
+            </form>
+    	</div><div class="clearfix"></div><br>
         <div class="col-xs-12">
 			<form name="adminUsers" action="" method="post">
 				<div class="allutable table-responsive" id="plan_registered_data">
-				<table class='table table-bordered' id="plan_registered_data">
+				<table class='table table-bordered table-list-search' id="plan_registered_data">
 					<thead>
 						<tr>
 							<th>نام و نام خانوادگی</th><th>کدملی</th><th>جنسیت</th><th>وضعیت</th><th>شماره دانشجویی</th><th>شماره تماس</th><th>ایمیل</th>
@@ -126,7 +126,7 @@ if(file_exists($abs_us_root.$us_url_root.'usersc/includes/admin_panels.php')){
 <?php require_once $abs_us_root.$us_url_root.'users/includes/page_footer.php'; // the final html footer copyright row + the external js calls ?>
 
 <script src="js/jquery.min.js"></script>
-<!-- Place any per-page javascript here -->
+<script src="js/search.js" charset="utf-8"></script>
 <script src="js/admin_plans.js"></script>
 
 <?php require_once $abs_us_root.$us_url_root.'users/includes/html_footer.php'; // currently just the closing /body and /html ?>

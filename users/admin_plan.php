@@ -338,11 +338,11 @@ if(!empty($_POST)) {
 	</div>
 
 	<h3></h3>
-	<div class="panel panel-default">
+	<div class="panel panel-default datetime-group">
 	<div class="panel-heading">زمان برنامه</div>
 	<div class="panel-body">
 
-		<div class="row " style="text-align: center; ">
+		<div class="row text-center">
             <div class="col-xs-2">
                 <p></p>
             </div>
@@ -365,7 +365,7 @@ if(!empty($_POST)) {
 
 
         <div class="row">
-            <div class="col-xs-2" style="text-align: center;">
+            <div class="col-xs-2">
                 <p>تاریخ</p>
             </div>
 
@@ -418,7 +418,7 @@ if(!empty($_POST)) {
 
 
 
-        <div class="row" style="text-align: center;">
+        <div class="row" >
             <div class="col-xs-2">
                 <p>ساعت</p>
             </div>

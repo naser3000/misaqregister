@@ -149,20 +149,9 @@ $userData = fetchAllUsers(); //Fetch information for all users
 
     <!-- Page Heading -->
     <div class="row">
-	    <div class="col-xs-12 col-md-6">
-		    <h1>مدیریت کاربران</h1>
+	    <div class="col-xs-12">
+		    <h1 class="text-center">مدیریت کاربران</h1>
 	    </div>
-        <div class="col-xs-12 col-md-6">
-            <form class="">
-                <label for="system-search">جستجو:</label>
-                <div class="input-group">
-                    <input class="form-control" id="system-search" name="q" placeholder="جستجوی کاربران..." type="text">
-                    <span class="input-group-btn">
-					      <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
-                    </span>
-                </div>
-            </form>
-        </div> 
     </div>
 
 
@@ -188,32 +177,35 @@ $userData = fetchAllUsers(); //Fetch information for all users
                   <?php
 
                   foreach ($permOps as $permOp){
-                    echo "<option value='$permOp->id'>$permOp->name</option>";
+                    if ($permOp->id!=4 || checkMenu(4,$user->data()->id)){
+                      echo "<option value='$permOp->id'>$permOp->name</option>";
+                    }
                   }
                   ?>
                   </select>
                   </h3>
 
                	<div class="form-group" >
-                  <div class="col-xs-2" >
-               		<input  class="form-control" type="text" name="username" id="username" placeholder="نام کاربری" value="<?php if (!$form_valid && !empty($_POST)){ echo $username;} ?>" required autofocus>
-</div>
-                  <div class="col-xs-2">
-               		<input type="text" class="form-control" id="fname" name="fname" placeholder="نام" value="<?php if (!$form_valid && !empty($_POST)){ echo $fname;} ?>" required>
-</div>
-                  <div class="col-xs-2">
-               		<input type="text" class="form-control" id="lname" name="lname" placeholder="نام خانوادگی" value="<?php if (!$form_valid && !empty($_POST)){ echo $lname;} ?>" required>
-</div>
-                  <div class="col-xs-2">
-               		<input  class="form-control" type="text" name="email" id="email" placeholder="آدرس ایمیل" value="<?php if (!$form_valid && !empty($_POST)){ echo $email;} ?>" required >
-</div>
-                  <div class="col-xs-2">
-               		<input  class="form-control" type="password" name="password" id="password" placeholder="رمز عبور" required aria-describedby="passwordhelp">
-</div>
-                  <div class="col-xs-2">
-               		<input  type="password" id="confirm" name="confirm" class="form-control" placeholder="تکرار رمز عبور" required >
-</div>
-               	</div>
+                    <div class="col-xs-2 pull-right">
+                        <input  class="form-control" type="text" name="username" id="username" placeholder="نام کاربری" value="<?php if (!$form_valid && !empty($_POST)){ echo $username;} ?>" required autofocus>
+                    </div>
+                    <div class="col-xs-2 pull-right">
+                        <input type="text" class="form-control" id="fname" name="fname" placeholder="نام" value="<?php if (!$form_valid && !empty($_POST)){ echo $fname;} ?>" required>
+                    </div>
+                    <div class="col-xs-2 pull-right">
+                        <input type="text" class="form-control" id="lname" name="lname" placeholder="نام خانوادگی" value="<?php if (!$form_valid && !empty($_POST)){ echo $lname;} ?>" required>
+                    </div>
+                    <div class="col-xs-2 pull-right">
+                        <input  class="form-control" type="text" name="email" id="email" placeholder="آدرس ایمیل" value="<?php if (!$form_valid && !empty($_POST)){ echo $email;} ?>" required >
+                    </div>
+                    <div class="col-xs-2 pull-right">
+                        <input  class="form-control" type="password" name="password" id="password" placeholder="رمز عبور" required aria-describedby="passwordhelp">
+                    </div>
+                    <div class="col-xs-2 pull-right">
+                        <input  type="password" id="confirm" name="confirm" class="form-control" placeholder="تکرار رمز عبور" required >
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
 
                 <br /><br />
                	<input type="hidden" value="<?=Token::generate();?>" name="csrf">
@@ -223,48 +215,59 @@ $userData = fetchAllUsers(); //Fetch information for all users
                </div>
                </div>
         <div class="row">
-        <div class="col-xs-12">
-				 <div class="alluinfo">&nbsp;</div>
-				<form name="adminUsers" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
-              <div class="allutable table-responsive" id="user_data">
-                <table class='table table-striped table-bordered table-list-search' id="user_data_table">
-                  <thead>
-                    <tr>
-                    	<th>حذف</th><th>نام کاربری</th><th>نام</th><th>نام خانوادگی</th><th>جنسیت</th><th>کدملی</th><th>وضعیت</th><th>شماره دانشجویی</th><th>شماره تماس</th><th>ایمیل</th><th>علاقمندی</th><th>آخرین فعالیت</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    //Cycle through users
-                    foreach ($userData as $v1) {
-                    ?>
-                    <tr>
-                      <td><div class="form-group"><input type="checkbox" name="delete[<?=$v1->id?>]" value="<?=$v1->id?>" /></div></td>
-                      <td><a href='admin_user.php?id=<?=$v1->id?>'><?=$v1->username?></a></td>
-                      <td><?=$v1->fname?></td>
-                      <td><?=$v1->lname?></td>
-                      <td><?=$v1->gender?></td>
-                      <td><?=$v1->icode?></td>
-                      <td><?=$v1->status?></td>
-                      <td><?php if($v1->status == "دانشجو") { print_r($v1->std_number);}
-                              elseif($v1->status == "کارمند") { print_r($v1->emp_number);}
-                                else{print_r("-");}?></td>
-                      <td><?=$v1->phnumber?></td>
-                      <td><?=$v1->email?></td>
-                      <td><?=$v1->interested?></td>
-                      <td><?=$v1->last_login?></td>
-                    </tr>
-                  		<?php } ?>
+          <div class="col-xs-12">
+            <form class="">
+                <label for="system-search">جستجو:</label>
+                <div class="input-group">
+                    <input class="form-control" id="system-search" name="q" placeholder="جستجوی کاربران..." type="text">
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+                    </span>
+                </div>
+            </form>
+          </div><br>
+          <div class="col-xs-12">
+  				  <div class="alluinfo">&nbsp;</div>
+  				    <form name="adminUsers" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
+                <div class="allutable table-responsive" id="user_data">
+                  <table class='table table-striped table-bordered table-list-search' id="user_data_table">
+                    <thead>
+                      <tr>
+                      	<th>حذف</th><th>نام کاربری</th><th>نام</th><th>نام خانوادگی</th><th>جنسیت</th><th>کدملی</th><th>وضعیت</th><th>شماره دانشجویی</th><th>شماره تماس</th><th>ایمیل</th><th>علاقمندی</th><th>آخرین فعالیت</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      //Cycle through users
+                      foreach ($userData as $v1) {
+                      ?>
+                      <tr>
+                        <td><div class="form-group"><input type="checkbox" name="delete[<?=$v1->id?>]" value="<?=$v1->id?>" /></div></td>
+                        <td><a href='admin_user.php?id=<?=$v1->id?>'><?=$v1->username?></a></td>
+                        <td><?=$v1->fname?></td>
+                        <td><?=$v1->lname?></td>
+                        <td><?=$v1->gender?></td>
+                        <td><?=$v1->icode?></td>
+                        <td><?=$v1->status?></td>
+                        <td><?php if($v1->status == "دانشجو") { print_r($v1->std_number);}
+                                elseif($v1->status == "کارمند") { print_r($v1->emp_number);}
+                                  else{print_r("-");}?></td>
+                        <td><?=$v1->phnumber?></td>
+                        <td><?=$v1->email?></td>
+                        <td><?=$v1->interested?></td>
+                        <td><?=$v1->last_login?></td>
+                      </tr>
+                    		<?php } ?>
 
-                  </tbody>
-                </table>
-              </div>
+                    </tbody>
+                  </table>
+                </div>
 
-				<input class='btn btn-danger pull-left' type='submit' name='Submit' value='حذف' />
-				</form>
-        <button class='btn btn-info' id="btnExport" onclick="">خروجی اکسل</button><br><br>
+  				      <input class='btn btn-danger pull-left' type='submit' name='Submit' value='حذف' />
+  				    </form>
+          <button class='btn btn-info' id="btnExport" onclick="">خروجی اکسل</button><br><br>
 
-		  </div>
+  		  </div><!--end of col -->
 		</div>
 
 

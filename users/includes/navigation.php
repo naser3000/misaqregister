@@ -139,14 +139,12 @@ url("../users/css/fonts/IRANSans.woff") format("woff");
 	th, td, li{
 		text-align: right;
 	}
-	input[type=checkbox] {
-		padding-lef: 5px !important;
-	}
 	.capacity-row [class*='col-'], 
 	.datetime-group [class*='col-'], 
 	.spec-row [class*='col-'] { /* contains col-lg in class name */
 
   		float: right;
+  		text-align: center;
 	}
 	div.scrollmenu {
    		overflow: auto;

@@ -192,19 +192,8 @@ if (!empty($_POST)) {
 
         <!-- Page Heading -->
         <div class="row">
-            <div class="col-xs-12 col-md-6">
-                <h1>مدیریت برنامه ها</h1>
-            </div>
-            <div class="col-xs-12 col-md-6">
-                <form class="">
-                    <label for="system-search">جستجو:</label>
-                    <div class="input-group">
-                        <span class="input-group-btn">
-                            <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
-                        </span>
-                        <input class="form-control" id="system-search" name="q" placeholder="جستجوی کاربران..." type="text">
-                    </div>
-                </form>
+            <div class="col-xs-12">
+                <h1 class="text-center">افزودن برنامه جدید</h1>
             </div>
         </div>
 
@@ -258,7 +247,7 @@ if (!empty($_POST)) {
                         <h2>زمان</h2>
                     </div>
 
-                    <div class="row " style="text-align: center; ">
+                    <div class="row ">
                         <div class="col-xs-2">
                             <p></p>
                         </div>
@@ -280,7 +269,7 @@ if (!empty($_POST)) {
                     </div>
 
                     <div class="row">
-                        <div class="col-xs-2" style="text-align: center;">
+                        <div class="col-xs-2" >
                             <p>تاریخ</p>
                         </div>
 
@@ -333,7 +322,7 @@ if (!empty($_POST)) {
 
 
 
-                    <div class="row" style="text-align: center;">
+                    <div class="row">
                         <div class="col-xs-2">
                             <p>ساعت</p>
                         </div>
