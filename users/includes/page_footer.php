@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	<div class="row">
 		<div class="col-sm-12 text-center">
 			<footer><font color='white'><br>&copy; <?=$copyright_message; ?></footer>
-			<?php if($your_public_key  == "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI") { echo "<h3 align='center'style='color:white'>For security reasons, you need to change your reCAPTCHA key.</h3>"; } ?>
+			<?php if($your_public_key  == "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI") { echo "<h3 align='center'style='color:white'></h3>"; } ?>
 		</div>
 	</div>
 </div>

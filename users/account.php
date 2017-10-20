@@ -1237,6 +1237,6 @@ if(!empty($_POST)) {
 
 
 <link rel="stylesheet" type="text/css" href="css/account.css">
-<script type="text/javascript" src="js/bootstrap.js"></script>
 <script src="js/jquery.min.js"></script>
+
 <script src="js/account.js"></script>

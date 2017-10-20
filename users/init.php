@@ -42,7 +42,7 @@ $GLOBALS['config'] = array(
 //put it here.
 $db_table_prefix = "uc_";  //Old database prefix
 $timezone_string = 'Africa/Abidjan';
-$copyright_message = 'nasershokri';
+$copyright_message = 'تمامی حقوق متعلق به `کانون میثاق` می باشد.';
 $your_private_key = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe';
 $your_public_key = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
 $publickey = $your_public_key;
