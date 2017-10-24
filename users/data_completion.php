@@ -174,7 +174,7 @@ if(Input::exists()){
 								</div>
 								
 								<div class="col-md-6">
-									<label for="interested">علاقه مند به همکاری</label><br>
+									<label for="interested">علاقمند به همکاری</label><br>
 									<input type="radio" class="form-contro" id="interested" name="interested" value="بله" required>&nbsp;بله<br>
 									<input type="radio" class="form-contro" id="interested" name="interested" value="خیر" required>&nbsp;خیر<br>
 								</div>

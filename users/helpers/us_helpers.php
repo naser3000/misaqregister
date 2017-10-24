@@ -1032,7 +1032,7 @@ function jd_to_persian($jd)
         	$zero = "0";
         if ($jalali[2] < 10)
         	$zero1 = "0";
-        return ($jalali[0]."/".$zero.$jalali[1]."/".$zero1.$jalali[2]);
+        return ($jalali[0]."/".$zero.$jalali[1]."/".$zero1.$jalali[2]-1);
     }
 
 

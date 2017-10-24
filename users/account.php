@@ -800,7 +800,7 @@ if(!empty($_POST)) {
 		<h1>اطلاعات حساب کاربری</h1>
 		<p>شماره تماس: <?=$userdetails->phnumber?></p>
 		<p>ایمیل: <?=$userdetails->email?></p>
-		<p>علاقه مند به همکاری: <?=$userdetails->interested?></p>
+		<p>علاقمند به همکاری: <?=$userdetails->interested?></p>
 		<p>تاریخ عضویت: <?=$signupdate?></p>
 		<p>تعداد ورود: <?=$userdetails->logins?></p>
 
@@ -809,7 +809,7 @@ if(!empty($_POST)) {
 	<div class="col-xs-12 col-sm-4 col-md-3" style="text-align: center;">
 		<h1>میزان اعتبار</h1>
 		<p>موجودی حساب کاربری شما</p>
-		<p><?=$userdetails->account_charge?> ریال</p>
+		<p><?=$userdetails->account_charge?> تومان</p>
 		<p>می باشد.</p>
 		<hr>
 		<p>برای افزایش اعتبار بر روی دکمه زیر کلیک کنید.</p>

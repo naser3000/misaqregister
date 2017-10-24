@@ -370,13 +370,13 @@ if(!empty($_POST)) {
             $fields=array('interested'=>$interested);
             $validation->check($_POST,array(
                 'interested' => array(
-                    'display' => 'علاقه مندی',
+                    'display' => 'علاقمندی',
                     'required' => false,
                 )
             ));
             if($validation->passed()){
                 $db->update('users',$userId,$fields);
-                $successes[]='علاقه مندی به روز رسانی شد.';
+                $successes[]='علاقمندی به روز رسانی شد.';
             }else{
                 //validation did not pass
                 foreach ($validation->errors() as $error) {
@@ -470,7 +470,7 @@ if(!empty($_POST)) {
     <div class="container">
         <div class="well">
             <div class="row">
-                <div class="col-xs-12 col-md-2">
+                <div class="col-xs-12">
                     <p><img src="<?=$grav; ?>" class="img-thumbnail" alt="Generic placeholder thumbnail"></p>
                 </div>
                 <div class="col-xs-12 col-md-10">
@@ -481,10 +481,10 @@ if(!empty($_POST)) {
 
                     <form name='updateAccount' action='user_settings.php' method='post'>                        
 
-<div class="col-md-6">
-    <div class=" panel panel-default">
-        <div class="panel-heading">اطلاعات حساب کاربری</div>
-        <div class="panel-body">
+            <div class="col-md-6">
+                <div class=" panel panel-default">
+                    <div class="panel-heading">اطلاعات حساب کاربری</div>
+                    <div class="panel-body">
                         <div class="form-group">
                             <label>نام کاربری</label>
                             <?php if (($settings->change_un == 0) || (($settings->change_un == 2) && ($user->data()->un_changed == 1)) ) {
@@ -515,17 +515,14 @@ if(!empty($_POST)) {
                             <input class='form-control' type='password' name='confirm' />
                         </div>
 
-                        <label for="interested">علاقه مند به همکاری</label><br>
-                        <input type="radio" class="form-contro" id="interested" name="interested" value="بله" <?php if($interested == "بله") echo "checked"; ?>>&nbsp;بله<br>
-                        <input type="radio" class="form-contro" id="interested" name="interested" value="خیر"  <?php if($interested == "خیر") echo "checked"; ?>>&nbsp;خیر<br>
-        </div>
-    </div><!--END OF panel-default  -->
-</div><!--END OF col  -->
+                    </div>
+                </div><!--END OF panel-default  -->
+            </div><!--END OF col  -->
 
-<div class="col-md-6">
-    <div class=" panel panel-default">
-        <div class="panel-heading">اطلاعات فردی</div>
-        <div class="panel-body">
+            <div class="col-md-6">
+                <div class=" panel panel-default">
+                    <div class="panel-heading">اطلاعات فردی</div>
+                    <div class="panel-body">
                         <div class="form-group">
                             <label>نام</label>
                             <input  class='form-control' type='text' name='fname' value='<?=$fname?>' />
@@ -545,92 +542,96 @@ if(!empty($_POST)) {
                             <label>شماره تماس</label>
                             <input  class='form-control' type='text' name='phnumber' value='<?=$phnumber?>' />
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-xs-6">
                             <label for="gender">جنسیت</label><br>
                             <input type="radio" class="form-contro" id="gender" name="gender" value="آقا" <?php if($gender == "آقا") echo "checked"; ?>>&nbsp;آقا<br>
-                            <input type="radio" class="form-contro" id="gender" name="gender" value="خانم"  <?php if($gender == "خانم") echo "checked"; ?>>&nbsp;خانم<br>
+                            <input type="radio" class="form-contro" id="gender" name="gender" value="خانم"  <?php if($gender == "خانم") echo "checked"; ?>>&nbsp;خانم
                         </div>
-        </div>
-    </div><!--END OF panel-default  -->
-</div><!--END OF col  -->
+                        <div class="form-group col-xs-6">
+                            <label for="interested">علاقمند به همکاری</label><br>
+                            <input type="radio" class="form-contro" id="interested" name="interested" value="بله" <?php if($interested == "بله") echo "checked"; ?>>&nbsp;بله<br>
+                            <input type="radio" class="form-contro" id="interested" name="interested" value="خیر"  <?php if($interested == "خیر") echo "checked"; ?>>&nbsp;خیر<br>
+                        </div>
+                    </div>
+                </div><!--END OF panel-default  -->
+            </div><!--END OF col  -->
 
 
-<div class="col-md-6">
-    <div class=" panel panel-default">
-        <div class="panel-heading">اطلاعات تحصیلی</div>
-        <div class="panel-body">
+            <div class="col-md-6">
+                <div class=" panel panel-default">
+                    <div class="panel-heading">اطلاعات تحصیلی</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="status">وضعیت*</label><br>
+                            <select name="status" id = "status" class="form-control" onchange="disableInput()" >
+                                <option></option>
+                                <?php if (!checkMenu(1,$user->data()->id)) { ?>
+                                <option value="مدیر برنامه ها" <?php if($userdetails->status == "مدیر برنامه ها") echo "selected"; ?> >مدیر برنامه ها</option>
+                                <option value="توسعه دهنده" <?php if($userdetails->status == "توسعه دهنده") echo "selected"; ?> >توسعه دهنده</option>
+                                <option value="مدیر سایت" <?php if($userdetails->status == "مدیر سایت") echo "selected"; ?> >مدیر سایت</option>
+                                <?php } ?>
+                                <option value="فارغ التحصیل"  <?php if($status == "فارغ التحصیل") echo "selected"; ?> >فارغ التحصیل</option>
+                                <option value="دانشجو"  <?php if($status == "دانشجو") echo "selected"; ?> >دانشجو</option>
+                                <option value="کارمند"  <?php if($status == "کارمند") echo "selected"; ?> >کارمند</option>
+                                <option value="استاد"  <?php if($status == "استاد") echo "selected"; ?> >استاد</option>
+                                <option value="آزاد"  <?php if($status == "آزاد") echo "selected"; ?> >آزاد</option>
+                            </select>
+                        </div>
 
-            <div class="form-group">
-                <label for="status">وضعیت*</label><br>
-                <select name="status" id = "status" class="form-control" onchange="disableInput()" >
-                    <option></option>
-                    <?php if (!checkMenu(1,$user->data()->id)) { ?>
-                    <option value="مدیر برنامه ها" <?php if($userdetails->status == "مدیر برنامه ها") echo "selected"; ?> >مدیر برنامه ها</option>
-                    <option value="توسعه دهنده" <?php if($userdetails->status == "توسعه دهنده") echo "selected"; ?> >توسعه دهنده</option>
-                    <option value="مدیر سایت" <?php if($userdetails->status == "مدیر سایت") echo "selected"; ?> >مدیر سایت</option>
-                    <?php } ?>
-                    <option value="فارغ التحصیل"  <?php if($status == "فارغ التحصیل") echo "selected"; ?> >فارغ التحصیل</option>
-                    <option value="دانشجو"  <?php if($status == "دانشجو") echo "selected"; ?> >دانشجو</option>
-                    <option value="کارمند"  <?php if($status == "کارمند") echo "selected"; ?> >کارمند</option>
-                    <option value="استاد"  <?php if($status == "استاد") echo "selected"; ?> >استاد</option>
-                    <option value="آزاد"  <?php if($status == "آزاد") echo "selected"; ?> >آزاد</option>
-                </select>
+                        <div class="form-group">
+                            <label for="std_number">شماره دانشجویی*</label>
+                            <?php   
+                            if ($status == "دانشجو"){
+                                echo "<input type='text' class='form-control' id='std_number' name='std_number' placeholder='شماره دانشجویی' value='$std_number' >";
+                            }else{
+                                echo "<input type='text' class='form-control' id='std_number' name='std_number' placeholder='شماره دانشجویی' readonly >";
+                            }
+                            ?>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="major">رشته تحصیلی</label>
+                            <input type="text" class="form-control" id="major" name="major" placeholder="رشته تحصیلی" value='<?=$major?>'>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dorms">خوابگاه</label><br>
+                            <select name="dorms" id = "dorms" class="form-control" <?php if($status != "دانشجو") echo "disabled='disabled'"; ?> >
+                                <option ></option>
+                                <option value="تهرانی"  <?php if($dorms == "تهرانی") echo "selected"; ?>>تهرانی</option>
+                                <option value="طرشت 3"  <?php if($dorms == "طرشت 3") echo "selected"; ?>>طرشت 3</option>
+                                <option value="احمدی روشن"  <?php if($dorms == "احمدی روشن") echo "selected"; ?>>احمدی روشن</option>
+                                <option value="طرشت 2"  <?php if($dorms == "طرشت 2") echo "selected"; ?>>طرشت 2</option>
+                                <option value="آزادی"  <?php if($dorms == "آزادی") echo "selected"; ?>>آزادی</option>
+                                <option value="وزوایی"  <?php if($dorms == "وزوایی") echo "selected"; ?>>وزوایی</option>
+                                <option value="شادمان"  <?php if($dorms == "شادمان") echo "selected"; ?>>شادمان</option>
+                                <option value="صادقی"  <?php if($dorms == "صادقی") echo "selected"; ?>>صادقی</option>
+                                <option value="متأهلی"  <?php if($dorms == "متأهلی") echo "selected"; ?>>متأهلی</option>
+                                <option value="شوریده"  <?php if($dorms == "شوریده") echo "selected"; ?>>شوریده</option>
+                                <option value="ولیعصر"  <?php if($dorms == "ولیعصر") echo "selected"; ?>>ولیعصر</option>
+                                <option value="12 واحدی"  <?php if($dorms == "12 واحدی") echo "selected"; ?>>12 واحدی</option>
+                                <option value="حیدرتاش"  <?php if($dorms == "حیدرتاش") echo "selected"; ?>>حیدرتاش</option>
+                                <option value="مصلی نژاد"  <?php if($dorms == "مصلی نژاد") echo "selected"; ?>>مصلی نژاد</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="emp_number">کد کارمندی*</label>
+                            <?php
+                            if ($status == "کارمند"){
+                                echo "<input type='text' class='form-control' id='emp_number' name='emp_number' placeholder='کد کارمندی' value='$emp_number' >";
+                            }else{
+                                echo "<input type='text' class='form-control' id='emp_number' name='emp_number' placeholder='کد کارمندی' readonly >";
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div><!--END OF panel-default  -->
+            </div><!--END OF col  -->
+
+                </div>
             </div>
-
-            <div class="form-group">
-                <label for="std_number">شماره دانشجویی*</label>
-                <?php   
-                if ($status == "دانشجو"){
-                    echo "<input type='text' class='form-control' id='std_number' name='std_number' placeholder='شماره دانشجویی' value='$std_number' >";
-                }else{
-                    echo "<input type='text' class='form-control' id='std_number' name='std_number' placeholder='شماره دانشجویی' readonly >";
-                }
-                ?>
-            </div>
-
-            <div class="form-group">
-                <label for="major">رشته تحصیلی</label>
-                <input type="text" class="form-control" id="major" name="major" placeholder="رشته تحصیلی" value='<?=$major?>'>
-            </div>
-
-            <div class="form-group">
-                <label for="dorms">خوابگاه</label><br>
-                <select name="dorms" id = "dorms" class="form-control" <?php if($status != "دانشجو") echo "disabled='disabled'"; ?> >
-                    <option ></option>
-                    <option value="تهرانی"  <?php if($dorms == "تهرانی") echo "selected"; ?>>تهرانی</option>
-                    <option value="طرشت 3"  <?php if($dorms == "طرشت 3") echo "selected"; ?>>طرشت 3</option>
-                    <option value="احمدی روشن"  <?php if($dorms == "احمدی روشن") echo "selected"; ?>>احمدی روشن</option>
-                    <option value="طرشت 2"  <?php if($dorms == "طرشت 2") echo "selected"; ?>>طرشت 2</option>
-                    <option value="آزادی"  <?php if($dorms == "آزادی") echo "selected"; ?>>آزادی</option>
-                    <option value="وزوایی"  <?php if($dorms == "وزوایی") echo "selected"; ?>>وزوایی</option>
-                    <option value="شادمان"  <?php if($dorms == "شادمان") echo "selected"; ?>>شادمان</option>
-                    <option value="صادقی"  <?php if($dorms == "صادقی") echo "selected"; ?>>صادقی</option>
-                    <option value="متأهلی"  <?php if($dorms == "متأهلی") echo "selected"; ?>>متأهلی</option>
-                    <option value="شوریده"  <?php if($dorms == "شوریده") echo "selected"; ?>>شوریده</option>
-                    <option value="ولیعصر"  <?php if($dorms == "ولیعصر") echo "selected"; ?>>ولیعصر</option>
-                    <option value="12 واحدی"  <?php if($dorms == "12 واحدی") echo "selected"; ?>>12 واحدی</option>
-                    <option value="حیدرتاش"  <?php if($dorms == "حیدرتاش") echo "selected"; ?>>حیدرتاش</option>
-                    <option value="مصلی نژاد"  <?php if($dorms == "مصلی نژاد") echo "selected"; ?>>مصلی نژاد</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="emp_number">کد کارمندی*</label>
-                <?php
-                if ($status == "کارمند"){
-                    echo "<input type='text' class='form-control' id='emp_number' name='emp_number' placeholder='کد کارمندی' value='$emp_number' >";
-                }else{
-                    echo "<input type='text' class='form-control' id='emp_number' name='emp_number' placeholder='کد کارمندی' readonly >";
-                }
-                ?>
-            </div>
-
-        </div>
-    </div><!--END OF panel-default  -->
-</div><!--END OF col  -->
-
                         <input type="hidden" name="csrf" value="<?=Token::generate();?>" />
-
                         <p><input class='btn btn-primary' type='submit' value='به روز رسانی' class='submit' /></p>
                         <p><a class="btn btn-info" href="account.php">انصراف</a></p>
 
@@ -640,8 +641,6 @@ if(!empty($_POST)) {
                         echo "<strong>NOTE:</strong> If you originally signed up with your Google/Facebook account, you will need to use the forgot password link to change your password...unless you're really good at guessing.";
                     }
                     ?>
-                </div>
-            </div>
         </div>
 
 
