@@ -36,10 +36,10 @@ $(document).ready(function() {
         ul[1].setAttribute('style', 'width: 470px;');
         var li = ul[1].querySelectorAll('li');
             for (var i = 0; i < li.length; i+=4) {
-                li[i].setAttribute('style', 'width: 28%;');
-                li[i].setAttribute('style', 'width: 30%;');
-                li[i].setAttribute('style', 'width: 27%;');
-                li[i].setAttribute('style', 'width: 13%;');
+                li[i].setAttribute('style', 'width: 20%;');
+                li[i+1].setAttribute('style', 'width: 25%;');
+                li[i+2].setAttribute('style', 'width: 30%;');
+                li[i+3].setAttribute('style', 'width: 20%;');
             }
     }
 
@@ -115,7 +115,7 @@ $(document).ready(function() {
 
 
         status.innerHTML = "همه موارد"
-        yinter.innerHTML = "---------";
+        yinter.innerHTML = "بدون اهمیت";
         cost.innerHTML = 0;
         participant_cost.innerHTML = 0;
         participant_number.innerHTML = 0;

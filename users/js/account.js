@@ -37,7 +37,7 @@
 				console.log($feedback2[0].childElementCount);
 				console.log($feedback2[0]);
 				//console.log($form.prepend($feedback));
-				//location.reload();
+				location.reload();
 			},
 			error: function(){
 				alert('failure');
@@ -55,7 +55,7 @@
 		 	type: "POST",
 		 	data: {'prgs_id' : prgs_id},
 		 	success: function(){
-		 		//location.reload();
+		 		location.reload();
 		 	},
 		 	error: function(){
 		 		alert('failure');
@@ -69,7 +69,7 @@
 		 	type: "POST",
 		 	data: {'prgs_id' : prgs_id, 'participant_number'  : id},
 		 	success: function(){
-		 		//location.reload();
+		 		location.reload();
 		 	},
 		 	error: function(){
 		 		alert('failure');
@@ -82,13 +82,13 @@
 		if ($('table.plan'+plan_id+' tr.hidden').length != 0) {
 			$('table.plan'+plan_id+' tr.hidden').find('input#participant_choise')[0].value = "1";
 			$('table.plan'+plan_id+' tr.hidden')[0].classList.remove('hidden');
-			changeOneParticipantCostToTotalCost(plan_id, +1, account_charge)
+			changeOneParticipantCostToTotalCost(plan_id, +1, account_charge, paid_cost)
 		}
 		if ($('table.plan'+plan_id+' tr.hidden').length == 0)
 			$('table.plan'+plan_id+' tr#add_participant').addClass('hidden');
 	}
 
-	function remove_participant(plan_id, i, account_charge) {
+	function remove_participant(plan_id, i, account_charge, paid_cost) {
 		var l1 = $('table.plan'+plan_id+' tr.hidden.dont-hidden').length;
 		var l2 = $('table.plan'+plan_id+' tr.dont-hidden').length
 		console.log(l1 + "jjj" + l2);
@@ -112,15 +112,14 @@
 			$('table.plan'+plan_id+' #participant_code2')[0].value = $('table.plan'+plan_id+' #participant_code3')[0].value;
 			$('table.plan'+plan_id+' #participant_gender2')[0].value = $('table.plan'+plan_id+' #participant_gender3')[0].value;
 		}
-		changeOneParticipantCostToTotalCost(plan_id, -1, account_charge);
+		changeOneParticipantCostToTotalCost(plan_id, -1, account_charge, paid_cost);
 		deleteText($('table.plan'+plan_id+' tr.dont-hidden')[l2 - 1]);
 		if ($('table.plan'+plan_id+' tr.hidden').length > 0)
 			$('table.plan'+plan_id+' tr#add_participant').removeClass('hidden');
 	}
 
 
-	function changeOneParticipantCostToTotalCost(plan_id, sign, account_charge) {
-
+	function changeOneParticipantCostToTotalCost(plan_id, sign, account_charge, paid_cost) {
 		var total_cost = document.querySelector('#register_modal'+plan_id+' #total_cost');
 		var participant_cost = document.querySelector('#register_modal'+plan_id+' #participant_cost1');
 		var i = total_cost.value.indexOf(':');
@@ -130,7 +129,7 @@
 		total += parseInt(participant_cost.value) * sign;
 
 		total_cost.value = "مجموع هزینه ها: " + total +" تومان";
-		if (total > account_charge) {
+		if (total-paid_cost > account_charge) {
 			$('#register_modal'+plan_id+' #charge_error').removeClass('hidden');
 			if($('button.register-plan#'+plan_id)[0] != undefined)
 				$('button.register-plan#'+plan_id)[0].disabled = true;

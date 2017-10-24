@@ -487,7 +487,6 @@ if(!empty($_POST)) {
                                     <option>  کارمند</option>
                                     <option>  استاد</option>
                                     <option>  آزاد</option>
-                                
                                 </select>
                                 <span class="input-group-addon" >
                                     <span class="capacity" >وضعیت</span>
@@ -498,6 +497,7 @@ if(!empty($_POST)) {
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 capacity">
                             <div class="input-group">
                                 <select name="" class="multiselect-ui form-control" id="yinter" multiple="multiple" >
+                                    <option  value="بدون اهمیت">بدون اهمیت</option><option  value="کارشناسی">کارشناسی</option><option  value="کارشناسی ارشد">کارشناسی ارشد</option><option  value="دکترا">دکترا</option>
                                     <option  value="85">85</option><option  value="کارشناسی (85)">کارشناسی (85)</option><option  value="کارشناسی ارشد (85)">کارشناسی ارشد (85)</option><option  value="دکترا (85)">دکترا (85)</option>
                                     <option  value="86">86</option><option  value="کارشناسی (86)">کارشناسی (86)</option><option  value="کارشناسی ارشد (86)">کارشناسی ارشد (86)</option><option  value="دکترا (86)">دکترا (86)</option>
                                     <option  value="87">87</option><option  value="کارشناسی (87)">کارشناسی (87)</option><option  value="کارشناسی ارشد (87)">کارشناسی ارشد (87)</option><option  value="دکترا (87)">دکترا (87)</option>

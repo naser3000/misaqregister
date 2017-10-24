@@ -183,13 +183,8 @@ if(!empty($_POST)) {
 						$db->update('capacity', $capacity_data->id, $reg_data);
 					}
 					
-					
-
 					//delete user register in plan
 					$db->query("DELETE FROM plan_register WHERE id = $prgs_id");
-					
-					
-
 				}
 			}
 
@@ -754,10 +749,10 @@ if(!empty($_POST)) {
 			
 		      			} catch (Exception $e) {
 		        		die($e->getMessage());
-    		}
+    			}
 
     	
-      	}
+      		}
     	}// passed validate
     	}// END OF ELSE ---> (isset($registered_plan_details[0]))
     }//// END OF ELSE ---> (!Token::check($token))
@@ -860,13 +855,12 @@ if(!empty($_POST)) {
 									& $pld->confirm_end_time < date("H:i")))
 						{$date_valide[2] = true;}
 
-					$related_capacity_n= 0;
 					$capacities = fetchAllPlanCapacities($pld->id);
 					//print_r($userdetails->yinter);
 
  		//////////////////////////////////  Cycle through capacity  ////////////////////////////////////////////////////////
+						$related_capacity = null;
 						foreach ($capacities as $capacity) {
-							
 							if ( !in_array($userdetails->status, explode(',   ', $capacity->status))) {
 								/*print_r($capacity->status."+++");
 								for ($iii=0; $iii < count(explode(',   ', $capacity->status)); $iii++) { 
@@ -875,11 +869,13 @@ if(!empty($_POST)) {
 								//print_r($capacity->status);
 								continue;
 							}
-							if ( !in_array($userdetails->yinter, explode(', ', $capacity->yinter)) & $userdetails->status == "دانشجو") {
+							if ($userdetails->status == "دانشجو") {
 								//print_r($capacity->yinter);
-								if ( !in_array($userdetails->grade." (".$userdetails->yinter.")", explode(', ', $capacity->yinter))) {
+								if ( !in_array($userdetails->grade." (".$userdetails->yinter.")", explode(', ', $capacity->yinter)) &
+									!in_array($userdetails->yinter, explode(', ', $capacity->yinter)) &
+									!in_array($userdetails->grade, explode(', ', $capacity->yinter)) &
+									!in_array("بدون اهمیت", explode(', ', $capacity->yinter)) )
 									continue;
-								}
 							}
 							if ( !in_array($userdetails->gender, explode(', ', $capacity->gender))) {
 								//print_r($capacity->gender);
@@ -887,14 +883,20 @@ if(!empty($_POST)) {
 							}
 
 							if ($capacity->registered == $capacity->capacity_number){
-									//
+									if ($related_capacity != null) {
+										if ($capacity->reserved < $related_capacity->reserved) {
+											$related_capacity = $capacity;
+										}
+									}
+									else
+										$related_capacity = $capacity;
+							}else{
+								$related_capacity = $capacity;
+								break;
 							}
-							$related_capacity = $capacity;
-							$related_capacity_n++;
-							break;
 						}
 		///////////////////////////////  End of Cycle through capacity  /////////////////////////////////////////////////
-						if ($related_capacity_n == 0) {
+						if ($related_capacity == null) {
 
 							$rgs = false;
 
@@ -990,7 +992,8 @@ if(!empty($_POST)) {
 							
 						<?php
 							$plan_register_details = fetchPlanRegisterDetails($userdetails->id, $pld->id, $related_capacity->id);
-							// managing showing elemant 
+							// managing showing elemant
+							$paid_cost = 0;
 							$rgs = isset($plan_register_details[0]);
 							$prgs_id = 0;
 							if ($rgs)
@@ -1002,6 +1005,7 @@ if(!empty($_POST)) {
 							$showing[0] = $showing[1] = $showing[2] = $showing[3] = false;
 							//$showing[] = $showing[1] = $showing[2] = false;
                     		if ($rgs) {
+                    			$paid_cost = $plan_register_details[0]->paid_cost;
                     			$rgs_status[0] = "ثبت نام ";
                     			if ($plan_register_details[0]->reserved_number > 0)
                     					$rgs_status[0] = "رزرو (".$plan_register_details[0]->reserved_number.")";
@@ -1068,7 +1072,7 @@ if(!empty($_POST)) {
 										<?php if ($date_valide[2]) {} 
 										elseif ($showing[$i]) { ?> 
 										<span class="pull-right margin-left" onclick="passId(<?=$pld->id?>, <?=$prgs_id?>, <?=$i?>)"><a class="btn btn-warning btn-xs" data-toggle="modal" data-target="#delete_participant_register<?=$pld->id?>">حذف همراه</a><?php  } else { ?>
-										<a  class="btn btn-warning btn-xs" id="add_participant" onclick="remove_participant(<?=$pld->id?>, <?=$i?>, <?=$userdetails->account_charge?>)"><span class="glyphicon glyphicon-remove"></span></a>
+										<a  class="btn btn-warning btn-xs" id="add_participant" onclick="remove_participant(<?=$pld->id?>, <?=$i?>, <?=$userdetails->account_charge?>, <?=$paid_cost?>)"><span class="glyphicon glyphicon-remove"></span></a>
 										<?php } ?>
 									</td>
 								</tr>
@@ -1080,7 +1084,7 @@ if(!empty($_POST)) {
 
 								<tr id="add_participant" class="<?php if ($date_valide[1] || $add_participant_hidden) {echo "hidden";} ?>" >
 									<td>
-										<a class="btn btn-success btn-xs" id="add_participant" onclick="add_participant(<?=$pld->id?>, <?=$userdetails->account_charge?>)">
+										<a class="btn btn-success btn-xs" id="add_participant" onclick="add_participant(<?=$pld->id?>, <?=$userdetails->account_charge?>, <?=$paid_cost?>)">
 											<span class="glyphicon glyphicon-plus">&nbsp;</span>اضافه کردن همراه
 										</a>
 									</td>
