@@ -41,13 +41,13 @@ class Validate{
 					switch ($rule) {
 						case 'min':
 							if (strlen($value) < $rule_value) {
-								$this->addError(["{$display} باید حداکثر {$rule_value} حرف داشته باشد.",$item]);
+								$this->addError(["{$display} باید حداقل {$rule_value} حرف داشته باشد.",$item]);
 							}
 							break;
 
 						case 'max':
 							if (strlen($value) > $rule_value) {
-								$this->addError(["{$display} باید حداقل {$rule_value} حرف داشته باشد.",$item]);
+								$this->addError(["{$display} باید حداکثر {$rule_value} حرف داشته باشد.",$item]);
 							}
 							break;
 

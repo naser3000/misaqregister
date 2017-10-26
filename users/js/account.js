@@ -37,7 +37,7 @@
 				console.log($feedback2[0].childElementCount);
 				console.log($feedback2[0]);
 				//console.log($form.prepend($feedback));
-				location.reload();
+				//location.reload();
 			},
 			error: function(){
 				alert('failure');
@@ -77,7 +77,7 @@
 		});
 	}
 
-	function add_participant(plan_id, account_charge) {
+	function add_participant(plan_id, account_charge, paid_cost) {
 
 		if ($('table.plan'+plan_id+' tr.hidden').length != 0) {
 			$('table.plan'+plan_id+' tr.hidden').find('input#participant_choise')[0].value = "1";

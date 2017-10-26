@@ -766,9 +766,13 @@ if(!empty($_POST)) {
 <div class="well">
 <div class="row">
 	<div class="col-xs-12 col-sm-4 col-md-3 pull-right">
+		<?php if (checkMenu(4,$user->data()->id)){  //Links for permission level 4 (default admin) ?>
 		<p><img src="<?=$grav; ?>" class="img-thumbnail" alt="Generic placeholder thumbnail"></p>
+		<?php } ?>
 		<p><a href="user_settings.php" class="btn btn-primary equal-btn">ویرایش اطلاعات</a></p>
+		<?php if (checkMenu(3,$user->data()->id) || checkMenu(4,$user->data()->id)){  //Links for permission level 23or 4 (default admin) ?>
 		<p ><a class="btn btn-primary equal-btn" href="profile.php?id=<?=$get_info_id;?>" role="button">پروفایل</a></p>
+		<?php } ?>
 
 	</div>
 	<div class="col-xs-12 col-sm-4 col-md-3 pull-right">
@@ -813,7 +817,7 @@ if(!empty($_POST)) {
 		<p>می باشد.</p>
 		<hr>
 		<p>برای افزایش اعتبار بر روی دکمه زیر کلیک کنید.</p>
-		<p ><a class="btn btn-primary equal-btn" href="" role="button">افزایش اعتبار</a></p>
+		<p ><a class="btn btn-primary equal-btn" href="epay.php" role="button">افزایش اعتبار</a></p>
 
 	</div>
 </div>
