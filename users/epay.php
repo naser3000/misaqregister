@@ -23,7 +23,7 @@
 $sep_MID	 		= "10548701";						// کد پذیرنده
 $sep_Amount 		= "1000";							// قیمت به ریال
 $sep_ResNum 		= time();							// شماره سفارش
-$sep_RedirectURL 	= "http://domain.ir/verify.php";	// لینک برگشت و برسی نتیجه تراکنش
+$sep_RedirectURL 	= "http://localhost/misaqregister/users/epay_verify.php";	// لینک برگشت و برسی نتیجه تراکنش
 ?>
 <div id="page-wrapper">
 	<div class="container">
