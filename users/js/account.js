@@ -30,6 +30,7 @@
 			    	$('#edit_register_modal'+id+' .modal-body').prepend($feedback2[0]);
 			    	$('#register_modal'+id).modal('toggle');
 			    	$('#edit_register_modal'+id).modal('show');
+			    	setTimeout(function(){location.reload();}, 4000);
 			    }
 
 				console.log($feedback[0].childElementCount);

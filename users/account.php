@@ -1181,7 +1181,7 @@ if(!empty($_POST)) {
                     </div>
 				</div>
 				<div class="modal-footer">
-					<span class="pull-left margin-left" data-dismiss="modal"><a class="btn btn-success btn-xs" data-toggle="modal" >تأیید</a></span>
+					<!-- <span class="pull-left margin-left" data-dismiss="modal"><a class="btn btn-success btn-xs" data-toggle="modal" >تأیید</a></span> -->
 				</div>
 			</div><!-- end .modal-content -->
 		</div><!-- end .modal-dialog -->
