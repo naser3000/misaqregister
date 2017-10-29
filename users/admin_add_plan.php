@@ -253,16 +253,16 @@ if (!empty($_POST)) {
                         </div>
                         <div class="col-xs-2">
                             <p>شروع ثبت نام</p>
-                        </div>  
-                        <div class="col-xs-2 ">
-                            <p>پایان ثبت نام</p>
-                        </div>  
+                        </div>
                         <div class="col-xs-2 ">
                             <p>مهلت لغو ثبت نام</p>
-                        </div>  
+                        </div>
+                        <div class="col-xs-2 ">
+                            <p>پایان ثبت نام</p>
+                        </div>
                         <div class="col-xs-2 ">
                             <p>شروع برنامه</p>
-                        </div>  
+                        </div>
                         <div class="col-xs-2 ">
                             <p>پایان برنامه</p>
                         </div>
@@ -284,19 +284,19 @@ if (!empty($_POST)) {
 
                         <div class="col-xs-2 ">                    
                             <div class='input-group date' id='datepicker' >
-                                <span class="input-group-addon" id="register_end_date_btn">
+                                <span class="input-group-addon" id="confirm_end_date_btn">
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="register_end_date" id="register_end_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_end_date;} ?>" required autofocus readonly/>
+                                <input type='text' class="form-control" name="confirm_end_date" id="confirm_end_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $confirm_end_date;} ?>" required autofocus readonly/>
                             </div>
                         </div>
 
                         <div class="col-xs-2 ">                    
                             <div class='input-group date' id='datepicker' >
-                                <span class="input-group-addon" id="confirm_end_date_btn">
+                                <span class="input-group-addon" id="register_end_date_btn">
                                     <span class="glyphicon glyphicon-calendar" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="confirm_end_date" id="confirm_end_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $confirm_end_date;} ?>" required autofocus readonly/>
+                                <input type='text' class="form-control" name="register_end_date" id="register_end_date" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_end_date;} ?>" required autofocus readonly/>
                             </div>
                         </div>
 
@@ -338,19 +338,19 @@ if (!empty($_POST)) {
 
                         <div class="col-xs-2">                    
                             <div class='input-group date' id='timepicker' >
-                                <span class="input-group-addon" id="register_end_time_btn">
+                                <span class="input-group-addon" id="confirm_end_time_btn">
                                     <span class="glyphicon glyphicon-time" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="register_end_time" id="register_end_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_end_time;} ?>" required autofocus />
+                                <input type='text' class="form-control" name="confirm_end_time" id="confirm_end_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $confirm_end_time;} ?>" required autofocus />
                             </div>
                         </div>
 
                         <div class="col-xs-2">                    
                             <div class='input-group date' id='timepicker' >
-                                <span class="input-group-addon" id="confirm_end_time_btn">
+                                <span class="input-group-addon" id="register_end_time_btn">
                                     <span class="glyphicon glyphicon-time" ></span>
                                 </span>
-                                <input type='text' class="form-control" name="confirm_end_time" id="confirm_end_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $confirm_end_time;} ?>" required autofocus />
+                                <input type='text' class="form-control" name="register_end_time" id="register_end_time" value="<?php if (!$form_valid && !empty($_POST)){ echo $register_end_time;} ?>" required autofocus />
                             </div>
                         </div>
 
@@ -406,11 +406,6 @@ if (!empty($_POST)) {
                             <div class="input-group">
                                 <select name="" class="multiselect-ui form-control" id="yinter" multiple="multiple" >
                                     <option  value="بدون اهمیت">بدون اهمیت</option><option  value="کارشناسی">کارشناسی</option><option  value="کارشناسی ارشد">کارشناسی ارشد</option><option  value="دکترا">دکترا</option>
-                                    <option  value="85">85</option><option  value="کارشناسی (85)">کارشناسی (85)</option><option  value="کارشناسی ارشد (85)">کارشناسی ارشد (85)</option><option  value="دکترا (85)">دکترا (85)</option>
-                                    <option  value="86">86</option><option  value="کارشناسی (86)">کارشناسی (86)</option><option  value="کارشناسی ارشد (86)">کارشناسی ارشد (86)</option><option  value="دکترا (86)">دکترا (86)</option>
-                                    <option  value="87">87</option><option  value="کارشناسی (87)">کارشناسی (87)</option><option  value="کارشناسی ارشد (87)">کارشناسی ارشد (87)</option><option  value="دکترا (87)">دکترا (87)</option>
-                                    <option  value="88">88</option><option  value="کارشناسی (88)">کارشناسی (88)</option><option  value="کارشناسی ارشد (88)">کارشناسی ارشد (88)</option><option  value="دکترا (88)">دکترا (88)</option>
-                                    <option  value="89">89</option><option  value="کارشناسی (89)">کارشناسی (89)</option><option  value="کارشناسی ارشد (89)">کارشناسی ارشد (89)</option><option  value="دکترا (89)">دکترا (89)</option>
                                     <option  value="90">90</option><option  value="کارشناسی (90)">کارشناسی (90)</option><option  value="کارشناسی ارشد (90)">کارشناسی ارشد (90)</option><option  value="دکترا (90)">دکترا (90)</option>
                                     <option  value="91">91</option><option  value="کارشناسی (91)">کارشناسی (91)</option><option  value="کارشناسی ارشد (91)">کارشناسی ارشد (91)</option><option  value="دکترا (91)">دکترا (91)</option>
                                     <option  value="92">92</option><option  value="کارشناسی (92)">کارشناسی (92)</option><option  value="کارشناسی ارشد (92)">کارشناسی ارشد (92)</option><option  value="دکترا (92)">دکترا (92)</option>
