@@ -8,9 +8,9 @@ $pagePermissions = fetchPagePermissions(4);
 
 
 // To make this panel super admin only, uncomment out the lines below
-// if($user->data()->id !='1'){
-//   Redirect::to('account.php');
-// }
+ if($user->data()->id !='1'){
+   Redirect::to('account.php');
+}
 
 //PHP Goes Here!
 delete_user_online(); //Deletes sessions older than 24 hours

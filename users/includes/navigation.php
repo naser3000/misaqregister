@@ -111,73 +111,7 @@ $email_act=$results->email_act;
 	</div> <!-- End of Div for navigation bar -->
 </div> <!-- End of Div for navigation bar styling -->
 
-
-<style type="text/css">
-@font-face {
-    font-family: "IRANSans";
-    font-weight: 300;
-	src: url("../users/css/fonts/IRANSans.eot") format("eot"),
-url("../users/css/fonts/IRANSans.ttf") format("ttf"),
-url("../users/css/fonts/IRANSans.woff") format("woff");
-}
-	.navbar-header{
-		float: right;
-	}
-	.container, .container-fluid{
-		font-family: 'IRANSans';
-		direction: rtl;
-	}
-	hr{
-		border: 0.5px solid black;
-	}
-	.navbar-left li{
-		float: right !important;
-	}
-	h1, h2, h3{
-		font-family: 'IRANSans';
-	}
-	th, td, li{
-		text-align: right;
-	}
-	.capacity-row [class*='col-'], 
-	.datetime-group [class*='col-'], 
-	.spec-row [class*='col-'] { /* contains col-lg in class name */
-
-  		float: right;
-  		text-align: center;
-	}
-	div.scrollmenu {
-   		overflow: auto;
-	}
-
-	.input-group {
-		direction: ltr !important;
-	}
-	.input-group .form-control{
-		direction: rtl;
-	}
-
-	.input-group-addon {
-		background-color: rgb(92, 184, 92);
-	}
-	.col-lg-4 .input-group-addon{
-		background-color: rgb(180, 230, 180);
-	}
-	.capacity {
-		margin-bottom: 10px;
-	}
-	table th, table td{
-		text-align: center;
-	}
-}
-</style>
-
 <script src="js/jquery.min.js"></script>
-
-
-
-
-
 
 <script type="text/javascript">
     
