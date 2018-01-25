@@ -30,6 +30,36 @@ require_once $abs_us_root.$us_url_root.'users/includes/navigation.php';
 	</div>
 </div>
 
+<div class="panel panel-default">
+	<div class="panel-heading">آخرین برنامه ها</div>
+	<div class="panel-body">
+		<!-- Plan Panel -->
+		<!-- Fetch information for all plans -->
+		<?php $plansData = fetchAllPlansOrderByStartDate();
+		foreach($plansData as $pld){
+			if( str_replace("-", "/", $pld->plan_start_date) >= gregorian_to_jalali(explode('/', date("Y/m/d"))) )
+			{
+				?> 
+				<div class="col-md-12 pull-right">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div><strong><?=$pld->title?></strong></div>
+							<div><strong>شروع برنامه: <?php echo str_replace("-", "/", $pld->plan_start_date)?></strong></div>
+							<div><span><?=$pld->description?></span></div>
+							<a class="btn btn-info btn-xs" href="users/user_plan.php?id=<?=$pld->id?>"><span class="pull-left" >بیشتر</span></a>
+						</div>
+						<div class="clearfix"></div>
+					</div><!-- /panel -->
+				</div><!-- /col -->
+				<?php 
+			}
+		} 
+		?>
+	</div>
+</div>
+
+</div>
+
 </div> <!-- /container -->
 
 </div> <!-- /#page-wrapper -->
