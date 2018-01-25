@@ -40,7 +40,7 @@ require_once $abs_us_root.$us_url_root.'users/includes/navigation.php';
 			if( str_replace("-", "/", $pld->plan_start_date) >= gregorian_to_jalali(explode('/', date("Y/m/d"))) )
 			{
 				?> 
-				<div class="col-md-12 pull-right">
+				<div class="col-md-6 pull-right">
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div><strong><?=$pld->title?></strong></div>
