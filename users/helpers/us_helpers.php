@@ -234,6 +234,14 @@ function fetchAllPlans() {
 	return ($results);
 }
 
+//Retrieve information for all plans in reverse order
+function fetchAllPlansOrderByStartDate() {
+	$db = DB::getInstance();
+	$query = $db->query("SELECT * FROM plans order by plan_start_date");
+	$results = $query->results();
+	return ($results);
+}
+
 //Unmatch permission level(s) from user(s)
 function removePermission($permissions, $members) {
 	$db = DB::getInstance();
@@ -1012,28 +1020,28 @@ function jd_to_persian($jd)
     return array($year, $month, $day);
 }
 
-    function jalali_to_gregorian($d) {
-        $adjustDay = 0;
-        if($d[1]<0){
-            $adjustDay = leap_persian($d[0]-1)? 30: 29;
-            $d[1]++;
-        }
-        $gregorian = jd_to_gregorian(persian_to_jd($d[0], $d[1] + 1, $d[2])-$adjustDay);
-        $gregorian[1]--;
-        return $gregorian;
-        //return implode('/', $gregorian);
+function jalali_to_gregorian($d) {
+    $adjustDay = 0;
+    if($d[1]<0){
+        $adjustDay = leap_persian($d[0]-1)? 30: 29;
+        $d[1]++;
     }
+    $gregorian = jd_to_gregorian(persian_to_jd($d[0], $d[1] + 1, $d[2])-$adjustDay);
+    $gregorian[1]--;
+    return $gregorian;
+    //return implode('/', $gregorian);
+}
 
-    function gregorian_to_jalali($d) {
-        $jalali = jd_to_persian(gregorian_to_jd($d[0], $d[1] + 1, $d[2]));
-        $jalali[1]--;
-        $zero = $zero1 = "";
-        if ($jalali[1] < 10)
-        	$zero = "0";
-        if ($jalali[2] < 10)
-        	$zero1 = "0";
-        return ($jalali[0]."/".$zero.$jalali[1]."/".$zero1.$jalali[2]-1);
-    }
+function gregorian_to_jalali($d) {
+    $jalali = jd_to_persian(gregorian_to_jd($d[0], $d[1] + 1, $d[2]));
+    $jalali[1]--;
+    $zero = $zero1 = "";
+    if ($jalali[1] < 10)
+    	$zero = "0";
+    if ($jalali[2] < 10)
+    	$zero1 = "0";
+    return ($jalali[0]."/".$zero.$jalali[1]."/".$zero1.($jalali[2]-1));
+}
 
 
 

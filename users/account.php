@@ -767,7 +767,7 @@ if(!empty($_POST)) {
 <div class="row">
 	<div class="col-xs-12 col-sm-4 col-md-3 pull-right">
 		<?php if (checkMenu(4,$user->data()->id)){  //Links for permission level 4 (default admin) ?>
-		<p><img src="<?=$grav; ?>" class="img-thumbnail" alt="Generic placeholder thumbnail"></p>
+		<!-- <p><img src="<?=$grav; ?>" class="img-thumbnail" alt="Generic placeholder thumbnail"></p> -->
 		<?php } ?>
 		<p><a href="user_settings.php" class="btn btn-primary equal-btn">ویرایش اطلاعات</a></p>
 		<?php if (checkMenu(3,$user->data()->id) || checkMenu(4,$user->data()->id)){  //Links for permission level 23or 4 (default admin) ?>
@@ -805,7 +805,7 @@ if(!empty($_POST)) {
 		<p>شماره تماس: <?=$userdetails->phnumber?></p>
 		<p>ایمیل: <?=$userdetails->email?></p>
 		<p>علاقمند به همکاری: <?=$userdetails->interested?></p>
-		<p>تاریخ عضویت: <?=$signupdate?></p>
+		<p>تاریخ عضویت: <?= gregorian_to_jalali(array_reverse(explode('/', $signupdate)))?></p>
 		<p>تعداد ورود: <?=$userdetails->logins?></p>
 
 
@@ -832,10 +832,10 @@ if(!empty($_POST)) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////  (creating a PLAN with its moadals)  ///////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		foreach ($plansData as $pld) {
+	foreach ($plansData as $pld) {
 	?>
 	<!--  MODAL POPUP -->
-	<div class="modal" id="register_modal<?=$pld->id?>">
+	<div class="modal fade" id="register_modal<?=$pld->id?>">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -1122,7 +1122,7 @@ if(!empty($_POST)) {
 
 					
 	<!--  MODAL POPUP -->
-	<div class="modal" id="delete_user_register<?=$pld->id?>">
+	<div class="modal fade" id="delete_user_register<?=$pld->id?>">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -1138,7 +1138,7 @@ if(!empty($_POST)) {
 	</div><!-- end .modal -->
 	<!-- END MODAL -->
 
-	<div class="modal" id="delete_participant_register<?=$pld->id?>">
+	<div class="modal fade" id="delete_participant_register<?=$pld->id?>">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -1155,7 +1155,7 @@ if(!empty($_POST)) {
 	<!-- END MODAL -->
 
 	<!--  MODAL POPUP -->
-	<div class="modal" id="edit_register_modal<?=$pld->id?>">
+	<div class="modal fade" id="edit_register_modal<?=$pld->id?>">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -1202,7 +1202,7 @@ if(!empty($_POST)) {
 			</div>
 			<div class="panel-body text-center"><div class="huge" style="font-size: 16px; text-align: justify;"><span><?=$pld->description?>	</span></div></div>	
 			<div class="panel-footer">	
-				<a class="btn btn-info btn-xs" href="user_plan.php?id=<?=$pld->id?>" target="blank"><span class="pull-left" >بیشتر</span></a>
+				<a class="btn btn-info btn-xs" href="user_plan.php?id=<?=$pld->id?>"><span class="pull-left" >بیشتر</span></a>
 				<?php if($rgs) { ?>
 				<span class="pull-right margin-left"><a class="btn btn-warning btn-xs" href="#" data-toggle="modal" data-target="#register_modal<?=$pld->id?>" >ویرایش ثبت نام</a></span>
 
@@ -1239,7 +1239,7 @@ if(!empty($_POST)) {
 
 <link rel="stylesheet" type="text/css" href="css/account.css">
 <script src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.js"></script>
+<!-- <script type="text/javascript" src="js/bootstrap.js"></script> -->
 <script src="js/account.js"></script>
 
 <!-- footers -->
