@@ -24,7 +24,7 @@ if (!$form_valid && Input::exists()){
 <form class="form-signup" action="<?=$form_action;?>" method="<?=$form_method;?>" id="payment-form">
 
 	<h2 class="form-signin-heading"> <?=lang("SIGNUP_TEXT","");?></h2>
-	<div class="col-md-6 pull-right">
+	<div class="col-md-12">
 	<div class=" panel panel-default ">
 		<div class="panel-heading">اطلاعات حساب کاربری</div>
 		<div class="panel-body">
@@ -156,7 +156,7 @@ if ($settings->req_num == 1){ ?>
 
 
 
-	<div class="col-md-6 pull-right">
+	<div class="col-md-12">
 	<div class=" panel panel-default ">
 		<div class="panel-heading">قوانین و شرایط</div>
 		<div class="panel-body">

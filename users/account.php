@@ -765,17 +765,7 @@ if(!empty($_POST)) {
 
 <div class="well">
 <div class="row">
-	<div class="col-xs-12 col-sm-4 col-md-3 pull-right">
-		<?php if (checkMenu(4,$user->data()->id)){  //Links for permission level 4 (default admin) ?>
-		<!-- <p><img src="<?=$grav; ?>" class="img-thumbnail" alt="Generic placeholder thumbnail"></p> -->
-		<?php } ?>
-		<p><a href="user_settings.php" class="btn btn-primary equal-btn">ویرایش اطلاعات</a></p>
-		<?php if (checkMenu(3,$user->data()->id) || checkMenu(4,$user->data()->id)){  //Links for permission level 23or 4 (default admin) ?>
-		<p ><a class="btn btn-primary equal-btn" href="profile.php?id=<?=$get_info_id;?>" role="button">پروفایل</a></p>
-		<?php } ?>
-
-	</div>
-	<div class="col-xs-12 col-sm-4 col-md-3 pull-right">
+	<div class="col-md-4 pull-right">
 		<h1><?=$userdetails->username?></h1>
 		<?php 
 		if ($userdetails->gender == "آقا")
@@ -798,10 +788,11 @@ if(!empty($_POST)) {
 		<?php if ($userdetails->status == "کارمند") {?>
 			<p>کد پرسنلی: <?=$userdetails->emp_number?></p>
 		<?php } ?>
+		<p><a href="user_settings.php" class="btn btn-primary equal-btn">ویرایش اطلاعات</a></p>
 
 	</div>
-	<div class="col-xs-12 col-sm-4 col-md-3 pull-right">
-		<h1>اطلاعات حساب کاربری</h1>
+	<div class="col-md-4 pull-right">
+		<hr>
 		<p>شماره تماس: <?=$userdetails->phnumber?></p>
 		<p>ایمیل: <?=$userdetails->email?></p>
 		<p>علاقمند به همکاری: <?=$userdetails->interested?></p>
@@ -810,7 +801,7 @@ if(!empty($_POST)) {
 
 
 	</div>
-	<div class="col-xs-12 col-sm-4 col-md-3" style="text-align: center;">
+	<div class="col-md-4" style="text-align: center;">
 		<h1>میزان اعتبار</h1>
 		<p>موجودی حساب کاربری شما</p>
 		<p><?=$userdetails->account_charge?> تومان</p>

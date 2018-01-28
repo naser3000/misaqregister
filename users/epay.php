@@ -30,16 +30,17 @@ $sep_RedirectURL 	= "http://localhost/misaqregister/users/epay_verify.php";	// �
 
 		<div class="well">
 		<div class="row">
-			<div class="col-xs-12 col-sm-4 col-md-3 text-center pull-right">
+			<div class="col-md-12 text-center">
 				<h1>میزان اعتبار</h1>
 				<p>موجودی حساب کاربری شما</p>
 				<p><?=$userdetails->account_charge?> تومان</p>
 				<p>می باشد.</p>
 			</div>
 		</div><br><hr>
-		<div class="row">
+		<div class="row text-center">
 			<form action="https://sep.shaparak.ir/payment.aspx" method="post">
-				<div class="input-group col-md-4 col-sm-6 col-xs-12">
+				<div class="col-md-4"></div>
+				<div class="input-group col-md-4">
 	                <span class="input-group-addon" >
 	                    <span class="capacity" >ریال</span>
 	                </span>

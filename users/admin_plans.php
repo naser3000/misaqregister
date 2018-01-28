@@ -18,23 +18,21 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
 ?>
 <div id="page-wrapper"> <!-- leave in place for full-screen backgrounds etc -->
 	<div class="container"> <!-- -fluid -->
-
-
 		<div class="row">
 		    <div class="col-xs-12 col-md-6 pull-right">
 			    <h1>مدیریت برنامه ها</h1>
 		    </div>
-		    <div class="col-xs-12 col-md-6">
+		    <!-- <div class="col-xs-12 col-md-6">
 	            <form class="">
 	                <label for="system-search">جستجو:</label>
 	                <div class="input-group">
-	                    <input class="form-control" id="system-search" name="q" placeholder="جستجوی کاربران..." type="text">
+	                    <input class="form-control" id="system-search" name="q" placeholder="جستجو..." type="text">
 	                    <span class="input-group-btn">
 						      <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
 	                    </span>
 	                </div>
 	            </form>
-        	</div> 
+        	</div>  -->
 	    </div>
 <div class="row"> <!-- row for Users, Permissions, Pages, Email settings panels -->
 	<hr>
