@@ -22,7 +22,14 @@ Unauthorised use of this website may give rise to a claim for damages and/or be 
 From time to time this website may also include links to other websites. These links are provided for your convenience to provide further information. They do not signify that we endorse the website(s). We have no responsibility for the content of the linked website(s).
 */
 ?>
-به موقع بیایید سوار اتوبوس بشید!
-کلاً بچه های خوبی باشید!
-شلوغ کاری نداریم!
-منظم باشید!
+بسم رب المهدی
+
+
+* لطفا راس ساعت مقرر در درب نقلیه حضور داشته باشید. در صورت تاخیر بیش از 5دقیقه، تضمینی برای شرکت در اردو وجود ندارد.
+* در طول اردو با رعایت ساعات اعلام شده از طرف مسئول اردو به هرچه بهتر برگزار شدن اردو کمک نمایید و حتما گوشی خود را قبل از اردو شارژ نمایید.
+* اگر مشکلی در روند ثبت نام ایجاد شد لطفا با ایمیل زیر و یا آیدی تلگرام زیر ارتباط برقرار نمایید:
+
+                 Sharif.misaaq@gmail.com
+                 @misaaqnet_admin
+*
+اللهم عجل لولیک الفرج

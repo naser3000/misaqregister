@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div class="row">
 <div class="col-xs-12">
 <div class="jumbotron text-center">
-<h2 style="font-family: 'IRANSans';">رمز عبور شما با موفقیت تغییر کرد!</h2>
+<h2>رمز عبور شما با موفقیت تغییر کرد!</h2>
 <p><a href="login.php" class="btn btn-primary">ورود</a></p>
 </div>	
 </div><!-- /.col -->

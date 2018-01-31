@@ -7,22 +7,22 @@
 
 //dealing with if the user is logged in
 ///echo "6666666666666666666666666666666666666666666666666";
-if($user->isLoggedIn() || !$user->isLoggedIn() && !checkMenu(2,$user->data()->id)){
-	if (($settings->site_offline==1) && (!in_array($user->data()->id, $master_account)) && ($currentPage != 'login.php') && ($currentPage != 'maintenance.php')){
-		$user->logout();
-		Redirect::to($us_url_root.'users/maintenance.php');
-	}
-}
-$grav = get_gravatar(strtolower(trim($user->data()->email)));
-$get_info_id = $user->data()->id;
-// $groupname = ucfirst($loggedInUser->title);
-$raw = date_parse($user->data()->join_date);
-$signupdate = $raw['month']."/".$raw['day']."/".$raw['year'];
-$userdetails = fetchUserDetails(NULL, NULL, $get_info_id); //Fetch user details
+// if($user->isLoggedIn() || !$user->isLoggedIn() && !checkMenu(2,$user->data()->id)){
+// 	if (($settings->site_offline==1) && (!in_array($user->data()->id, $master_account)) && ($currentPage != 'login.php') && ($currentPage != 'maintenance.php')){
+// 		$user->logout();
+// 		Redirect::to($us_url_root.'users/maintenance.php');
+// 	}
+// }
+// $grav = get_gravatar(strtolower(trim($user->data()->email)));
+// $get_info_id = $user->data()->id;
+// // $groupname = ucfirst($loggedInUser->title);
+// $raw = date_parse($user->data()->join_date);
+// $signupdate = $raw['month']."/".$raw['day']."/".$raw['year'];
+// $userdetails = fetchUserDetails(NULL, NULL, $get_info_id); //Fetch user details
 $plan_id = $_GET['id']; // take plan_id from request
-if ($userdetails->data_completion == 0){
-	Redirect::to($us_url_root.'users/data_completion.php');
-}
+// if ($userdetails->data_completion == 0){
+// 	Redirect::to($us_url_root.'users/data_completion.php');
+// }
 $planData = fetchPlanDetails(null, $plan_id); //Fetch information for all plans
 ///echo "44444444444444444444444444444444444444444444";
  ?>
@@ -1038,7 +1038,7 @@ if(!empty($_POST)) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////						
 					?>
 
-		<h2>...</h2>
+		<h2>جزئیات برنامه</h2>
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h1><?=$planData->title?></h1>
@@ -1127,7 +1127,7 @@ if(!empty($_POST)) {
 
 
 			</div>
-			<div class="panel-footer">	
+			<!-- <div class="panel-footer">	
 				<?php if($rgs) { ?>
 				<span class="pull-right margin-left"><a class="btn btn-warning " href="#" data-toggle="modal" data-target="#register_modal<?=$plan_id?>" >ویرایش ثبت نام</a></span>
 
@@ -1136,7 +1136,8 @@ if(!empty($_POST)) {
 				<?php } ?>
 
 				<div class="clearfix"></div>
-			</div> <!-- /panel-footer -->
+			</div>  -->
+			<!-- /panel-footer -->
 		</div>
 
 	</div> <!-- /container -->
@@ -1201,7 +1202,7 @@ if(!empty($_POST)) {
 
 </style>
 <script src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.js"></script>
+<!-- <script type="text/javascript" src="js/bootstrap.js"></script> -->
 <script type="text/javascript">
 
 //$("#register_modal1").modal({"backdrop": "static"});

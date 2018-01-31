@@ -57,7 +57,7 @@ $settings = $settingsQ->first();
 <div id="page-wrapper"> <!-- leave in place for full-screen backgrounds etc -->
 <div class="container"> <!-- -fluid -->
 
-<h1 class="text-center">داشبورد مدیریت سامانه ثبت نام کانون میثاق</h1>
+<h1 class="text-center">داشبورد مدیریت سایت</h1>
 <hr>
 
 <div class="row"> <!-- row for Users, Email settings panels , plans-->

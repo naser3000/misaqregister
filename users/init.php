@@ -26,7 +26,7 @@ $GLOBALS['config'] = array(
 	'mysql'      => array('host'         => 'localhost',
 'username'     => 'root',
 'password'     => '123456789',
-'db'           => 'misaqregister',
+'db'           => 'missaq_final',
 ),
 'remember'        => array(
   'cookie_name'   => 'pmqesoxiw318374csb',
@@ -42,7 +42,7 @@ $GLOBALS['config'] = array(
 //put it here.
 $db_table_prefix = "uc_";  //Old database prefix
 $timezone_string = 'Africa/Abidjan';
-$copyright_message = 'تمامی حقوق متعلق به `کانون میثاق` می باشد.';
+$copyright_message = 'کانون میثاق';
 $your_private_key = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe';
 $your_public_key = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI';
 $publickey = $your_public_key;

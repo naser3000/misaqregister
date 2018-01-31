@@ -142,6 +142,7 @@ function email($to,$subject,$body,$attachment=false){
 	$mail->Password = $smtp_password;                           // SMTP password
 	$mail->SMTPSecure = $smtp_transport;                            // Enable TLS encryption, `ssl` also accepted
 	$mail->Port = $smtp_port;                                    // TCP port to connect to
+	$mail->CharSet = 'UTF-8';
 
 	$mail->setFrom($from, $from_name);
 

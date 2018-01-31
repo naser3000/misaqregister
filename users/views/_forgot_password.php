@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ?>
 <div class="row">
 <div class="col-xs-12">
-<h1 style="font-family: 'IRANSans'; ">بازیابی رمز عبور</h1>
+<h1>بازیابی رمز عبور</h1>
 <ol>
 	<li>آدرس پست الکترونیک خود را وارد کرده و بر روی دکمه بازیابی کلیک کنید.</li>
 	<li>ایمیل خود را بررسی کرده و بر روی لینکی که برای شما فرستاده شده کلیک کنید.</li>
