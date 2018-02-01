@@ -14,7 +14,7 @@ $get_info_id = $user->data()->id;
 $userdetails = fetchUserDetails(NULL, NULL, $get_info_id); //Fetch user details
 
 if(isset($_POST['State'])) {
-	$soapclient = new soapclient('https://acquirer.samanepay.com/payments/referencepayment.asmx?WSDL','wsdl');
+	$soapclient = new nusoap_client('https://acquirer.samanepay.com/payments/referencepayment.asmx?WSDL','wsdl');
 	// $soapclient->debug_flag=true;
 	$soapProxy = $soapclient->getProxy() ;
 	// if( $err = $soapclient->getError() )
@@ -24,6 +24,10 @@ if(isset($_POST['State'])) {
 	if( $res <= 0 ) {
 		echo "Error ".$res."<br>";
 		echo "Error: ".$_POST['State']."<br>";
+		echo "Error: ".$_POST['StateCode']."<br>";
+		echo "Error: ".$_POST['ResNum']."<br>";
+		echo "Error: ".$_POST['SecurePan']."<br>";
+		echo "Error: ".$_POST['CID']."<br>";
 
 		echo "<script>alert(\"خطا: پرداخت با موفقیت انجام نشد!\");</script>";
 		echo "<script>setTimeout(\"location.href = 'http://localhost".$us_url_root."users/account.php'\",3000);</script>";
