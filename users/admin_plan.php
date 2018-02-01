@@ -313,6 +313,26 @@ if(!empty($_POST)) {
 
 <div class="row">
 
+  <!--REMOVE PLANE MODAL -->
+  <div class="modal fade" id="remove_plan">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>لغوکردن برنامه</h3>
+        </div>
+        <div class="modal-body">
+          <p>با لغو برنامه تمامی اطلاعت شرکت کنندگان حذف خواهد شد.</p>
+          <p>آیا از لغو برنامه مطمئن هستید؟</p>
+        </div>
+        <div class="modal-footer">
+          <span class="pull-left" data-dismiss="modal" onclick="remove_plan"><a class="btn btn-danger btn-xs" data-toggle="modal" >بله، برنامه لغو شود</a></span>
+          <span class="pull-left" data-dismiss="modal" style="margin-left: 10px;"><a class="btn btn-info btn-xs" data-toggle="modal" >خیر، انصراف</a></span>
+        </div>
+      </div><!-- end .modal-content -->
+    </div><!-- end .modal-dialog -->
+  </div><!-- end .modal -->
+  <!-- END MODAL -->
+
 	<div class="col-xs-12 col-sm-12">
 	<form class="form" name='adminUser' action='admin_plan.php?id=<?=$planId?>' method='post'>
 
@@ -620,7 +640,7 @@ if(!empty($_POST)) {
 
 				</table>
 		</div>
-		<input class='btn btn-danger' type='button' name='' onclick="removeCapacity()" value='حذف' style="width: 100px" />
+		<input class='btn btn-info' type='button' name='' onclick="removeCapacity()" value='حذف' style="width: 100px" />
         <span class="" id="remove_capacity_message"></span>
 
 	</div>
@@ -632,7 +652,7 @@ if(!empty($_POST)) {
 	<a class='btn btn-warning' href="admin_plans.php">انصراف</a><br><br>
 
 	</form>
-
+  <button class="btn btn-danger pull-left" id="remove_plane" data-toggle="modal" data-target="#remove_plan">لغو برنامه</button>
 	</div><!--/col-9-->
 </div><!--/row-->
 
@@ -669,6 +689,6 @@ if(!empty($_POST)) {
 
 
 
-    console.log("***");
+    // console.log("***");
     //console.log(gregorian_to_jalali([2017, 10, 18]));
 </script>
