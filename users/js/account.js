@@ -15,15 +15,15 @@
 			data: $(this).serialize(),
 			success: function(data){
 
-			  	console.log(id);
-			  	console.log($('<div>').html(data).find('.modal-success-feedback' + id));
+			  	// console.log(id);
+			  	// console.log($('<div>').html(data).find('.modal-success-feedback' + id));
 			    $feedback = $('<div>').html(data).find('.modal-error-feedback' + id);
 			    $feedback2 = $('<div>').html(data).find('.modal-success-feedback' + id);
 			    $('.modal-error-feedback' + id).remove();
 			    $form.prepend($feedback[0]);
 
 			    if ($feedback[0].childElementCount == 1) {
-			    	console.log("|||||||||||||||||||||||||||||||||");
+			    	// console.log("|||||||||||||||||||||||||||||||||");
 			    }
 			    if ($feedback2[0].childElementCount == 1) {
 			    	$('.modal-success-feedback' + id).remove();
@@ -33,10 +33,10 @@
 			    	setTimeout(function(){location.reload();}, 4000);
 			    }
 
-				console.log($feedback[0].childElementCount);
-				console.log($feedback[0]);
-				console.log($feedback2[0].childElementCount);
-				console.log($feedback2[0]);
+				// console.log($feedback[0].childElementCount);
+				// console.log($feedback[0]);
+				// console.log($feedback2[0].childElementCount);
+				// console.log($feedback2[0]);
 				//console.log($form.prepend($feedback));
 				//location.reload();
 			},
@@ -45,7 +45,7 @@
 			}
 		});
 
-		console.log("+++++++++++++++++++++");
+		// console.log("+++++++++++++++++++++");
 		
 	});
 
@@ -92,11 +92,11 @@
 	function remove_participant(plan_id, i, account_charge, paid_cost) {
 		var l1 = $('table.plan'+plan_id+' tr.hidden.dont-hidden').length;
 		var l2 = $('table.plan'+plan_id+' tr.dont-hidden').length
-		console.log(l1 + "jjj" + l2);
-		console.log($('table.plan'+plan_id+' tr.dont-hidden'));
+		// console.log(l1 + "jjj" + l2);
+		// console.log($('table.plan'+plan_id+' tr.dont-hidden'));
 		$('table.plan'+plan_id+' tr.dont-hidden')[l2 - l1 - 1].classList.add('hidden');
 		if(i == 1){
-			console.log(i + "***");
+			// console.log(i + "***");
 			if(l2 > 1){
 				$('table.plan'+plan_id+' #participant_name1')[0].value = $('table.plan'+plan_id+' #participant_name2')[0].value;
 				$('table.plan'+plan_id+' #participant_code1')[0].value = $('table.plan'+plan_id+' #participant_code2')[0].value;
@@ -167,8 +167,8 @@
 	function passId(plan_id, prgs_id, id){
 		var modal = document.querySelector('#delete_participant_register'+plan_id+' span');
 		//modal.attr('onclick','').unbind('click');
-		console.log(modal);
-		console.log(modal.onclick);
+		// console.log(modal);
+		// console.log(modal.onclick);
 		modal.onclick = function(event) {remove_participant_register(prgs_id, id)};
-		console.log(modal);
+		// console.log(modal);
 	}

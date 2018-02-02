@@ -11,13 +11,30 @@ $successes = [];
 
 $planId = Input::get('id');
 
-//Check if selected user exists
+//Check if selected plan exists
 if(!planIdExists($planId)){
   Redirect::to("admin_plans.php"); die();
 }
 
 $plandetails = fetchPlanDetails(NULL, $planId); //Fetch plan details
 $planCapacitiesData = fetchAllPlanCapacities($planId); //Fetch information for all capacities of plan
+
+
+//DELETE Plan
+if(!empty($_POST)) {
+  if(isset($_POST['plan_id'])){
+    $plan_id = $_POST['plan_id'];
+    $plan_registered = fetchPlanRegisteredUsers($plan_id);
+
+    foreach ($plan_registered as $rgs) {
+      $userdetails = fetchUserDetails(null, null, $rgs->user_id);
+      $charge_fields=array('account_charge'=> ($userdetails->account_charge + $rgs->paid_cost) );
+      $db->update('users', $rgs->user_id, $charge_fields);
+    }
+    $db->query("DELETE FROM plans WHERE id = $plan_id");
+    Redirect::to("admin_plans.php"); die();
+  }
+}
 
 //Forms posted
 if(!empty($_POST)) {
@@ -312,6 +329,30 @@ if(!empty($_POST)) {
 
 
 <div class="row">
+
+  <!--REMOVE PLANE MODAL -->
+  <div class="modal fade" id="cancel_plan">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>لغوکردن برنامه</h3>
+        </div>
+        <div class="modal-body">
+          <p>با لغو برنامه تمامی اطلاعت شرکت کنندگان حذف خواهد شد.</p>
+          <p>آیا از لغو برنامه مطمئن هستید؟</p>
+        </div>
+        <div class="modal-footer">
+          <!-- <span class="pull-left" data-dismiss="modal" name="cancel_plan" onclick="cancel_plan(<?=$planId?>)"><a class="btn btn-danger btn-xs" data-toggle="modal" >بله، برنامه لغو شود</a></span> -->
+          <form class="form" name="cancel_plan" action="admin_plan.php?id=<?=$planId?>" method="post">
+            <input type="hidden" name="plan_id" value="<?=$planId?>">
+            <button type="submit" class="btn btn-danger btn-xs" >بله، برنامه لغو شود</button>
+          </form>
+          <span class="pull-left" data-dismiss="modal" style="margin-left: 10px;"><a class="btn btn-info btn-xs" data-toggle="modal" >خیر، انصراف</a></span>
+        </div>
+      </div><!-- end .modal-content -->
+    </div><!-- end .modal-dialog -->
+  </div><!-- end .modal -->
+  <!-- END MODAL -->
 
 	<div class="col-xs-12 col-sm-12">
 	<form class="form" name='adminUser' action='admin_plan.php?id=<?=$planId?>' method='post'>
@@ -608,8 +649,6 @@ if(!empty($_POST)) {
 					<td><?=$v1->capacity_number?></td>
 					</tr>
 							<?php } ?>
-
-
 					<tr>
 						<th><hr></th> <th><hr></th> <th><hr></th> <th><hr></th> <th><hr></th> <th><hr></th> <th><hr></th> <th><hr></th> <th><hr></th>
 					</tr>
@@ -620,7 +659,7 @@ if(!empty($_POST)) {
 
 				</table>
 		</div>
-		<input class='btn btn-danger' type='button' name='' onclick="removeCapacity()" value='حذف' style="width: 100px" />
+		<input class='btn btn-info' type='button' name='' onclick="removeCapacity()" value='حذف' style="width: 100px" />
         <span class="" id="remove_capacity_message"></span>
 
 	</div>
@@ -629,10 +668,10 @@ if(!empty($_POST)) {
 	<br><br>
 	<input type="hidden" name="csrf" value="<?=Token::generate();?>" />
 	<input class='btn btn-primary' type='submit' value='به روز رسانی' class='submit' />
-	<a class='btn btn-warning' href="admin_plans.php">انصراف</a><br><br>
+	<a class='btn btn-warning' href="admin_plans.php">انصراف</a>
 
 	</form>
-
+  <button class="btn btn-danger pull-left" id="cancel_plan" data-toggle="modal" data-target="#cancel_plan">لغو برنامه</button><br><br><hr>
 	</div><!--/col-9-->
 </div><!--/row-->
 
@@ -664,11 +703,11 @@ if(!empty($_POST)) {
 <script src="js/bootstrap-datepicker.fa.min.js"></script>
 
 <script src="js/admin_add_plan.js"></script>
-
+<script src="js/admin_plan.js"></script>
 <script type="text/javascript">
 
 
 
-    console.log("***");
+    // console.log("***");
     //console.log(gregorian_to_jalali([2017, 10, 18]));
 </script>

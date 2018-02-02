@@ -11,17 +11,108 @@ delete_user_online(); //Deletes sessions older than 24 hours
 //Find users who have logged in in X amount of time.
 $date = date("Y-m-d H:i:s");
 
-
-
 $plansData = fetchAllPlansOrderByStartDate(); //Fetch information for all plans
-
+if(!empty($_POST)) {
+  if(isset($_POST['send_sms'])){
+  	echo "***********************************************************************";
+    $phone_numbers = explode(',', $_POST['send_sms']);
+	$text = $_POST['message'];
+	$receiver = $phone_numbers;
+    $res = send_group_sms($text, $receiver);
+    echo '<div class="alert alert-success" role="alert"><?=$res?></div><br/>';
+    echo '<div class="alert alert-success" role="alert"><?=$res?></div><br/>';
+    echo '<div class="alert alert-success" role="alert"><?=$res?></div><br/>';
+    echo $res;
+    echo "***********************************************************************";
+    // foreach ($phone_numbers as $phn) {
+    // 	echo $phn;
+    // }
+    // echo $text;
+  }
+  if(isset($_POST['send_email'])){
+    $mail_address = explode(',', $_POST['send_email']);
+    foreach ($mail_address as $mail) {
+	    $to = $mail;
+		$subject = $_POST['subject'];
+		$body = $_POST['message'];
+		$mail_result = email($to,$subject,$body);
+		if($mail_result){
+		    echo '<div class="alert alert-success" role="alert">Mail sent successfully</div><br/>';
+		}else{
+		    echo '<div class="alert alert-danger" role="alert">Mail ERROR</div><br/>';
+		}
+    }
+  }
+}
 ?>
 <div id="page-wrapper"> <!-- leave in place for full-screen backgrounds etc -->
+
+  <!--send email PLANE MODAL -->
+  <div class="modal fade" id="send_email">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      	<form class="form" name="send_email" action="admin_plans.php" method="post">
+	        <div class="modal-header">
+	          <h1>ارسال ایمیل</h1>
+	        </div>
+	        <div class="modal-body">
+	        	<label >موضوع</label>
+	            <input  class="form-control" type="text" name="subject" id="title" placeholder="موضوع">       
+	            <label>متن پیام</label>
+	            <textarea class="form-control" id="description" name="message" placeholder="پیام ..." rows="5"></textarea>
+	        </div>
+	        <div class="modal-footer">
+	          <span class="pull-left" data-dismiss="modal" name="send_email" onclick=""><a class="btn btn-default btn-xs" data-toggle="modal" >انصراف</a></span>
+	          <input type="hidden" name="send_email" id="mail_address">
+	          <button type="submit" class="btn btn-warning btn-xs pull-left" style="margin-left: 10px;">ارسال ایمیل</button>
+	        </div>
+	    </form>
+      </div><!-- end .modal-content -->
+    </div><!-- end .modal-dialog -->
+  </div><!-- end .modal -->
+  <!-- END MODAL -->
+
+  <!--send SMS PLANE MODAL -->
+  <div class="modal fade" id="send_sms">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      	<form class="form" name="send_sms" action="admin_plans.php" method="post">
+	        <div class="modal-header">
+	          <h1>ارسال پیامک</h1>
+	        </div>
+	        <div class="modal-body">      
+	            <label>متن پیام</label>
+	            <textarea class="form-control" id="description" name="message" placeholder="پیام ..." rows="5"></textarea>
+	        </div>
+	        <div class="modal-footer">
+	          <span class="pull-left" data-dismiss="modal" name="send_sms" onclick=""><a class="btn btn-default btn-xs" data-toggle="modal" >انصراف</a></span>
+	          <input type="hidden" id="phone_numbers" name="send_sms">
+	          <button type="submit" class="btn btn-info btn-xs pull-left" style="margin-left: 10px;" >ارسال پیامک</button>
+	        </div>
+	    </form>
+      </div><!-- end .modal-content -->
+    </div><!-- end .modal-dialog -->
+  </div><!-- end .modal -->
+  <!-- END MODAL -->
+
+
+
 	<div class="container"> <!-- -fluid -->
 		<div class="row">
 		    <div class="text-center">
 			    <h1>مدیریت برنامه ها</h1>
 		    </div>
+		    <!-- <div class="col-xs-12 col-md-6">
+	            <form class="">
+	                <label for="system-search">جستجو:</label>
+	                <div class="input-group">
+	                    <input class="form-control" id="system-search" name="q" placeholder="جستجو..." type="text">
+	                    <span class="input-group-btn">
+						      <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+	                    </span>
+	                </div>
+	            </form>
+        	</div>  -->
 	    </div>
 
 <div class="row"> <!-- row for Users, Permissions, Pages, Email settings panels -->
@@ -102,7 +193,9 @@ $plansData = fetchAllPlansOrderByStartDate(); //Fetch information for all plans
 				</table>
 				</div>
 			</form>
-        <button class='btn btn-info' id="btnExport" onclick="">خروجی اکسل</button><br><br>
+        <button class='btn btn-info' id="btnimportmail" data-toggle="modal" data-target="#send_sms" onclick="importPhoneNumbers()">ارسال پیامک</button>
+        <button class='btn btn-warning' id="btnimportphone" data-toggle="modal" data-target="#send_email" onclick="importEmailAddress()">ارسال ایمیل</button>
+        <button class='btn btn-primary pull-left' id="btnExport" onclick="">خروجی اکسل</button><br><br>
 
 		</div>
 	</div>

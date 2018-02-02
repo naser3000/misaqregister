@@ -188,6 +188,19 @@ if(!empty($_POST)) {
 					//delete user register in plan
 					$db->query("DELETE FROM plan_register WHERE id = $prgs_id");
 				}
+				foreach ($shiftQue as $enteredUser) {
+					$enterUserDetails = fetchUserDetails($enteredUser->user_id);
+					$to = $enterUserDetails->email;
+                  	$subject = 'ثبت نام در اردو';
+                  	$body = 'شما در اردوی ثبت نام شدید.';
+                  	$mail_result=email($to,$subject,$body);
+
+                    if($mail_result){
+                        echo '<div class="alert alert-success" role="alert">Mail sent successfully</div><br/>';
+                    }else{
+                        echo '<div class="alert alert-danger" role="alert">Mail ERROR</div><br/>';
+                    }
+				}
 			}
 
 			if ($RPD->participant_name1 == "" & 
@@ -1247,5 +1260,3 @@ if(!empty($_POST)) {
 
 <!-- Place any per-page javascript here -->
 <?php require_once $abs_us_root.$us_url_root.'users/includes/html_footer.php'; // currently just the closing /body and /html ?>
-
-
