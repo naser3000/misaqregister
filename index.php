@@ -37,7 +37,9 @@ require_once $abs_us_root.$us_url_root.'users/includes/navigation.php';
 		<!-- Fetch information for all plans -->
 		<?php $plansData = fetchAllPlansOrderByStartDate();
 		foreach($plansData as $pld){
-			if( str_replace("-", "/", $pld->plan_start_date) >= gregorian_to_jalali(explode('/', date("Y/m/d"))) )
+			$g_date = explode('/', date("Y/m/d"));
+			$j_date = gregorian_to_jalali($g_date[0], $g_date[1], $g_date[2], true);
+			if( str_replace("-", "/", $pld->plan_start_date) >= $j_date)
 			{
 				?> 
 				<div class="col-md-6 pull-right">

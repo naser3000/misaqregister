@@ -17,11 +17,13 @@ $grav = get_gravatar(strtolower(trim($user->data()->email)));
 $get_info_id = $user->data()->id;
 // $groupname = ucfirst($loggedInUser->title);
 $raw = date_parse($user->data()->join_date);
-$signupdate = $raw['month']."/".$raw['day']."/".$raw['year'];
+$signupdate = $raw['year']."/".$raw['month']."/".$raw['day'];
 $userdetails = fetchUserDetails(NULL, NULL, $get_info_id); //Fetch user details
+
 if ($userdetails->data_completion == 0){
 	Redirect::to($us_url_root.'users/data_completion.php');
 }
+
 $plansData = fetchAllPlans(); //Fetch information for all plans
 ///echo "44444444444444444444444444444444444444444444";
  ?>
@@ -766,6 +768,7 @@ if(!empty($_POST)) {
 <div class="well">
 <div class="row">
 	<div class="col-md-4 pull-right">
+		<p><a href="user_settings.php" class="btn btn-primary equal-btn">ویرایش اطلاعات</a></p>
 		<h1><?=$userdetails->username?></h1>
 		<?php 
 		if ($userdetails->gender == "آقا")
@@ -788,7 +791,6 @@ if(!empty($_POST)) {
 		<?php if ($userdetails->status == "کارمند") {?>
 			<p>کد پرسنلی: <?=$userdetails->emp_number?></p>
 		<?php } ?>
-		<p><a href="user_settings.php" class="btn btn-primary equal-btn">ویرایش اطلاعات</a></p>
 
 	</div>
 	<div class="col-md-4 pull-right">
@@ -796,13 +798,21 @@ if(!empty($_POST)) {
 		<p>شماره تماس: <?=$userdetails->phnumber?></p>
 		<p>ایمیل: <?=$userdetails->email?></p>
 		<p>علاقمند به همکاری: <?=$userdetails->interested?></p>
-		<p>تاریخ عضویت: <?= gregorian_to_jalali(array_reverse(explode('/', $signupdate)))?></p>
+		<p>تاریخ عضویت: <?php 
+		$g_date = explode('/', $signupdate);
+		echo gregorian_to_jalali($g_date[0], $g_date[1], $g_date[2], true);?>
+		</p>
 		<p>تعداد ورود: <?=$userdetails->logins?></p>
-
+		<p>وضعیت پروفایل: <?php if ($userdetails->data_completion == 0){ 
+			echo "<span style=\"color:red;\">ناقص</span>";}
+			else{
+				echo "<span style=\"color:green;\">تکمیل</span>";
+			}?>				
+		</p>
 
 	</div>
 	<div class="col-md-4" style="text-align: center;">
-		<h1>میزان اعتبار</h1>
+		<h3>میزان اعتبار</h3>
 		<p>موجودی حساب کاربری شما</p>
 		<p><?=$userdetails->account_charge?> تومان</p>
 		<p>می باشد.</p>
@@ -813,9 +823,8 @@ if(!empty($_POST)) {
 	</div>
 </div>
 </div>
-	<h2>برنامه ها</h2>
 	<div class="panel panel-default">
-	<div class="panel-heading">برنامه های سایت فرهنگی میثاق</div>
+	<div class="panel-heading">آخرین برنامه ها</div>
 	<div class="panel-body">
 	<?php
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -824,7 +833,8 @@ if(!empty($_POST)) {
 //////////////////////////////////////////  (creating a PLAN with its moadals)  ///////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	foreach ($plansData as $pld) {
-		if( str_replace("-", "/", $pld->plan_start_date) >= gregorian_to_jalali(explode('/', date("Y/m/d"))) )
+		$g_date = explode('/', date("Y/m/d"));
+		if( str_replace("-", "/", $pld->plan_start_date) >= gregorian_to_jalali($g_date[0], $g_date[1], $g_date[2], true))
 		{
 		?>
 		<!--  MODAL POPUP -->
@@ -839,16 +849,17 @@ if(!empty($_POST)) {
 
 	            		// check date validation
 	            		$date_valide[0] = $date_valide[1] = $date_valide[2] = false;
-	            		if (str_replace("-", "/", $pld->register_start_date) < gregorian_to_jalali(explode('/', date("Y/m/d"))) ||
-										(str_replace("-", "/", $pld->register_start_date) == gregorian_to_jalali(explode('/', date("Y/m/d"))) 
+	            		$j_date = gregorian_to_jalali($g_date[0], $g_date[1], $g_date[2], true);
+	            		if (str_replace("-", "/", $pld->register_start_date) < $j_date ||
+										(str_replace("-", "/", $pld->register_start_date) == $j_date 
 										& $pld->register_start_time < date("H:i"))) 
 							{$date_valide[0] = true;}
-						if (str_replace("-", "/", $pld->register_end_date) < gregorian_to_jalali(explode('/', date("Y/m/d"))) ||
-										(str_replace("-", "/", $pld->register_end_date) == gregorian_to_jalali(explode('/', date("Y/m/d"))) 
+						if (str_replace("-", "/", $pld->register_end_date) < $j_date ||
+										(str_replace("-", "/", $pld->register_end_date) == $j_date 
 										& $pld->register_end_time < date("H:i")))
 							{$date_valide[1] = true;}
-						if (str_replace("-", "/", $pld->confirm_end_date) < gregorian_to_jalali(explode('/', date("Y/m/d"))) ||
-										(str_replace("-", "/", $pld->confirm_end_date) == gregorian_to_jalali(explode('/', date("Y/m/d"))) 
+						if (str_replace("-", "/", $pld->confirm_end_date) < $j_date ||
+										(str_replace("-", "/", $pld->confirm_end_date) == $j_date 
 										& $pld->confirm_end_time < date("H:i")))
 							{$date_valide[2] = true;}
 

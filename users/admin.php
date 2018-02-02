@@ -132,7 +132,10 @@ $settings = $settingsQ->first();
 	<?php foreach($recentUsers as $v1){
 		$user_id=$v1->user_id;
 		$username=name_from_id($v1->user_id);
-		$timestamp=date("Y-m-d H:i:s",$v1->timestamp);
+		// $timestamp=date("Y-m-d H:i:s",$v1->timestamp);
+		$timestamp=date("Y/m/d",$v1->timestamp);
+		$g_date = explode('/', $timestamp);
+		$timestamp= date("H:i:s ", $v1->timestamp).gregorian_to_jalali($g_date[0], $g_date[1], $g_date[2], true);
 		$ip=$v1->ip;
 
 		if ($user_id==0){

@@ -13,7 +13,7 @@ $date = date("Y-m-d H:i:s");
 
 
 
-$plansData = fetchAllPlans(); //Fetch information for all plans
+$plansData = fetchAllPlansOrderByStartDate(); //Fetch information for all plans
 
 ?>
 <div id="page-wrapper"> <!-- leave in place for full-screen backgrounds etc -->
@@ -22,23 +22,20 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
 		    <div class="col-xs-12 col-md-6 pull-right">
 			    <h1>مدیریت برنامه ها</h1>
 		    </div>
-		    <!-- <div class="col-xs-12 col-md-6">
-	            <form class="">
-	                <label for="system-search">جستجو:</label>
-	                <div class="input-group">
-	                    <input class="form-control" id="system-search" name="q" placeholder="جستجو..." type="text">
-	                    <span class="input-group-btn">
-						      <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
-	                    </span>
-	                </div>
-	            </form>
-        	</div>  -->
 	    </div>
+
 <div class="row"> <!-- row for Users, Permissions, Pages, Email settings panels -->
 	<hr>
 	<?php
 		//Cycle through plans
+		$max_plans_num = 5;
+		$i = 0;
+		$plansData = array_reverse($plansData);
+
 		foreach ($plansData as $v1) {
+			$i++;
+			if($i > $max_plans_num)
+				break;
 			$plan_registered = fetchPlanRegisteredUsers($v1->id);
 			$users_registered = [];
 			foreach ($plan_registered as $rgs) {
@@ -47,46 +44,38 @@ $plansData = fetchAllPlans(); //Fetch information for all plans
 			}
 			$users = json_encode($users_registered);
 			$regiters = json_encode($plan_registered);
-			
 	?>
 	<!-- Plan Panel -->
-	<div class="col-xs-6 col-md-4 pull-right">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<strong><?=$v1->title?></strong>
-				<span class="pull-left"><?=$v1->id?></span>
-			</div>
-			<div class="panel-body text-center"><div class="huge" style="font-size: 16px; text-align: justify;"><span><?=$v1->description?>	</span></div></div>	
-			<div class="panel-footer">	
-				<a class="btn btn-info btn-xs" href="admin_plan.php?id=<?=$v1->id?>" target="blank"><span class="pull-right">مشاهده جزئیات</span></a>
-				<a class="btn btn-primary btn-xs" id="showRegistered<?=$v1->id?>" onclick='showRegistered(<?=$users?>, <?=$regiters?>, "<?=$v1->title?>", "<?=$v1->id?>")' ><span class="pull-right">مشاهده شرکت کنندگان</span></a>
-				<a class="btn btn-warning btn-xs hidden" id="dontShowRegistered<?=$v1->id?>" onclick='dontShowRegistered(<?=$users?>, "<?=$v1->id?>")' ><span class="pull-right">عدم مشاهده شرکت کنندگان</span></a>
-				<span class="pull-left"><i class='fa fa-arrow-circle-left'></i></span>
-				<div class="clearfix"></div>	
-			</div> <!-- /panel-footer -->
-		</div><!-- /panel -->		
+	<div class="col-md-12">
+		<div class="panel-body">
+			<strong style="font-size: 18px; padding-left: 10px;"><?=$v1->title?></strong>
+			<span><?php if(strlen($v1->description) > 100) {
+				echo mb_substr($v1->description, 0, 97)." ...";
+				}
+				else{
+				 echo $v1->description;
+				}?>	
+			</span>
+			<a class="btn btn-primary btn-xs pull-left" style="margin-right: 10px;" id="showRegistered<?=$v1->id?>" onclick='showRegistered(<?=$users?>, <?=$regiters?>, "<?=$v1->title?>", "<?=$v1->id?>")' ><span>مشاهده شرکت کنندگان</span></a>
+			<a class="btn btn-warning btn-xs pull-left hidden" style="margin-right: 10px;" id="dontShowRegistered<?=$v1->id?>" onclick='dontShowRegistered(<?=$users?>, "<?=$v1->id?>")' ><span>مشاهده شرکت کنندگان</span></a>
+			<a class="btn btn-info btn-xs pull-left" href="admin_plan.php?id=<?=$v1->id?>" target="blank"><span>مشاهده جزئیات</span></a>
+		</div><!-- /panel body-->
 	</div><!-- /col -->
 
 	<?php } ?>
 
 	<!-- Plan Panel -->
-	<div class="col-xs-3 col-md-2 pull-right">
-		<div class="panel panel-default">
-			<div class="panel-heading"><strong>اضافه کردن برنامه جدید</strong></div>
-			<div class="panel-body text-center"><div class="huge"><i class='fa fa-plus fa-x1'></i></div></div>	
-			<div class="panel-footer">
-				<a class="btn btn-success btn-xs" id="" href="admin_add_plan.php" target="blank"><span class="pull-right">اضافه کردن</span></a>
-				<span class="pull-left"><i class='fa fa-arrow-circle-left'></i></span>	
-				<div class="clearfix"></div>	
-			</div> <!-- /panel-footer -->
-		</div><!-- /panel -->
+	<div class="col-md-12">
+		<div class="panel-body">
+			<a class="btn btn-success btn-xs pull-left" id="" href="admin_add_plan.php" target="blank"><span>افزودن برنامه جدید</span></a>
+		</div><!-- /panel body-->
 	</div><!-- /col -->
 
 </div> <!-- /.row -->
 
-	<br><hr><hr>
 	<div class="row hidden" id="plan_registered_data">
 		<div class="col-xs-12 pull-right">
+		<h2>شرکت کنندگان</h2>
             <form class="">
                 <label for="system-search">جستجو:</label>
                 <div class="input-group">

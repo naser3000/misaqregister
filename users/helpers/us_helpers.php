@@ -919,129 +919,248 @@ function generateForm($table,$id, $skip=[]){
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	function mod($a, $b) {return $a - ($b * floor($a / $b));}
+// 	function mod($a, $b) {return $a - ($b * floor($a / $b));}
 
-function leap_gregorian($year)
+// function leap_gregorian($year)
+// {
+//     return (($year % 4) == 0) &&
+//             (!((($year % 100) == 0) && (($year % 400) != 0)));
+// }
+
+// function gregorian_to_jd($year, $month, $day)
+// {
+// 	$GREGORIAN_EPOCH = 1721425.5;
+//     return ($GREGORIAN_EPOCH - 1) +
+//            (365 * ($year - 1)) +
+//            floor(($year - 1) / 4) +
+//            (-floor(($year - 1) / 100)) +
+//            floor(($year - 1) / 400) +
+//            floor((((367 * $month) - 362) / 12) +
+//            (($month <= 2) ? 0 :
+//                                (leap_gregorian($year) ? -1 : -2)
+//            ) +
+//            $day);
+// }
+// function jd_to_gregorian($jd) {
+//     //$wjd, $depoch, $quadricent, $dqc, $cent, $dcent, $quad, $dquad,
+//         //$yindex, $dyindex, $year, $yearday, $leapadj;
+// 	$GREGORIAN_EPOCH = 1721425.5;
+//     $wjd = floor($jd - 0.5) + 0.5;
+//     $depoch = $wjd - $GREGORIAN_EPOCH;
+//     $quadricent = floor($depoch / 146097);
+//     $dqc = mod($depoch, 146097);
+//     $cent = floor($dqc / 36524);
+//     $dcent = mod($dqc, 36524);
+//     $quad = floor($dcent / 1461);
+//     $dquad = mod($dcent, 1461);
+//     $yindex = floor($dquad / 365);
+//     $year = ($quadricent * 400) + ($cent * 100) + ($quad * 4) + $yindex;
+//     if (!(($cent == 4) || ($yindex == 4))) {
+//         $year++;
+//     }
+//     $yearday = $wjd - gregorian_to_jd($year, 1, 1);
+//     $leapadj = (($wjd < gregorian_to_jd($year, 3, 1)) ? 0
+//                                                   :
+//                   (leap_gregorian($year) ? 1 : 2)
+//               );
+//     $month = floor(((($yearday + $leapadj) * 12) + 373) / 367);
+//     $day = ($wjd - gregorian_to_jd($year, $month, 1)) + 1;
+
+//     return array($year, $month, $day);
+// }
+
+// function leap_persian($year)
+// {
+//     return (((((($year - (($year > 0) ? 474 : 473)) % 2820) + 474) + 38) * 682) % 2816) < 682;
+// }
+
+// function persian_to_jd($year, $month, $day)
+// {
+//     //$epbase, $epyear;
+// 	$PERSIAN_EPOCH = 1948320.5;
+//     $epbase = $year - (($year >= 0) ? 474 : 473);
+//     $epyear = 474 + mod($epbase, 2820);
+
+//     return $day +
+//             (($month <= 7) ?
+//                 (($month - 1) * 31) :
+//                 ((($month - 1) * 30) + 6)
+//             ) +
+//             floor((($epyear * 682) - 110) / 2816) +
+//             ($epyear - 1) * 365 +
+//             floor($epbase / 2820) * 1029983 +
+//             ($PERSIAN_EPOCH - 1);
+// }
+// function jd_to_persian($jd)
+// {
+//     //$year, $month, $day, $depoch, $cycle, $cyear, $ycycle,
+//    //     $aux1, $aux2, $yday;
+
+
+//     $jd = floor($jd) + 0.5;
+
+//     $depoch = $jd - persian_to_jd(475, 1, 1);
+//     $cycle = floor($depoch / 1029983);
+//     $cyear = mod($depoch, 1029983);
+//     if ($cyear == 1029982) {
+//         $ycycle = 2820;
+//     } else {
+//         $aux1 = floor($cyear / 366);
+//         $aux2 = mod($cyear, 366);
+//         $ycycle = floor(((2134 * $aux1) + (2816 * $aux2) + 2815) / 1028522) +
+//                     $aux1 + 1;
+//     }
+//     $year = $ycycle + (2820 * $cycle) + 474;
+//     if ($year <= 0) {
+//         $year--;
+//     }
+//     $yday = ($jd - persian_to_jd($year, 1, 1)) + 1;
+//     $month = ($yday <= 186) ? ceil($yday / 31) : ceil(($yday - 6) / 30);
+//     $day = ($jd - persian_to_jd($year, $month, 1)) + 1;
+//     return array($year, $month, $day);
+// }
+
+// function jalali_to_gregorian($d) {
+//     $adjustDay = 0;
+//     if($d[1]<0){
+//         $adjustDay = leap_persian($d[0]-1)? 30: 29;
+//         $d[1]++;
+//     }
+//     $gregorian = jd_to_gregorian(persian_to_jd($d[0], $d[1] + 1, $d[2])-$adjustDay);
+//     $gregorian[1]--;
+//     return $gregorian;
+//     //return implode('/', $gregorian);
+// }
+
+// function gregorian_to_jalali($d) {
+//     $jalali = jd_to_persian(gregorian_to_jd($d[0], $d[1] + 1, $d[2]));
+//     $jalali[1]--;
+//     $zero = $zero1 = "";
+//     if ($jalali[1] < 10)
+//     	$zero = "0";
+//     if ($jalali[2] < 10)
+//     	$zero1 = "0";
+//     return ($jalali[0]."/".$zero.$jalali[1]."/".$zero1.($jalali[2]-1));
+// }
+
+function div($a,$b) { 
+    return (int) ($a / $b); 
+} 
+ 
+function gregorian_to_jalali ($g_y, $g_m, $g_d,$str) 
+{ 
+    $g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31); 
+    $j_days_in_month = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29); 
+ 
+  
+   $gy = $g_y-1600; 
+   $gm = $g_m-1; 
+   $gd = $g_d-1; 
+ 
+   $g_day_no = 365*$gy+div($gy+3,4)-div($gy+99,100)+div($gy+399,400); 
+ 
+   for ($i=0; $i < $gm; ++$i) 
+      $g_day_no += $g_days_in_month[$i]; 
+   if ($gm>1 && (($gy%4==0 && $gy%100!=0) || ($gy%400==0))) 
+      /* leap and after Feb */ 
+      $g_day_no++; 
+   $g_day_no += $gd; 
+ 
+   $j_day_no = $g_day_no-79; 
+ 
+   $j_np = div($j_day_no, 12053); /* 12053 = 365*33 + 32/4 */ 
+   $j_day_no = $j_day_no % 12053; 
+ 
+   $jy = 979+33*$j_np+4*div($j_day_no,1461); /* 1461 = 365*4 + 4/4 */ 
+ 
+   $j_day_no %= 1461; 
+ 
+   if ($j_day_no >= 366) { 
+      $jy += div($j_day_no-1, 365); 
+      $j_day_no = ($j_day_no-1)%365; 
+   } 
+ 
+   for ($i = 0; $i < 11 && $j_day_no >= $j_days_in_month[$i]; ++$i) 
+      $j_day_no -= $j_days_in_month[$i]; 
+   $jm = $i+1; 
+   $jd = $j_day_no+1; 
+ if($str) return $jy.'/'.$jm.'/'.$jd ;
+   return array($jy, $jm, $jd); 
+} 
+ 
+function jalali_to_gregorian($j_y, $j_m, $j_d,$str) 
+{ 
+    $g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31); 
+    $j_days_in_month = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29); 
+ 
+ 
+   $jy = (int)($j_y)-979; 
+   $jm = (int)($j_m)-1; 
+   $jd = (int)($j_d)-1; 
+ 
+   $j_day_no = 365*$jy + div($jy, 33)*8 + div($jy%33+3, 4); 
+   
+   for ($i=0; $i < $jm; ++$i) 
+      $j_day_no += $j_days_in_month[$i]; 
+ 
+   $j_day_no += $jd; 
+ 
+   $g_day_no = $j_day_no+79; 
+ 
+   $gy = 1600 + 400*div($g_day_no, 146097); /* 146097 = 365*400 + 400/4 - 400/100 + 400/400 */ 
+   $g_day_no = $g_day_no % 146097; 
+ 
+   $leap = true; 
+   if ($g_day_no >= 36525) /* 36525 = 365*100 + 100/4 */ 
+   { 
+      $g_day_no--; 
+      $gy += 100*div($g_day_no,  36524); /* 36524 = 365*100 + 100/4 - 100/100 */ 
+      $g_day_no = $g_day_no % 36524; 
+ 
+      if ($g_day_no >= 365) 
+         $g_day_no++; 
+      else 
+         $leap = false; 
+   } 
+ 
+   $gy += 4*div($g_day_no, 1461); /* 1461 = 365*4 + 4/4 */ 
+   $g_day_no %= 1461; 
+ 
+   if ($g_day_no >= 366) { 
+      $leap = false; 
+ 
+      $g_day_no--; 
+      $gy += div($g_day_no, 365); 
+      $g_day_no = $g_day_no % 365; 
+   } 
+ 
+   for ($i = 0; $g_day_no >= $g_days_in_month[$i] + ($i == 1 && $leap); $i++) 
+      $g_day_no -= $g_days_in_month[$i] + ($i == 1 && $leap); 
+   $gm = $i+1; 
+   $gd = $g_day_no+1; 
+    if($str) return $gy.'/'.$gm.'/'.$gd ;
+    return array($gy, $gm, $gd); 
+} 
+function comparedate($_date_mix_jalaly,$_date_mix_gregorian)
 {
-    return (($year % 4) == 0) &&
-            (!((($year % 100) == 0) && (($year % 400) != 0)));
+  $_date_arr_jalaly = explode('/', $_date_mix_jalaly);
+  $_date_arr_gregorian = explode('/', $_date_mix_gregorian);		
+  
+  $arr_jtg = jalali_to_gregorian($_date_arr_jalaly[0],$_date_arr_jalaly[1],$_date_arr_jalaly[2]);
+		
+  if($_date_arr_gregorian[0]> $arr_jtg[0])
+    {
+	 return  false;
+	}
+		
+	else if($_date_arr_gregorian[0]== $arr_jtg[0] && $_date_arr_gregorian[1]>$arr_jtg[1])
+	{
+	 return false;
+	}
+	else if($_date_arr_gregorian[0]== $arr_jtg[0] && $_date_arr_gregorian[1]==$arr_jtg[1] && $_date_arr_gregorian[2]>$arr_jtg[2])
+	{
+	 return false;
+	}
+  return true ;	
 }
-
-function gregorian_to_jd($year, $month, $day)
-{
-	$GREGORIAN_EPOCH = 1721425.5;
-    return ($GREGORIAN_EPOCH - 1) +
-           (365 * ($year - 1)) +
-           floor(($year - 1) / 4) +
-           (-floor(($year - 1) / 100)) +
-           floor(($year - 1) / 400) +
-           floor((((367 * $month) - 362) / 12) +
-           (($month <= 2) ? 0 :
-                               (leap_gregorian($year) ? -1 : -2)
-           ) +
-           $day);
-}
-function jd_to_gregorian($jd) {
-    //$wjd, $depoch, $quadricent, $dqc, $cent, $dcent, $quad, $dquad,
-        //$yindex, $dyindex, $year, $yearday, $leapadj;
-	$GREGORIAN_EPOCH = 1721425.5;
-    $wjd = floor($jd - 0.5) + 0.5;
-    $depoch = $wjd - $GREGORIAN_EPOCH;
-    $quadricent = floor($depoch / 146097);
-    $dqc = mod($depoch, 146097);
-    $cent = floor($dqc / 36524);
-    $dcent = mod($dqc, 36524);
-    $quad = floor($dcent / 1461);
-    $dquad = mod($dcent, 1461);
-    $yindex = floor($dquad / 365);
-    $year = ($quadricent * 400) + ($cent * 100) + ($quad * 4) + $yindex;
-    if (!(($cent == 4) || ($yindex == 4))) {
-        $year++;
-    }
-    $yearday = $wjd - gregorian_to_jd($year, 1, 1);
-    $leapadj = (($wjd < gregorian_to_jd($year, 3, 1)) ? 0
-                                                  :
-                  (leap_gregorian($year) ? 1 : 2)
-              );
-    $month = floor(((($yearday + $leapadj) * 12) + 373) / 367);
-    $day = ($wjd - gregorian_to_jd($year, $month, 1)) + 1;
-
-    return array($year, $month, $day);
-}
-
-function leap_persian($year)
-{
-    return (((((($year - (($year > 0) ? 474 : 473)) % 2820) + 474) + 38) * 682) % 2816) < 682;
-}
-
-function persian_to_jd($year, $month, $day)
-{
-    //$epbase, $epyear;
-	$PERSIAN_EPOCH = 1948320.5;
-    $epbase = $year - (($year >= 0) ? 474 : 473);
-    $epyear = 474 + mod($epbase, 2820);
-
-    return $day +
-            (($month <= 7) ?
-                (($month - 1) * 31) :
-                ((($month - 1) * 30) + 6)
-            ) +
-            floor((($epyear * 682) - 110) / 2816) +
-            ($epyear - 1) * 365 +
-            floor($epbase / 2820) * 1029983 +
-            ($PERSIAN_EPOCH - 1);
-}
-function jd_to_persian($jd)
-{
-    //$year, $month, $day, $depoch, $cycle, $cyear, $ycycle,
-   //     $aux1, $aux2, $yday;
-
-
-    $jd = floor($jd) + 0.5;
-
-    $depoch = $jd - persian_to_jd(475, 1, 1);
-    $cycle = floor($depoch / 1029983);
-    $cyear = mod($depoch, 1029983);
-    if ($cyear == 1029982) {
-        $ycycle = 2820;
-    } else {
-        $aux1 = floor($cyear / 366);
-        $aux2 = mod($cyear, 366);
-        $ycycle = floor(((2134 * $aux1) + (2816 * $aux2) + 2815) / 1028522) +
-                    $aux1 + 1;
-    }
-    $year = $ycycle + (2820 * $cycle) + 474;
-    if ($year <= 0) {
-        $year--;
-    }
-    $yday = ($jd - persian_to_jd($year, 1, 1)) + 1;
-    $month = ($yday <= 186) ? ceil($yday / 31) : ceil(($yday - 6) / 30);
-    $day = ($jd - persian_to_jd($year, $month, 1)) + 1;
-    return array($year, $month, $day);
-}
-
-function jalali_to_gregorian($d) {
-    $adjustDay = 0;
-    if($d[1]<0){
-        $adjustDay = leap_persian($d[0]-1)? 30: 29;
-        $d[1]++;
-    }
-    $gregorian = jd_to_gregorian(persian_to_jd($d[0], $d[1] + 1, $d[2])-$adjustDay);
-    $gregorian[1]--;
-    return $gregorian;
-    //return implode('/', $gregorian);
-}
-
-function gregorian_to_jalali($d) {
-    $jalali = jd_to_persian(gregorian_to_jd($d[0], $d[1] + 1, $d[2]));
-    $jalali[1]--;
-    $zero = $zero1 = "";
-    if ($jalali[1] < 10)
-    	$zero = "0";
-    if ($jalali[2] < 10)
-    	$zero1 = "0";
-    return ($jalali[0]."/".$zero.$jalali[1]."/".$zero1.($jalali[2]-1));
-}
-
-
 
