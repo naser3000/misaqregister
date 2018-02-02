@@ -42,7 +42,7 @@ require_once $abs_us_root.$us_url_root.'users/includes/navigation.php';
 			if( str_replace("-", "/", $pld->plan_start_date) >= $j_date)
 			{
 				?> 
-				<div class="col-md-6 pull-right">
+				<div class="col-md-6 col-xs-12 pull-right">
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div><strong><?=$pld->title?></strong></div>

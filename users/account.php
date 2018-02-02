@@ -767,8 +767,12 @@ if(!empty($_POST)) {
 
 <div class="well">
 <div class="row">
-	<div class="col-md-4 pull-right">
-		<p><a href="user_settings.php" class="btn btn-primary equal-btn">ویرایش اطلاعات</a></p>
+	<div class="col-md-3 col-xs-12 col-sm-12 text-center">
+		<div class="col-sm-12 col-xs-6 img-responsive" style="padding-bottom: 10px;"><img src="images/defaultavatar.png"></div>
+		<p class="col-sm-12 col-xs-6 pull-left"><a class="btn btn-primary equal-btn" href="user_settings.php">ویرایش اطلاعات</a></p>
+		<p class="col-sm-12 col-xs-6 pull-left"><a class="btn btn-primary equal-btn" href="epay.php" role="button">افزایش اعتبار</a></p>
+	</div>
+	<div class="col-md-4 col-xs-6 pull-right">
 		<h1><?=$userdetails->username?></h1>
 		<?php 
 		if ($userdetails->gender == "آقا")
@@ -791,12 +795,12 @@ if(!empty($_POST)) {
 		<?php if ($userdetails->status == "کارمند") {?>
 			<p>کد پرسنلی: <?=$userdetails->emp_number?></p>
 		<?php } ?>
-
-	</div>
-	<div class="col-md-4 pull-right">
-		<hr>
 		<p>شماره تماس: <?=$userdetails->phnumber?></p>
 		<p>ایمیل: <?=$userdetails->email?></p>
+
+	</div>
+	<div class="col-md-4 col-xs-6 pull-right">
+		<hr><hr><br>
 		<p>علاقمند به همکاری: <?=$userdetails->interested?></p>
 		<p>تاریخ عضویت: <?php 
 		$g_date = explode('/', $signupdate);
@@ -809,16 +813,7 @@ if(!empty($_POST)) {
 				echo "<span style=\"color:green;\">تکمیل</span>";
 			}?>				
 		</p>
-
-	</div>
-	<div class="col-md-4" style="text-align: center;">
-		<h3>میزان اعتبار</h3>
-		<p>موجودی حساب کاربری شما</p>
-		<p><?=$userdetails->account_charge?> تومان</p>
-		<p>می باشد.</p>
-		<hr>
-		<p>برای افزایش اعتبار بر روی دکمه زیر کلیک کنید.</p>
-		<p ><a class="btn btn-primary equal-btn" href="epay.php" role="button">افزایش اعتبار</a></p>
+		<p>میزان اعتبار: <?=$userdetails->account_charge?> تومان</p>
 
 	</div>
 </div>

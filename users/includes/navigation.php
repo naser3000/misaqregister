@@ -42,7 +42,7 @@ $email_act=$results->email_act;
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="" href="<?=$us_url_root?>"><img class="img-responsive" src="<?=$us_url_root?>users/images/logo.png" alt="" /></a>
+			<a class="navbar-brand" href="<?=$us_url_root?>"><img class="img-responsive" src="<?=$us_url_root?>users/images/logo.png" alt="" /></a>
 		</div>
 		<div class="collapse navbar-collapse navbar-top-menu-collapse navbar-left" >
 			<ul class="nav navbar-nav " >
@@ -54,7 +54,7 @@ $email_act=$results->email_act;
 					<?php } ?>
 					<li class="hidden-sm hidden-md hidden-lg"><a href="<?=$us_url_root?>"><i class="fa fa-fw fa-home"></i> خانه</a></li> <!-- Hamburger menu link -->
 					<?php if (checkMenu(2,$user->data()->id) || checkMenu(4,$user->data()->id)){  //Links for permission level 2 or 4 (default admin) ?>
-						<li class="hidden-sm hidden-md hidden-lg"><a href="<?=$us_url_root?>users/admin.php"><i class="fa fa-fw fa-cogs"></i> داشبورد مدیر برنامه</a></li> <!-- Hamburger menu link -->
+						<li class="hidden-sm hidden-md hidden-lg"><a href="<?=$us_url_root?>users/admin_plans.php"><i class="fa fa-fw fa-cogs"></i> داشبورد مدیر برنامه</a></li> <!-- Hamburger menu link -->
 					<?php } // is user an admin ?>
 					<?php if (checkMenu(3,$user->data()->id) || checkMenu(4,$user->data()->id)){  //Links for permission level 3 or 4 (default admin) ?>
 						<li class="hidden-sm hidden-md hidden-lg"><a href="<?=$us_url_root?>users/admin.php"><i class="fa fa-fw fa-cogs"></i> داشبورد مدیر سایت</a></li> <!-- Hamburger menu link -->

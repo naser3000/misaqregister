@@ -19,7 +19,7 @@ $plansData = fetchAllPlansOrderByStartDate(); //Fetch information for all plans
 <div id="page-wrapper"> <!-- leave in place for full-screen backgrounds etc -->
 	<div class="container"> <!-- -fluid -->
 		<div class="row">
-		    <div class="col-xs-12 col-md-6 pull-right">
+		    <div class="text-center">
 			    <h1>مدیریت برنامه ها</h1>
 		    </div>
 	    </div>
@@ -47,19 +47,21 @@ $plansData = fetchAllPlansOrderByStartDate(); //Fetch information for all plans
 	?>
 	<!-- Plan Panel -->
 	<div class="col-md-12">
-		<div class="panel-body">
-			<strong style="font-size: 18px; padding-left: 10px;"><?=$v1->title?></strong>
-			<span><?php if(strlen($v1->description) > 100) {
-				echo mb_substr($v1->description, 0, 97)." ...";
-				}
-				else{
-				 echo $v1->description;
-				}?>	
-			</span>
-			<a class="btn btn-primary btn-xs pull-left" style="margin-right: 10px;" id="showRegistered<?=$v1->id?>" onclick='showRegistered(<?=$users?>, <?=$regiters?>, "<?=$v1->title?>", "<?=$v1->id?>")' ><span>مشاهده شرکت کنندگان</span></a>
-			<a class="btn btn-warning btn-xs pull-left hidden" style="margin-right: 10px;" id="dontShowRegistered<?=$v1->id?>" onclick='dontShowRegistered(<?=$users?>, "<?=$v1->id?>")' ><span>مشاهده شرکت کنندگان</span></a>
-			<a class="btn btn-info btn-xs pull-left" href="admin_plan.php?id=<?=$v1->id?>" target="blank"><span>مشاهده جزئیات</span></a>
-		</div><!-- /panel body-->
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<strong style="font-size: 18px; padding-left: 10px;"><?=$v1->title?></strong>
+				<span><?php if(strlen($v1->description) > 100) {
+					echo mb_substr($v1->description, 0, 97)." ...";
+					}
+					else{
+					 echo $v1->description;
+					}?>	
+				</span>
+				<a class="btn btn-primary btn-xs pull-left" style="margin-right: 10px;" id="showRegistered<?=$v1->id?>" onclick='showRegistered(<?=$users?>, <?=$regiters?>, "<?=$v1->title?>", "<?=$v1->id?>")' ><span>مشاهده شرکت کنندگان</span></a>
+				<a class="btn btn-warning btn-xs pull-left hidden" style="margin-right: 10px;" id="dontShowRegistered<?=$v1->id?>" onclick='dontShowRegistered(<?=$users?>, "<?=$v1->id?>")' ><span>مشاهده شرکت کنندگان</span></a>
+				<a class="btn btn-info btn-xs pull-left" href="admin_plan.php?id=<?=$v1->id?>" target="blank"><span>مشاهده جزئیات</span></a>
+			</div><!-- /panel body-->
+		</div> <!-- panel -->
 	</div><!-- /col -->
 
 	<?php } ?>
@@ -77,7 +79,6 @@ $plansData = fetchAllPlansOrderByStartDate(); //Fetch information for all plans
 		<div class="col-xs-12 pull-right">
 		<h2>شرکت کنندگان</h2>
             <form class="">
-                <label for="system-search">جستجو:</label>
                 <div class="input-group">
                     <input class="form-control" id="system-search" name="q" placeholder="جستجوی کاربران..." type="text">
                     <span class="input-group-btn">
