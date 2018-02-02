@@ -9,7 +9,8 @@ function cancel_plan(id){
 	$.ajax({
 	 	url: 'admin_plan.php',
 	 	type: 'POST',
-	 	data: {'plan_id' : id},
+	 	dataType: 'json',
+	 	data: "{'plan_id' :" + id + "}",
 	 	success: function(data, f, k){
 	 		console.log("----------");
 	 		// console.log(data);
@@ -26,17 +27,17 @@ function cancel_plan(id){
 }
 
 
-	function remove_user_register(prgs_id){
+	// function remove_user_register(prgs_id){
 		
-		$.ajax({
-		 	url: 'account.php',
-		 	type: "POST",
-		 	data: {'prgs_id' : prgs_id},
-		 	success: function(){
-		 		location.reload();
-		 	},
-		 	error: function(){
-		 		alert('failure');
-		 	}
-		});
-	}
+	// 	$.ajax({
+	// 	 	url: 'account.php',
+	// 	 	type: "POST",
+	// 	 	data: {'prgs_id' : prgs_id},
+	// 	 	success: function(){
+	// 	 		location.reload();
+	// 	 	},
+	// 	 	error: function(){
+	// 	 		alert('failure');
+	// 	 	}
+	// 	});
+	// }

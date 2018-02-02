@@ -201,3 +201,41 @@
 			$('#plan_registered_data').addClass('hidden');
 		
 	}
+	function importEmailAddress(){
+		var emails ="";
+		var selector = 'td:eq(6)';
+		var emails_cell = $('table tr').find(selector);
+		for (var i = 0; i < emails_cell.length; i++) {
+			if(emails_cell[i].innerHTML.length > 0)
+				emails += emails_cell[i].innerHTML + ",";
+		}
+		$('#mail_address')[0].value = emails;
+		console.log(emails);
+		console.log($('#mail_address')[0].value);
+		
+	}
+	function importPhoneNumbers(){
+		var phonenumbers = "";
+		var selector = 'td:eq(5)';
+		var phonenumber_cell = $('table tr').find(selector);
+		for (var i = 0; i < phonenumber_cell.length; i++) {
+			if(phonenumber_cell[i].innerHTML.length > 0)
+				phonenumbers += phonenumber_cell[i].innerHTML + ",";
+		}
+		$('#phone_numbers')[0].value = phonenumbers;
+		console.log(phonenumbers);
+		console.log($('#phone_numbers')[0].value);
+		// var msg_text = $('#send_sms textarea')[0].value;
+		// console.log(msg_text);
+		// $.ajax({
+		//  	url: 'admin_plans.php',
+		//  	type: "POST",
+		//  	data: {'phoneNumber' : phonenumbers, 'message' : msg_text},
+		//  	success: function(){
+		//  		// location.reload();
+		//  	},
+		//  	error: function(){
+		//  		alert('failure');
+		//  	}
+		// });
+	}

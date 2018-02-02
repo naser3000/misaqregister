@@ -32,8 +32,8 @@ if(!empty($_POST)) {
       $db->update('users', $rgs->user_id, $charge_fields);
     }
     $db->query("DELETE FROM plans WHERE id = $plan_id");
+    Redirect::to("admin_plans.php"); die();
   }
-  Redirect::to("admin_plans.php"); die();
 }
 
 //Forms posted

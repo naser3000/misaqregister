@@ -22,6 +22,7 @@ require_once("us_helpers.php");
 require_once("users_online.php");
 require_once("language.php");
 require_once("backup_util.php");
+require_once("lib/nusoap.php");
 
 // Readeable file size
 function size($path) {
@@ -180,6 +181,27 @@ function email_body($template,$options = array()){
 	ob_start();
 	require $abs_us_root.$us_url_root.'users/views/'.$template;
 	return ob_get_clean();
+}
+
+function send_group_sms($text, $receiver)
+{
+	$user="sharif.misaaq";
+	$pass="3456";
+	$sender="30009900091105";
+	$client = new soapclient('http://webservice.smsline.ir/');
+	$err = $client->getError();
+	if (!$err)
+	{
+		$send = $client->call('Send_GROUP_SMS',array($user,$pass,$receiver,$text,$sender,"2"));
+		$err = $client->getError();
+		unset($client);
+		if ($err)
+		 	return $err;
+		 else
+		    return $send;
+	}	
+	else 
+		return $err;
 }
 
 function inputBlock($type,$label,$id,$divAttr=array(),$inputAttr=array(),$helper=''){

@@ -150,7 +150,7 @@ function shiftQue($reserved_number, $plan_id, $capacity_id){
 	$query = $db->query("SELECT * FROM  plan_register WHERE plan_id = $plan_id AND capacity_id = $capacity_id");
 	$results = $query->results();
 
-	$string = "";
+	$enter = array();
 	foreach ($results as $register_data) {
 		$shift = $shift1 = $shift2 = $shift3 = 0;
 		$register_status = "رزرو";
@@ -172,9 +172,12 @@ function shiftQue($reserved_number, $plan_id, $capacity_id){
 				'reserved_number3'=> ($register_data->reserved_number3 - $shift3),
 				'status'=> $register_status);
 		$db->update('plan_register', $register_data->id, $shfit_data);
-		$string .= $register_data->id."*********";
+		if($shift!=0 | $shift1!=0 | $shift2!=0 | $shift3!=0 ){
+			array_push($enter, array("user_id"=>$register_data->user_id));
+		}
+		// $string .= $register_data->id."*********";
 	}
-	return ($string);
+	return ($enter);
 }
 
 
