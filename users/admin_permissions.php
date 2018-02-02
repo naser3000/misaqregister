@@ -101,7 +101,7 @@ $count = 0;
 			<form name='adminPermissions' action='<?=$_SERVER['PHP_SELF']?>' method='post'>
 			  <h2>ایجاد سطح دسترسی جدید</h2>
 			  <p>
-				<label>نام شطح دسترسی:</label>
+				<label>نام سطح دسترسی:</label>
 				<input type='text' name='name' class="form-control" />
 			  </p>
 

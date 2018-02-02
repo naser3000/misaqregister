@@ -1,0 +1,1185 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"plan",
+				"plan_id"
+			],
+			[
+				"ov",
+				"overflow-y"
+			],
+			[
+				"bg",
+				"bg-inf"
+			],
+			[
+				"di",
+				"div\tTag"
+			],
+			[
+				"d",
+				"display"
+			],
+			[
+				"r",
+				"right"
+			],
+			[
+				"im",
+				"important"
+			],
+			[
+				"cl",
+				"clear"
+			],
+			[
+				"li",
+				"li\tTag"
+			],
+			[
+				"marg",
+				"margin-right"
+			],
+			[
+				"in",
+				"inline-block"
+			],
+			[
+				"pad",
+				"padding"
+			],
+			[
+				"mat",
+				"margin-top"
+			],
+			[
+				"ma",
+				"margin"
+			],
+			[
+				"i",
+				"inline"
+			],
+			[
+				"col",
+				"col-xs-12"
+			],
+			[
+				"border",
+				"border-radius"
+			],
+			[
+				"o",
+				"out_i"
+			],
+			[
+				"tra",
+				"transparent"
+			],
+			[
+				"linear-gr",
+				"linear-gray"
+			],
+			[
+				"ba",
+				"background-color"
+			],
+			[
+				"brw",
+				"border-width"
+			],
+			[
+				"deco",
+				"text-decoration-line"
+			],
+			[
+				"dec",
+				"text-decoration-style"
+			],
+			[
+				"texd",
+				"text-decoration-color"
+			],
+			[
+				"alit",
+				"align-content"
+			],
+			[
+				"bl",
+				"black"
+			],
+			[
+				"u",
+				"url()"
+			],
+			[
+				"st",
+				"style\tTag"
+			],
+			[
+				"bacc",
+				"background-color"
+			],
+			[
+				"co",
+				"cover"
+			],
+			[
+				"bas",
+				"background-size"
+			],
+			[
+				"min",
+				"min-height"
+			],
+			[
+				"mi",
+				"min-height"
+			],
+			[
+				"al",
+				"alt\tAttr"
+			],
+			[
+				"ad",
+				"font-size-adjust"
+			],
+			[
+				"pu",
+				"pull-left"
+			],
+			[
+				"baco",
+				"background-color"
+			],
+			[
+				"fons",
+				"font-size"
+			],
+			[
+				"textal",
+				"text-align"
+			],
+			[
+				"inl",
+				"inline-block"
+			],
+			[
+				"el",
+				"el_img"
+			],
+			[
+				"borr",
+				"border-radius"
+			],
+			[
+				"texa",
+				"text-align"
+			],
+			[
+				"p",
+				"p\tTag"
+			],
+			[
+				"a",
+				"auto"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"tex",
+				"text-center"
+			],
+			[
+				"per",
+				"permissions"
+			],
+			[
+				"adm",
+				"admin_plan"
+			],
+			[
+				"acc",
+				"account"
+			],
+			[
+				"use",
+				"user_capacity"
+			],
+			[
+				"cap",
+				"capacity_data"
+			],
+			[
+				"res",
+				"res_n"
+			],
+			[
+				"reg",
+				"reg_n"
+			],
+			[
+				"regi",
+				"register"
+			],
+			[
+				"resn",
+				"reserved_number"
+			],
+			[
+				"sta",
+				"status"
+			],
+			[
+				"pl",
+				"plan_register"
+			],
+			[
+				"shi",
+				"shiftQue"
+			],
+			[
+				"resr",
+				"reserved"
+			],
+			[
+				"re",
+				"registered"
+			],
+			[
+				"reserve",
+				"reserved_number"
+			],
+			[
+				"rgs",
+				"rgs_number"
+			],
+			[
+				"bgc",
+				"background-color"
+			],
+			[
+				"str_re",
+				"str_replace"
+			],
+			[
+				"zer",
+				"zero1"
+			],
+			[
+				"btn",
+				"btn-primary"
+			],
+			[
+				"quer",
+				"querySelector"
+			],
+			[
+				"q",
+				"querySelector"
+			],
+			[
+				"rows",
+				"rows1"
+			],
+			[
+				"do",
+				"document"
+			],
+			[
+				"dont",
+				"dontShowRegistered"
+			],
+			[
+				"pla",
+				"plan_id"
+			],
+			[
+				"row",
+				"rows"
+			],
+			[
+				"ro",
+				"rows"
+			],
+			[
+				"for",
+				"for\tfor (…) {…}"
+			],
+			[
+				"bt",
+				"btnExport"
+			],
+			[
+				"nu",
+				"number"
+			],
+			[
+				"rel",
+				"related_capacity"
+			],
+			[
+				"tru",
+				"true"
+			],
+			[
+				"ch",
+				"charge_error"
+			],
+			[
+				"te",
+				"text-danger"
+			],
+			[
+				"tot",
+				"total"
+			],
+			[
+				"acco",
+				"account_charge"
+			],
+			[
+				"paid",
+				"paid_cost"
+			],
+			[
+				"reser",
+				"reserved_number2"
+			],
+			[
+				"participant_gen",
+				"participant_gender3"
+			],
+			[
+				"participant_cod",
+				"participant_code3"
+			],
+			[
+				"participant_ge",
+				"participant_gender2"
+			],
+			[
+				"part",
+				"participant_name1"
+			],
+			[
+				"participant_co",
+				"participant_code3"
+			],
+			[
+				"participant_na",
+				"participant_name3"
+			],
+			[
+				"is",
+				"isset"
+			],
+			[
+				"si",
+				"sizeof"
+			],
+			[
+				"sel",
+				"selected"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"remo",
+				"remove_participant"
+			],
+			[
+				"hi",
+				"hidden"
+			],
+			[
+				"add",
+				"add_participant"
+			],
+			[
+				"onc",
+				"onclick\tAttr"
+			],
+			[
+				"succ",
+				"successes2"
+			],
+			[
+				"دانش",
+				"دانشجو"
+			],
+			[
+				"btn-wa",
+				"btn-warning"
+			],
+			[
+				"btn-d",
+				"btn-danger"
+			],
+			[
+				"dele",
+				"delete_participant_register"
+			],
+			[
+				"del",
+				"delete_user_register"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"rpd",
+				"RPD"
+			],
+			[
+				"capaci",
+				"capacity_id"
+			],
+			[
+				"h",
+				"height"
+			],
+			[
+				"fo",
+				"form-control"
+			],
+			[
+				"emp",
+				"empty"
+			],
+			[
+				"ac",
+				"account"
+			],
+			[
+				"mo",
+				"modal-body"
+			],
+			[
+				"هم",
+				"همراه"
+			],
+			[
+				"ELS",
+				"else"
+			],
+			[
+				"ser",
+				"serialize"
+			],
+			[
+				"modal-f",
+				"modal-feedback"
+			],
+			[
+				"Se",
+				"SELECT\tTag"
+			],
+			[
+				"user",
+				"user_id"
+			],
+			[
+				"tota",
+				"total_cost"
+			],
+			[
+				"els",
+				"else"
+			],
+			[
+				"capa",
+				"capacity_id"
+			],
+			[
+				"fonts",
+				"font-size"
+			],
+			[
+				"va",
+				"value"
+			],
+			[
+				"participant_c",
+				"participant_code"
+			],
+			[
+				"participant_",
+				"participant_active"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "users/admin_permissions.php",
+			"settings":
+			{
+				"buffer_size": 4407,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "users/admin_plan.php",
+			"settings":
+			{
+				"buffer_size": 28857,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "{\n    \"folders\": [\n        {\n        \"follow_symlinks\": true,\n        \"path\": \".\"\n        }\n    ],\n    \"settings\": {\n        \"xdebug\": {\n            \"url\": \"http://my.local.website/\",\n        }\n    }\n}",
+			"file": "misaaq_debug.sublime-project",
+			"file_size": 45,
+			"file_write_time": 131620231851624036,
+			"settings":
+			{
+				"buffer_size": 201,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "users/joinThankYou.php",
+			"settings":
+			{
+				"buffer_size": 1769,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "users/js/admin_plan.js",
+			"settings":
+			{
+				"buffer_size": 393,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "users/js/admin_plans.js",
+			"settings":
+			{
+				"buffer_size": 7476,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "users/admin_plans.php",
+			"settings":
+			{
+				"buffer_size": 5649,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "users/account.php",
+			"settings":
+			{
+				"buffer_size": 50908,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "users/js/account.js",
+			"settings":
+			{
+				"buffer_size": 6552,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 980.0,
+		"last_filter": "install",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Install Package Control"
+			]
+		],
+		"width": 1030.0
+	},
+	"console":
+	{
+		"height": 500.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
+			"import urllib2,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); os.makedirs( ipp ) if not os.path.exists(ipp) else None; urllib2.install_opener( urllib2.build_opener( urllib2.ProxyHandler()) ); by = urllib2.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); open( os.path.join( ipp, pf), 'wb' ).write(by) if dh == h else None; print('Error validating download (got %s instead of %s), please try manual install' % (dh, h) if dh != h else 'Please restart Sublime Text to finish installation')",
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/xampp/htdocs/misaqregister",
+		"/C/xampp/htdocs/misaqregister/users",
+		"/C/xampp/htdocs/misaqregister/users/js"
+	],
+	"file_history":
+	[
+		"/C/xampp/htdocs/misaqregister/users/helpers/us_helpers.php",
+		"/C/xampp/htdocs/misaqregister/users/js/plugins/admin_plan.php",
+		"/C/Users/Naser/Desktop/Motion_Equ.m",
+		"/D/UNIVERSITY/کارشناسی ارشد/ترم  1/کنترل اتوماتیک پیشرفته/MATLAB code/code 6/testAdv2.m",
+		"/C/Users/Naser/Desktop/ce.html",
+		"/E/BOUJAN/boujan/node_modules/bootstrap/dist/css/bootstrap.css",
+		"/D/UNIVERSITY/کارشناسی ارشد/ترم  1/دینامیک پرواز پیشرفته/پروژه/codes/simulation1.m",
+		"/D/UNIVERSITY/کارشناسی ارشد/ترم  1/کنترل اتوماتیک پیشرفته/HW 1/HW 1/HW_1.m",
+		"/D/UNIVERSITY/کارشناسی ارشد/ترم  1/کنترل اتوماتیک پیشرفته/MATLAB code/code 6/testAdv.m",
+		"/C/Users/Naser/Desktop/Test.m",
+		"/E/BOUJAN/boujan/.angular-cli.json",
+		"/E/BOUJAN/boujan/node_modules/bootstrap-rtl/dist/css/bootstrap-rtl.css",
+		"/E/BOUJAN/boujan/node_modules/bootstrap-rtl/bootstrap/dist/css/bootstrap.css",
+		"/C/Users/Naser/Desktop/bootstrap-4.0.0/dist/css/bootstrap.css",
+		"/C/Users/Naser/Desktop/bootstrap-4.0.0/dist/css/bootstrap.min.css",
+		"/E/BOUJAN/boujan/node_modules/bootstrap-rtl/bootstrap/dist/css/bootstrap.min.css",
+		"/E/BOUJAN/boujan/package-lock.json",
+		"/E/BOUJAN/boujan/src/index.html",
+		"/E/BOUJAN/boujan/src/styles.css",
+		"/C/Users/Naser/Desktop/bootstrap-v4-rtl-4.0.0-beta/dist/bootstrap.html",
+		"/C/Users/Naser/Desktop/bootstrap-3.3.7-dist/bootstrap.html",
+		"/C/Users/Naser/Desktop/bootstrap.html",
+		"/E/BOUJAN/boujan/src/app/header/header.component.html",
+		"/E/BOUJAN/boujan/src/app/app.routing.ts",
+		"/E/BOUJAN/boujan/src/app/app.component.html",
+		"/C/Users/Naser/Desktop/test.html",
+		"/E/BOUJAN/boujan/node_modules/less/dist/less.js",
+		"/E/BOUJAN/boujan/server.js",
+		"/E/BOUJAN/boujan/package.json",
+		"/E/BOUJAN/boujan/src/app/familiar/familiar.component.ts",
+		"/E/BOUJAN/boujan/src/app/home/home.component.ts",
+		"/E/BOUJAN/boujan/src/app/app.module.ts",
+		"/C/Users/Naser/Desktop/recipes.component.html",
+		"/E/BOUJAN/boujan/src/app/header/header.component.css",
+		"/E/BOUJAN/boujan/src/app/familiar/familiar.component.css",
+		"/E/BOUJAN/boujan/src/app/app.component.ts",
+		"/C/Users/Naser/Desktop/boujan/src/styles.css",
+		"/C/Users/Naser/Desktop/trim.mat",
+		"/D/UNIVERSITY/کارشناسی ارشد/ترم  1/کنترل اتوماتیک پیشرفته/HW 1/HW 1/Servo.m",
+		"/D/UNIVERSITY/کارشناسی ارشد/ترم  1/کنترل اتوماتیک پیشرفته/HW 1/HW 1/Pnd.m",
+		"/D/UNIVERSITY/کارشناسی ارشد/ترم  1/کنترل اتوماتیک پیشرفته/HW 1/HW 1/Regulator1.m",
+		"/C/Users/Naser/Desktop/SampleCode.mlx",
+		"/D/UNIVERSITY/کارشناسی ارشد/ترم  1/کنترل اتوماتیک پیشرفته/MATLAB code/code 8/Adv8.m",
+		"/C/Users/Naser/Desktop/Algorithm.js",
+		"/D/UNIVERSITY/کارشناسی ارشد/ترم  1/کنترل اتوماتیک پیشرفته/MATLAB code/code 8/adv8f.m",
+		"/C/Users/Naser/Downloads/css.rtf",
+		"/C/Users/Naser/Desktop/home.component.css",
+		"/C/Users/Naser/Desktop/test2.html",
+		"/C/Users/Naser/Downloads/shape.svg",
+		"/C/Users/Naser/Desktop/folder-open.svg",
+		"/E/BOUJAN/Buojan/Icon/030-menu.svg",
+		"/C/Users/Naser/Desktop/appDir/client/package.json",
+		"/C/xampp/htdocs/streamer-web-master/tesst/index.php",
+		"/C/xampp/htdocs/streamer-web-master/streamer-web-master/protected/yiic.php",
+		"/C/xampp/htdocs/streamer-web-master/tesst/protected/yiic.php",
+		"/C/xampp/htdocs/streamer-web-master/streamer-web-master/index.php",
+		"/C/xampp/htdocs/streamer-web-master/tesst/protected/config/main.php",
+		"/C/xampp/htdocs/streamer-web-master/yii/framework/yiic.bat",
+		"/C/xampp/htdocs/streamer-web-master/test/index.php",
+		"/C/xampp/htdocs/test/index.php",
+		"/C/xampp/htdocs/streamer-web-master/protected/yiic.bat",
+		"/C/xampp/htdocs/streamer-web-master/protected/yiic",
+		"/C/Users/Naser/Desktop/streamer-web-master/index.php",
+		"/C/xampp/htdocs/streamer-web-master/protected/.htaccess",
+		"/E/FATER/Source/Workspaces/StopWatch/WebServer/Files/js/filemanager.js",
+		"/C/Users/Naser/Desktop/Archive.cs",
+		"/E/FATER/Source/Workspaces/StopWatch/WebServer/Files/css/file-explore.css",
+		"/E/BOUJAN/boujan/src/assets/js/carousel.js",
+		"/E/FATER/Source/Workspaces/StopWatch/WebServer/Files/icons/folder/folder-open-fill.svg",
+		"/E/FATER/StopWatch/WebServer/Files/css/file-explore.css",
+		"/E/FATER/Source/Workspaces/StopWatch/WebServer/Files/js/file-explore.js",
+		"/C/Users/Naser/Desktop/folder.svg",
+		"/D/UNIVERSITY/کارشناسی/ترم 6/دینامیک پرواز 1/برنامه نویسی 2/Q2.m",
+		"/D/UNIVERSITY/کارشناسی/ترم 6/دینامیک پرواز 1/برنامه نویسی 2/Q3.m",
+		"/D/UNIVERSITY/کارشناسی ارشد/ترم  1/کنترل اتوماتیک پیشرفته/MATLAB code/Dr.Salarieh code 1/Adv1.m",
+		"/D/UNIVERSITY/کارشناسی/ترم 8/برنامه نویسی وب/پروژه/فازها/web95-92109031-phase2/JS/create2.js",
+		"/E/FATER/StopWatch/WebServer/Files/js/file-explore.js",
+		"/E/FATER/StopWatch/WebServer/archives_doc.aspx",
+		"/C/Users/Naser/Desktop/appDir/client/src/app/app.component.ts",
+		"/C/Users/Naser/Desktop/appDir/client/src/app/videolist/videolist.component.ts",
+		"/E/BOUJAN/lbd-angular-cli-free-v1.4.0/src/app/app.component.html",
+		"/E/BOUJAN/lbd-angular-cli-free-v1.4.0/src/app/home/home.component.html",
+		"/C/Users/Naser/AppData/Local/Temp/Rar$DIa0.279/.angular-cli.json",
+		"/C/Users/Naser/Desktop/Template-FileManager/index.html",
+		"/E/FATER/StopWatch/WebServer/Files/css/jquerysctipttop.css",
+		"/C/Users/Naser/Downloads/Folding-Tree-Structures-jQuery-file-explore/index.html",
+		"/C/Users/Naser/Downloads/Folding-Tree-Structures-jQuery-file-explore/css/file-explore.css",
+		"/C/Users/Naser/Desktop/tree.html",
+		"/C/Users/Naser/Desktop/css/file-explore.css",
+		"/C/Users/Naser/Desktop/js/file-explore.js",
+		"/C/Users/Naser/Downloads/Folding-Tree-Structures-jQuery-file-explore/js/file-explore.js",
+		"/E/XAMARIN/Projects/cross1/cross1/cross1/SettingPage.xaml.cs",
+		"/E/PROGRAMMING/QUERA/color/index.html",
+		"/E/FATER/StopWatch/WebServer/Files/js/require.js",
+		"/C/Users/Naser/Desktop/file_manager/data/gridData.xml",
+		"/C/xampp/htdocs/MinimalFileManager-master/app/app.php",
+		"/C/Users/Naser/Desktop/MinimalFileManager-master/app/app.php",
+		"/C/Users/Naser/Desktop/MinimalFileManager-master/web/index.php",
+		"/E/Program Files/MATLAB/R2017b/mcr/toolbox/matlab/winfun/private/associateFiles.m",
+		"/C/Users/Naser/Desktop/simulation.m",
+		"/E/Program Files/MATLAB/R2017b/mcr/toolbox/matlab/winfun/private/associateFiles",
+		"/C/xampp/htdocs/misaqregister/users/admin_plans.php",
+		"/C/xampp/htdocs/misaqregister/users/admin_plan.php",
+		"/C/xampp/htdocs/misaqregister/users/admin_users.php",
+		"/C/xampp/htdocs/misaqregister/users/user_plan.php",
+		"/C/xampp/htdocs/misaqregister/users/admin_add_plan.php",
+		"/C/xampp/htdocs/misaqregister/users/user_settings.php",
+		"/C/xampp/htdocs/misaqregister/users/epay_verify.php",
+		"/C/xampp/htdocs/misaqregister/users/epay.php",
+		"/C/Users/Naser/Desktop/MISAQ WEBSITE PROJECT/Samplecode  95-06-29/PHP KWMP Sample/PHP KWMP Sample/verify.php",
+		"/C/xampp/htdocs/misaqregister/users/css/bootstrap.min.css",
+		"/C/xampp/htdocs/misaqregister/users/css/font-awesome.min.css",
+		"/C/xampp/htdocs/misaqregister/users/includes/page_footer.php",
+		"/C/Users/Naser/Desktop/appDir/client/tslint.json",
+		"/C/xampp/htdocs/misaqregister/users/developer.php",
+		"/C/xampp/htdocs/misaqregister/users/admin.php",
+		"/C/xampp/htdocs/misaqregister/users/veryfy.php",
+		"/C/Users/Naser/Desktop/MISAQ WEBSITE PROJECT/Samplecode  95-06-29/nusoap-0.9.5/lib/nusoap.php",
+		"/C/xampp/htdocs/misaqregister/users/data_completion.php",
+		"/C/xampp/htdocs/misaqregister/users/js/account.js",
+		"/C/xampp/htdocs/misaqregister/users/js/admin_add_plan.js",
+		"/C/Users/Naser/Desktop/HW1.m",
+		"/C/Users/Naser/Desktop/Samplecode  95-06-29/PHP KWMP Sample/PHP KWMP Sample/verify.php",
+		"/C/Users/Naser/Desktop/Samplecode  95-06-29/nusoap-0.9.5/samples/client2.php",
+		"/C/Users/Naser/Desktop/Samplecode  95-06-29/nusoap-0.9.5/lib/nusoap.php",
+		"/C/xampp/htdocs/misaqregister/users/admin_user.php",
+		"/C/xampp/htdocs/misaqregister/users/admin_permissions.php",
+		"/C/xampp/htdocs/misaqregister/users/css/account.css"
+	],
+	"find":
+	{
+		"height": 100.0
+	},
+	"find_in_files":
+	{
+		"height": 508.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"follow_symlinks",
+			"$_POST['plan_id']",
+			"_GET",
+			"DELETE",
+			"remov",
+			"planId",
+			"plan_id",
+			"get",
+			"GET",
+			"_GET",
+			"remove_plan"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": false,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "users/admin_permissions.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4407,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2834,
+								2834
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3374.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "users/admin_plan.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 28857,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								874,
+								874
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "misaaq_debug.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 201,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								200,
+								201
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "users/joinThankYou.php",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 1769,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "users/js/admin_plan.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 393,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								194,
+								194
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "users/js/admin_plans.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7476,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								31,
+								31
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "users/admin_plans.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5649,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2442,
+								2453
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "users/account.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 50908,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								50572,
+								50535
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 13325.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "users/js/account.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6552,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								237,
+								237
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 70.0
+	},
+	"input":
+	{
+		"height": 176.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.doc":
+	{
+		"height": 0.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "misaaq_debug.sublime-project",
+	"replace":
+	{
+		"height": 130.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 640.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 980.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+		"xdebug":
+		{
+			"hide_conflict": false
+		}
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 787.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

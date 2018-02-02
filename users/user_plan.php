@@ -1221,7 +1221,7 @@ if(!empty($_POST)) {
 			data: $(this).serialize(),
 			success: function(data){
 
-			  	console.log(data)
+			  	// console.log(data);
 
 			    $feedback = $('<div>').html(data).find('.modal-error-feedback' + id);
 			    $feedback2 = $('<div>').html(data).find('.modal-success-feedback' + id);
@@ -1238,10 +1238,10 @@ if(!empty($_POST)) {
 			    	$('#edit_register_modal'+id).modal('show');
 			    }
 
-				console.log($feedback[0].childElementCount);
-				console.log($feedback[0]);
-				console.log($feedback2[0].childElementCount);
-				console.log($feedback2[0]);
+				// console.log($feedback[0].childElementCount);
+				// console.log($feedback[0]);
+				// console.log($feedback2[0].childElementCount);
+				// console.log($feedback2[0]);
 				//console.log($form.prepend($feedback));
 				//location.reload();
 			},
@@ -1250,7 +1250,7 @@ if(!empty($_POST)) {
 			}
 		});
 
-		console.log("+++++++++++++++++++++");
+		// console.log("+++++++++++++++++++++");
 		
 	});
 
@@ -1298,8 +1298,8 @@ if(!empty($_POST)) {
 	function remove_participant(plan_id, i, account_charge) {
 		var l1 = $('table.plan'+plan_id+' tr.hidden.dont-hidden').length;
 		var l2 = $('table.plan'+plan_id+' tr.dont-hidden').length
-		console.log(l1 + "jjj" + l2);
-		console.log($('table.plan'+plan_id+' tr.dont-hidden'));
+		// console.log(l1 + "jjj" + l2);
+		// console.log($('table.plan'+plan_id+' tr.dont-hidden'));
 		$('table.plan'+plan_id+' tr.dont-hidden')[l2 - l1 - 1].classList.add('hidden');
 		if(i == 1){
 			console.log(i + "***");
@@ -1363,9 +1363,9 @@ if(!empty($_POST)) {
 	function passId(plan_id, prgs_id, id){
 		var modal = document.querySelector('#delete_participant_register'+plan_id+' span');
 		//modal.attr('onclick','').unbind('click');
-		console.log(modal);
-		console.log(modal.onclick);
+		// console.log(modal);
+		// console.log(modal.onclick);
 		modal.onclick = function(event) {remove_participant_register(prgs_id, id)};
-		console.log(modal);
+		// console.log(modal);
 	}
 </script>
