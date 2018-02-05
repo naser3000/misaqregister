@@ -149,22 +149,23 @@ function JalaliDate(p0, p1, p2) {
         setFullDate(p0);
     }
 
-    function jalali_to_gregorian(d) {
-		var adjustDay = 0;
-		if(d[1]<0){
-			adjustDay = leap_persian(d[0]-1)? 30: 29;
-			d[1]++;
-		}
-        var gregorian = jd_to_gregorian(persian_to_jd(d[0], d[1] + 1, d[2])-adjustDay);
-        gregorian[1]--;
-        return gregorian;
-    }
+  //   function jalali_to_gregorian(d) {
+		// var adjustDay = 0;
+		// if(d[1]<0){
+		// 	adjustDay = leap_persian(d[0]-1)? 30: 29;
+		// 	d[1]++;
+		// }
+  //       var gregorian = jd_to_gregorian(persian_to_jd(d[0], d[1] + 1, d[2])-adjustDay);
+  //       gregorian[1]--;
+  //       return gregorian;
+  //   }
 
-    function gregorian_to_jalali(d) {
-        var jalali = jd_to_persian(gregorian_to_jd(d[0], d[1] + 1, d[2]));
-        jalali[1]--;
-        return jalali;
-    }
+
+    // function gregorian_to_jalali(d) {
+    //     var jalali = jd_to_persian(gregorian_to_jd(d[0], d[1] + 1, d[2]));
+    //     jalali[1]--;
+    //     return jalali;
+    // }
 
     function setFullDate(date) {
         if (date && date.getGregorianDate) date = date.getGregorianDate();

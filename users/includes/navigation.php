@@ -111,7 +111,7 @@ $email_act=$results->email_act;
 	</div> <!-- End of Div for navigation bar -->
 </div> <!-- End of Div for navigation bar styling -->
 
-<script src="js/jquery.min.js"></script>
+<!-- <script src="js/jquery.min.js"></script> -->
 
 <script type="text/javascript">
     

@@ -20,9 +20,9 @@ $raw = date_parse($user->data()->join_date);
 $signupdate = $raw['year']."/".$raw['month']."/".$raw['day'];
 $userdetails = fetchUserDetails(NULL, NULL, $get_info_id); //Fetch user details
 
-if ($userdetails->data_completion == 0){
-	Redirect::to($us_url_root.'users/data_completion.php');
-}
+// if ($userdetails->data_completion == 0){
+// 	Redirect::to($us_url_root.'users/data_completion.php');
+// }
 
 $plansData = fetchAllPlans(); //Fetch information for all plans
 ///echo "44444444444444444444444444444444444444444444";
@@ -821,8 +821,9 @@ if(!empty($_POST)) {
 		</p>
 		<p>تعداد ورود: <?=$userdetails->logins?></p>
 		<p>وضعیت پروفایل: <?php if ($userdetails->data_completion == 0){ 
-			echo "<span style=\"color:red;\">ناقص</span>";}
-			else{
+			echo "<a href=\"data_completion.php\" style=\"color:red;\">ناقص</a>";
+
+			}else{
 				echo "<span style=\"color:green;\">تکمیل</span>";
 			}?>				
 		</p>

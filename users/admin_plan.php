@@ -91,10 +91,12 @@ if(!empty($_POST)) {
       $displayname = Input::get("register_start_date");
 
       $fields=array('register_start_date'=>$displayname);
+      $g_date = explode('/', date("Y/m/d"));
+      $j_date = gregorian_to_jalali($g_date[0], $g_date[1], $g_date[2], true);
       $validation->check($_POST,array(
         'register_start_date' => array(
           'display' => 'تاریخ شروع ثبت نام',
-          'after_equal' => gregorian_to_jalali(explode('/', date("Y/m/d"))),
+          'after_equal' => $j_date,
           'before_equal' => $_POST['register_end_date'],
           'required' => true,
         )
@@ -193,7 +195,7 @@ if(!empty($_POST)) {
     }
 
 //Update register_start_time
-    if ($plandetails->register_start_time != ($_POST['register_start_time']+":00")){
+    if ($plandetails->register_start_time != ($_POST['register_start_time'].":00")){
       $displayname = Input::get("register_start_time");
 
       $fields=array('register_start_time'=>$displayname);
@@ -212,7 +214,7 @@ if(!empty($_POST)) {
     }
 
 //Update register_end_time
-    if ($plandetails->register_end_time != ($_POST['register_end_time']+":00")){
+    if ($plandetails->register_end_time != ($_POST['register_end_time'].":00")){
       $displayname = Input::get("register_end_time");
 
       $fields=array('register_end_time'=>$displayname);
@@ -231,7 +233,7 @@ if(!empty($_POST)) {
     }
 
 //Update confirm_end_time
-    if ($plandetails->confirm_end_time != ($_POST['confirm_end_time']+":00")){
+    if ($plandetails->confirm_end_time != ($_POST['confirm_end_time'].":00")){
       $displayname = Input::get("confirm_end_time");
 
       $fields=array('confirm_end_time'=>$displayname);
@@ -250,7 +252,7 @@ if(!empty($_POST)) {
     }
 
 //Update plan_start_time
-    if ($plandetails->plan_start_time != ($_POST['plan_start_time']+":00")){
+    if ($plandetails->plan_start_time != ($_POST['plan_start_time'].":00")){
       $displayname = Input::get("plan_start_time");
 
       $fields=array('plan_start_time'=>$displayname);
@@ -270,7 +272,7 @@ if(!empty($_POST)) {
 
 
 //Update plan_end_time
-    if ($plandetails->plan_end_time != ($_POST['plan_end_time']+":00")){
+    if ($plandetails->plan_end_time != ($_POST['plan_end_time'].":00")){
       $displayname = Input::get("plan_end_time");
 
       $fields=array('plan_end_time'=>$displayname);
@@ -335,7 +337,7 @@ if(!empty($_POST)) {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h3>لغوکردن برنامه</h3>
+          <h3>لغو برنامه</h3>
         </div>
         <div class="modal-body">
           <p>با لغو برنامه تمامی اطلاعت شرکت کنندگان حذف خواهد شد.</p>
@@ -343,11 +345,11 @@ if(!empty($_POST)) {
         </div>
         <div class="modal-footer">
           <!-- <span class="pull-left" data-dismiss="modal" name="cancel_plan" onclick="cancel_plan(<?=$planId?>)"><a class="btn btn-danger btn-xs" data-toggle="modal" >بله، برنامه لغو شود</a></span> -->
-          <form class="form" name="cancel_plan" action="admin_plan.php?id=<?=$planId?>" method="post">
+          <form class="col-md-10 form" name="cancel_plan" action="admin_plan.php?id=<?=$planId?>" method="post">
             <input type="hidden" name="plan_id" value="<?=$planId?>">
             <button type="submit" class="btn btn-danger btn-xs" >بله، برنامه لغو شود</button>
           </form>
-          <span class="pull-left" data-dismiss="modal" style="margin-left: 10px;"><a class="btn btn-info btn-xs" data-toggle="modal" >خیر، انصراف</a></span>
+          <div data-dismiss="modal" style="margin-left: 10px;"><a class="btn btn-info btn-xs" data-toggle="modal" >خیر، انصراف</a></div>
         </div>
       </div><!-- end .modal-content -->
     </div><!-- end .modal-dialog -->
@@ -707,7 +709,4 @@ if(!empty($_POST)) {
 <script type="text/javascript">
 
 
-
-    // console.log("***");
-    //console.log(gregorian_to_jalali([2017, 10, 18]));
 </script>

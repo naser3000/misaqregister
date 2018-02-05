@@ -56,6 +56,8 @@ if (!empty($_POST)) {
     }
 
     $form_valid=FALSE; // assume the worst
+    $g_date = explode('/', date("Y/m/d"));
+    $j_date = gregorian_to_jalali($g_date[0], $g_date[1], $g_date[2], true);
     $validation = new Validate();
     $validation->check($_POST,array(
       'title' => array(
@@ -71,7 +73,7 @@ if (!empty($_POST)) {
       ),
       'register_start_date' => array(
       'display' => 'تاریخ شروع ثبت نام',
-      'after_equal' => gregorian_to_jalali(explode('/', date("Y/m/d"))),
+      'after_equal' => $j_date,
       'before_equal' => $register_end_date,
       'required' => true,
       ),

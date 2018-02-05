@@ -12,6 +12,8 @@ delete_user_online(); //Deletes sessions older than 24 hours
 $date = date("Y-m-d H:i:s");
 
 $plansData = fetchAllPlansOrderByStartDate(); //Fetch information for all plans
+$sms_account_charge = get_sms_account_charge();
+
 if(!empty($_POST)) {
   if(isset($_POST['send_sms'])){
   	echo "***********************************************************************";
@@ -80,7 +82,8 @@ if(!empty($_POST)) {
 	        <div class="modal-header">
 	          <h1>ارسال پیامک</h1>
 	        </div>
-	        <div class="modal-body">      
+	        <div class="modal-body">
+	            <label>اعتبار کنونی: <?=$sms_account_charge?> ریال</label><hr>
 	            <label>متن پیام</label>
 	            <textarea class="form-control" id="description" name="message" placeholder="پیام ..." rows="5"></textarea>
 	        </div>
@@ -102,17 +105,6 @@ if(!empty($_POST)) {
 		    <div class="text-center">
 			    <h1>مدیریت برنامه ها</h1>
 		    </div>
-		    <!-- <div class="col-xs-12 col-md-6">
-	            <form class="">
-	                <label for="system-search">جستجو:</label>
-	                <div class="input-group">
-	                    <input class="form-control" id="system-search" name="q" placeholder="جستجو..." type="text">
-	                    <span class="input-group-btn">
-						      <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
-	                    </span>
-	                </div>
-	            </form>
-        	</div>  -->
 	    </div>
 
 <div class="row"> <!-- row for Users, Permissions, Pages, Email settings panels -->

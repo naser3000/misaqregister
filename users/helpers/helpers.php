@@ -22,7 +22,8 @@ require_once("us_helpers.php");
 require_once("users_online.php");
 require_once("language.php");
 require_once("backup_util.php");
-require_once("lib/nusoap.php");
+require_once $abs_us_root.$us_url_root.'users/lib/nusoap.php';
+
 
 // Readeable file size
 function size($path) {
@@ -202,6 +203,25 @@ function send_group_sms($text, $receiver)
 	}	
 	else 
 		return $err;
+}
+
+function get_sms_account_charge()
+{
+	$user="sharif.misaaq";
+	$pass="3456";
+	$sender="30009900091105";
+	$client = new soapclient('http://webservice.smsline.ir/');
+	$err = $client->getError();
+	if (!$err)
+	{
+		$account_charge = $client->call('CREDIT_LINESMS',array($user,$pass,$sender));
+		$err = $client->getError();
+		unset($client);
+		if ($err)
+	 		return $err;
+		else
+	    	return $account_charge;
+	}
 }
 
 function inputBlock($type,$label,$id,$divAttr=array(),$inputAttr=array(),$helper=''){

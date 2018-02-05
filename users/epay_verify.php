@@ -34,7 +34,7 @@ if(isset($_POST['State'])) {
 	} else {
 		echo "The transaction was successful";
 		//Update account charge
-		$new_account_charge = $userdetails->account_charge + $res; 
+		$new_account_charge = $userdetails->account_charge + ($res/10); 
 		$fields=array('account_charge'=>$new_account_charge);
 
 		$db->update('users',$userId,$fields);
