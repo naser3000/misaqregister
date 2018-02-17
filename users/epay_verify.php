@@ -37,9 +37,9 @@ if(isset($_POST['State'])) {
 		$new_account_charge = $userdetails->account_charge + ($res/10); 
 		$fields=array('account_charge'=>$new_account_charge);
 
-		$db->update('users',$userId,$fields);
+		$db->update('users', $get_info_id, $fields);
 		echo "<script>alert(\"خطا: پرداخت با موفقیت انجام شد!\");</script>";
-		echo "<script>setTimeout(\"location.href = 'http://localhost".$us_url_root."users/account.php'\",1000);</script>";
+		echo "<script>setTimeout(\"location.href = 'http://localhost".$us_url_root."users/account.php'\",100);</script>";
 	}
 }
 ?>
